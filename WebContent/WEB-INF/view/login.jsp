@@ -28,15 +28,15 @@
                         </a>     
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">HOME</a></li>
-                        <li><a href="#">GENRES</a></li>
-                        <li><a href="#">Page 2</a></li>
+                        <li><a href="/cinemind">Home</a></li>
+                        <li><a href="#">Genres</a></li>
+                        <li><a href="#" onclick="window.location.href='movies'; return false;">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li style="padding-left: 5px; padding-right: 5px;">
                             <form class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="SEARCH" name="q">
+                                    <input type="text" class="form-control" placeholder="Search" name="q">
                                     <div class="input-group-btn">
                                         <button class="btn btn-danger" type="submit" style="height: 34px; background: #ff4d4d"><i class="glyphicon glyphicon-search"></i></button>
                                     </div>
@@ -44,12 +44,12 @@
                             </form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
-         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> SIGN UP</a></li>
-                        	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> LOGIN</a></li>
+         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
+                        	<li class="active"><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
-         					<li><a href="#" onclick="window.location.href='info'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${fn:toUpperCase(loginedUser.username)}"/></a></li>
-                        	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> LOGOUT</a></li>
+         					<li><a href="#" onclick="window.location.href='info'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
+                        	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
      					</c:if>
                     </ul>
                 </div>

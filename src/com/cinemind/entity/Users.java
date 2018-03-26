@@ -45,13 +45,6 @@ public class Users {
 	@CreationTimestamp
 	protected Date createdAt;
 	
-	
-	/*@PrePersist
-	protected void onCreate() throws ParseException {
-		Date tempDate= new Date();
-		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		createdAt = sdf.parse(sdf.format(tempDate));		
-	}*/
 
 	public Users() {
 		

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemind.dao.UserDAO;
+import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
 
 @Service
@@ -53,5 +54,11 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public String getUsernameByLogin(String email, String password) {
 		return userDAO.getUsernameByLogin(email,password);
+	}
+
+	@Override
+	@Transactional
+	public void saveActivity(User_activities activity) {
+		userDAO.saveActivity(activity);
 	}
 }

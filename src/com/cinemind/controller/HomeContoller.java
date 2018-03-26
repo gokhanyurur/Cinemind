@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
 import com.cinemind.service.UserService;
 
 
 @Controller
 @RequestMapping("/")
-public class CinemindContoller {
+public class HomeContoller {
 
 	@Autowired
 	private UserService userService;
@@ -27,14 +28,17 @@ public class CinemindContoller {
 		Users theUser = new Users();
 		theModel.addAttribute("user",theUser);
 		theModel.addAttribute("registerMessage",message);
-		return "signup";		
+		return "signup";	
+		//show sign up page
 	}
 	
 	@PostMapping("/registerUser")
 	public String registerUser(@ModelAttribute("user") Users theUser,Model theModel) {
 		if((String.valueOf(theUser.getPassword()).equals(String.valueOf(theUser.getPasswordConf()))) && !userService.checkUsername(theUser.getUsername())) {
 			userService.saveUser(theUser);
+			userService.saveActivity(new User_activities(userService.getUserIdByLogin(theUser.getEmail(), theUser.getPassword())," joined to cinemind"));
 			return "redirect:/";
+			//redirect home
 		}else {
 			System.out.println("Username is already exist or passwords are not matching.");
 			theModel.addAttribute("registerMessage", "Username is already exist or passwords are not matching.");
@@ -49,6 +53,7 @@ public class CinemindContoller {
 		theModel.addAttribute("user",theUser);
 		theModel.addAttribute("loginMessage",message);
 		return "login";
+		//show login form
 	}
 	
 	@PostMapping("/loginUser")

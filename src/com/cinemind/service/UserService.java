@@ -1,5 +1,6 @@
 package com.cinemind.service;
 
+import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
 
 public interface UserService {
@@ -17,4 +18,6 @@ public interface UserService {
 	public int getUserIdByLogin(String email, String password);
 
 	public String getUsernameByLogin(String email, String password);
+
+	public void saveActivity(User_activities activity);
 }

@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
 
 @Repository
@@ -78,5 +79,12 @@ public class UserDAOImpl implements UserDAO{
 		System.out.println("Username is "+username);
 		return username;
 
+	}
+
+	@Override
+	public void saveActivity(User_activities activity) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.save(activity);
+		
 	}
 }
