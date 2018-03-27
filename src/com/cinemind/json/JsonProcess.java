@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.cinemind.objects.genreObj;
 import com.cinemind.objects.movieObj;
 
 public class JsonProcess {
@@ -40,6 +41,29 @@ public class JsonProcess {
 		}
 		
 		return tempMovieList;
+	}
+	
+	public static List<genreObj> getGenresFromUrl(String url) throws JSONException, IOException{
+		
+		JSONObject jsonObj = JsonReader.readJsonObjFromUrl(url);
+		
+		String resultText = jsonObj.get("genres").toString();
+		JSONArray jsonResults = new JSONArray(resultText);
+		
+		List<genreObj> tempGenreList = new ArrayList<>();
+		
+		for(int i=0;i<jsonResults.length();i++) {
+			JSONObject tempObj = jsonResults.getJSONObject(i);
+			
+			int id= tempObj.getInt("id");
+			String title=tempObj.getString("name");
+			
+			genreObj tempGenre = new genreObj(id,title);
+			tempGenreList.add(tempGenre);
+		}
+		
+		return tempGenreList;	
+		
 	}
 
 }

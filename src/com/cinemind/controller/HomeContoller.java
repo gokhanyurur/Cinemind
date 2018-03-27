@@ -1,7 +1,11 @@
 package com.cinemind.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +17,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
+import com.cinemind.json.JsonProcess;
+import com.cinemind.objects.genreObj;
+import com.cinemind.objects.movieObj;
 import com.cinemind.service.UserService;
 
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class HomeContoller {
 
 	@Autowired
 	private UserService userService;
+	
+	
+	@GetMapping("/")
+	public String showIndexPage(Model theModel) throws IOException, JSONException {
+		
+		List<movieObj> popularList = JsonProcess.getMoviesFromUrl("https://api.themoviedb.org/3/movie/popular?api_key=a092bd16da64915723b2521295da3254");
+		theModel.addAttribute("popularList", popularList);
+		
+		List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("genreList", genreList);
+		return "index";
+	}
 	
 	@GetMapping("/signup")
 	public String showFormForSignup(Model theModel,@RequestParam(name="registerMessage",required = false) String message) {

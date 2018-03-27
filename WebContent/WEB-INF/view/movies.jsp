@@ -72,7 +72,7 @@ body {
 				</div>
                 <c:forEach var="tempMovie" items="${movieList}">
                 	<c:url var="movieLink" value="/movies/viewMovie">
-                    	<c:param name="movieId" value="${tempMovie.id}"></c:param>
+                    	<c:param name="movieId" value="${tempMovie.id}" />
                     </c:url>
 					<div class="col-md-3" style="padding: 0; margin: 0; margin-bottom: -40px;">
 						<figure class="imghvr-reveal-up">

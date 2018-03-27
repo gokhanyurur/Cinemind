@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,6 +16,9 @@
     
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slider.css" />
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/verticalmovie.css" />
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </head>
 <!--
 <style>
@@ -85,9 +89,9 @@ body {
            			</div>
            		</div>
            		<div class="row" style="padding-bottom: 10px;">
-					<div class="col-md-8">
+					<div class="col-md-9">
 						<div class="row">
-							<div class='col-md-6'>						
+							<div class='col-md-6' style="padding-bottom: 10px;">						
 							    <div id="carousel-example-generic1" class="carousel slide" data-ride="carousel">
 							      <!-- Indicators -->
 							      <ol class="carousel-indicators">
@@ -99,21 +103,21 @@ body {
 							      <!-- Wrapper for slides -->
 							      <div class="carousel-inner">
 							        <div class="item active">
-							          <img src="https://image.tmdb.org/t/p/w500/dqaUwCBK2Omdy5RRzTk6oBrP18p.jpg" alt="...">
+							          <img src="${popularList[0].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5>Movie Name</h5>
+							            <h5><a href="/movies/viewMovie?movieId=${popularList[0].id}" class="movieTitleSmall">${popularList[0].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="http://placehold.it/500x281" alt="...">
+							          <img src="${popularList[9].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5>Movie Name</h5>
+							            <h5><a href="/movies/viewMovie?movieId=${popularList[9].id}" class="movieTitleSmall">${popularList[9].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="http://placehold.it/500x281" alt="...">
+							          <img src="${popularList[10].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5>Movie Name</h5>
+							            <h5><a href="/movies/viewMovie?movieId=${popularList[10].id}" class="movieTitleSmall">${popularList[10].title}</a></h5>
 							          </div>
 							        </div>
 							      </div>
@@ -127,7 +131,7 @@ body {
 							      </a>
 							    </div>    
 					    </div>
-					    <div class='col-md-6'>						
+					    <div class='col-md-6' style="padding-bottom: 10px;">						
 							    <div id="carousel-example-generic2" class="carousel slide" data-ride="carousel">
 							      <!-- Indicators -->
 							      <ol class="carousel-indicators">
@@ -139,21 +143,21 @@ body {
 							      <!-- Wrapper for slides -->
 							      <div class="carousel-inner">
 							        <div class="item active">
-							          <img src="http://placehold.it/500x281" alt="...">
+							          <img src="${popularList[11].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5>Movie Name</h5>
+							            <h5><a href="/movies/viewMovie?movieId=${popularList[11].id}" class="movieTitleSmall">${popularList[11].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="http://placehold.it/500x281" alt="...">
+							          <img src="${popularList[12].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5>Movie Name</h5>
+							            <h5><a href="/movies/viewMovie?movieId=${popularList[12].id}" class="movieTitleSmall">${popularList[12].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="http://placehold.it/500x281" alt="...">
+							          <img src="${popularList[13].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5>Movie Name</h5>
+							            <h5><a href="/movies/viewMovie?movieId=${popularList[13].id}" class="movieTitleSmall">${popularList[13].title}</a></h5>
 							          </div>
 							        </div>
 							      </div>
@@ -165,48 +169,87 @@ body {
 							      <a class="right carousel-control" href="#carousel-example-generic2" data-slide="next">
 							        <span class="glyphicon glyphicon-chevron-right"></span>
 							      </a>
-							    </div>
-				    		</div>  
+							    </div>    
+					    </div>
 						</div>
-						<div class="row" style="padding-left: 15px; padding-right: 15px;">
+						<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -20px;">
 			            	<div class="page-header">
-							  <h3 style="color: #FF4D4D; font-weight: normal;">Most Popular</h3>
+							  <h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Most Popular</h3>
 							</div>
-							
+							<c:forEach var="i" begin="1" end="8">
+								<c:url var="popularLink" value="/movies/viewMovie">
+			                    	<c:param name="movieId" value="${popularList[i].id}"></c:param>
+			                    </c:url>
+								<div class="col-md-3" style="padding-bottom: 20px;">
+									<a href="${popularLink}">
+										<img src="${popularList[i].poster_path}" alt="Title" class="img-responsive">
+									</a>
+									<!--  -->
+									<div class="ss-item-text" style="text-align: center;">
+										<h5>${popularList[i].title}</h5>
+								    </div>			    
+								</div>
+							</c:forEach>		
 						</div>
 					</div>
-				    <div class="col-md-4">
-				    	asdasd <br><br>
-				    	asdasd <br><br>
-				    	asdasd <br><br>
-				    	asdasd <br><br>
-				    	asdasd <br><br>
-				    	asdasd <br><br>
-				    	asdasd <br><br>
-				    	asdasd <br><br>
+				    <div class="col-md-3" style="padding-left: 20px;">
+				    <!-- Filter -->
+				    	<div class="col-md-12">
+				    		<div class="row">
+				    			<h5 class="filterTitle">Genres</h5>
+				    		</div>
+				    		<div class="row">
+				    			<c:forEach var="genre" items="${genreList}">
+				    				<div class="col-md-12" style="padding-bottom: 5px;">
+					    			<c:url var="genreLink" value="/movies/genre">
+					                 	<c:param name="genreId" value="${genre.id}" />
+					                </c:url>
+				    					<a href="${genreLink}" class="filterText">${genre.title}</a>
+				    				</div>
+				    			</c:forEach>
+				    		</div>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<div class="row">
+				    			<h5 class="filterTitle">Release Date</h5>
+				    			<div class="col-md-12">
+				    				<jsp:useBean id="now" class="java.util.Date" />
+									<fmt:formatDate var="year" value="${now}" pattern="yyyy" />
+				    				<c:forEach var="i" begin="0" end="26" step="1">
+				    					<c:url var="yearLink" value="/movies/byYear">
+					                    	<c:param name="year" value="${year-i}"></c:param>
+					                    </c:url>
+									   <a href="${yearLink}">
+										   	<div class="col-md-3  filterYearBg">
+										   		<span class="filterYearText"><c:out value="${2018-i}"/></span>
+										   	</div>
+									   </a>
+									</c:forEach>
+				    			</div>
+				    		</div>
+				    	</div>
+				    	<div class="col-md-12">
+				    		<div class="row">
+				    			<div class="col-md-12">
+				    				<h5 class="filterTitle">Short By</h5>
+				    			</div>
+				    		</div>
+				    	</div>
 				    </div>        		
            		</div>
-                <div class="row">
-                	<div class="col-md-3" style="background-color: deeppink" >
-                    	Index Page
-                        	<br>
-                        Index Page
-                        <br>
-                        Index Page
-                        <br>
-                    </div>
-                    <div class="col-md-9" style="background-color:darkorchid" >
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
-                            Index Page 2<br>
+				<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -10px;">
+			    	<div class="page-header">
+						<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
+					</div>
+                    <div class="col-md-12" style="background-color: white;" >
+                            Upcoming<br>
+                            Upcoming<br>
+                            Upcoming<br>
+                            Upcoming<br>
+                            Upcoming<br>
+                            Upcoming<br>
+                            Upcoming<br>
+                            Upcoming<br>
                     </div>
                 </div>
             </div>
