@@ -1,0 +1,10 @@
+.cast-container{
+	width: 100%;
+	height: 300px;
+	overflow-y: scroll;
+}
+.actor-container{
+	width: auto;
+	height: 85px;
+	margin-bottom: 25px;
+}

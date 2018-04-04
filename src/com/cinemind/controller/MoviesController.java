@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cinemind.json.JsonProcess;
 import com.cinemind.objects.movieObj;
@@ -31,5 +32,14 @@ public class MoviesController {
 	@GetMapping("movies/genres")
 	public String GenreMovies() {
 		return "genre-movie";
+	}
+	
+	@GetMapping("movies/viewMovie")
+	public String viewMovie(@RequestParam("movieId")int movieId, Model theModel) throws JSONException, IOException {
+		
+		movieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+		theModel.addAttribute("movie",tempMovie);
+		
+		return "view-movie";
 	}
 }

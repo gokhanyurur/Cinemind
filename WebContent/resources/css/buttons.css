@@ -1,0 +1,49 @@
+.filterYearBt{
+	background-color: #F9F9F9;
+	color: #474747;
+	margin: 2px;
+	box-shadow: none;
+ 	border-radius: 0px;
+ 	padding-left: 18px;
+ 	padding-right: 18px;
+ 	padding-top: 3px;
+ 	padding-bottom: 3px;
+ 	border: 0;
+}
+.filterYearBt:hover{
+	background-color: #ff4d4d;
+	color: #ffffff;
+}
+
+.addListBt{
+	background-color: #ff4d4d;
+	color: #ffffff;
+	margin: 0px;
+	box-shadow: none;
+ 	border-radius: 0px;
+ 	padding-top: 1px;
+ 	padding-bottom: 1px;
+ 	border: 0;
+ 	width: 100%;
+}
+.addListBt:hover{
+	background-color: #F9F9F9;
+	color: #474747;
+}
+
+.movieGenreBt{
+	background-color: #E8E8E8;
+	color: #474747;
+	margin: 2px;
+	box-shadow: none;
+ 	border-radius: 0px;
+ 	padding-left: 18px;
+ 	padding-right: 18px;
+ 	padding-top: 3px;
+ 	padding-bottom: 3px;
+ 	border: 0;
+}
+.movieGenreBt:hover{
+	background-color: #ff4d4d;
+	color: #ffffff;
+}

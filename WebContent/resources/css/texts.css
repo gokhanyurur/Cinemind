@@ -1,6 +1,10 @@
 .primaryColor{
     color: #ff4d4d;
 }
+
+.bold{
+	font-weight: bold;
+}
 .white{
     color:white; 
 }
@@ -9,6 +13,10 @@
 	font-size: 15px;
 	padding-left: 13px;
 	padding-right: 13px;
+}
+.movieTagLine{
+	color: #383838;
+	font-size: 15px;
 }
 a.movieTitleSmall{
 	color: #ffffff;
@@ -31,16 +39,19 @@ a.filterText{
 	font-size: 15px;
 	font-weight: normal;
 }
-
-.filterYearBg{
-	margin: 2px;
-	background-color: #E3E3E3;
-	border-radius: 3px;
-	height: 23px;
+a.filterText:hover{
+	color: #ff4d4d;
 }
 
-.filterYearText{
-	color: #6A6A6A;
+.voteText{
+	color: #4A4A4A;
+}
+
+.detailText{
+	color: #383838;
 	font-size: 15px;
-	font-weight: normal;
+	margin: 0;
+	padding: 5px;
 }
+
+

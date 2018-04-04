@@ -25,7 +25,7 @@ import com.cinemind.service.UserService;
 
 @Controller
 //@RequestMapping("/")
-public class HomeContoller {
+public class HomeController {
 
 	@Autowired
 	private UserService userService;
@@ -34,11 +34,16 @@ public class HomeContoller {
 	@GetMapping("/")
 	public String showIndexPage(Model theModel) throws IOException, JSONException {
 		
-		List<movieObj> popularList = JsonProcess.getMoviesFromUrl("https://api.themoviedb.org/3/movie/popular?api_key=a092bd16da64915723b2521295da3254");
-		theModel.addAttribute("popularList", popularList);
+		//https://api.themoviedb.org/3/movie/popular?api_key=a092bd16da64915723b2521295da3254
+		List<movieObj> nowPlayingList = JsonProcess.getMoviesFromUrl("https://api.themoviedb.org/3/movie/now_playing?api_key=a092bd16da64915723b2521295da3254&region=US");
+		theModel.addAttribute("nowPlaying", nowPlayingList);
 		
 		List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
 		theModel.addAttribute("genreList", genreList);
+		
+		List<movieObj> upcomingList = JsonProcess.getUpcomingFromUrl("https://api.themoviedb.org/3/movie/upcoming?api_key=a092bd16da64915723b2521295da3254");
+		theModel.addAttribute("upcomingList",upcomingList);
+		
 		return "index";
 	}
 	

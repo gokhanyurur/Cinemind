@@ -2,7 +2,7 @@ package com.cinemind.objects;
 
 public class image {
     private float aspect_ratio;
-    private String file_path;
+    private String filePath;
     private int height,width;
 
 
@@ -11,12 +11,12 @@ public class image {
     }
     public image(float aspect_ratio, String file_path,int width,int height){
         this.aspect_ratio=aspect_ratio;
-        this.file_path = file_path;
+        this.filePath = file_path;
         this.width =width;
         this.height =height;
     }
     public image(String file_path){
-        this.file_path = file_path;
+        this.filePath = file_path;
     }
 
     public float getAspectRatio(){
@@ -27,10 +27,10 @@ public class image {
     }
     
     public String getFilePath(){
-        return file_path;
+        return filePath;
     }
-    public void setFilePath(String file_path){
-        this.file_path = file_path;
+    public void setFilePath(String filePath){
+        this.filePath = filePath;
     }
 
     public int getWidth(){

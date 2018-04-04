@@ -15,6 +15,15 @@ public class movieObj {
     private List<video> videoList=new ArrayList<>();
     private List<image> imageList=new ArrayList<>();
     private String status;
+	private String tagline;
+	private long budget;
+	private long revenue;
+	
+	private String director;
+	private String writer;
+	private String music;
+	private List<Country> countries;
+	private String countryString;
 
     public movieObj(){
 
@@ -70,7 +79,7 @@ public class movieObj {
     public int getVote_count(){
         return vote_count;
     }
-    public void setVote_count(int voteCount){
+    public void setVote_count(int vote_count){
         this.vote_count=vote_count;
     }
 
@@ -193,7 +202,7 @@ public class movieObj {
         this.videoList=videoList;
     }
 
-    public List<image> getImagesList(){
+    public List<image> getImageList(){
         return imageList;
     }
     public void setImageList(List<image> imageList){
@@ -222,6 +231,69 @@ public class movieObj {
         }
         return null;
     }
+
+	public void setTagline(String tagline) {
+		this.tagline=tagline;
+	}
+	
+	public String getTagline() {
+		return tagline;
+	}
+
+	public void setBudget(long budget) {
+		this.budget=budget;		
+	}
+	
+	public long getBudget() {
+		return budget;
+	}
+
+	public void setRevenue(long revenue) {
+		this.revenue=revenue;
+	}
+	public long getRevenue() {
+		return revenue;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
+	public String getMusic() {
+		return music;
+	}
+
+	public void setMusic(String music) {
+		this.music = music;
+	}
+
+	public List<Country> getCountries() {
+		return countries;
+	}
+
+	public void setCountries(List<Country> countries) {
+		this.countries = countries;
+	}
+
+	public String getCountryString() {
+		return countryString;
+	}
+
+	public void setCountryString(String countryString) {
+		this.countryString = countryString;
+	}
 
 
 }

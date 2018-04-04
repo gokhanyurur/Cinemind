@@ -1,0 +1,22 @@
+.movie-backdrop-header{
+	width: 100%;
+	height: 400px;
+	overflow: hidden;
+	object-fit: cover;
+
+}
+
+.transparent{
+	opacity: 0.6;
+    filter: alpha(opacity=50);
+}
+
+.blur{
+	-webkit-filter: blur(50px);
+    filter: blur(50px);
+}
+
+.viewMoviePoster{
+	width: 250px;
+	height: auto;
+}

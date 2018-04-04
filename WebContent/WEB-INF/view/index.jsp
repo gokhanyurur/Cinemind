@@ -9,6 +9,7 @@
 	<title>Cinemind</title>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/navbar.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/texts.css" />
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css" />
 	
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -103,21 +104,21 @@ body {
 							      <!-- Wrapper for slides -->
 							      <div class="carousel-inner">
 							        <div class="item active">
-							          <img src="${popularList[0].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[8].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/movies/viewMovie?movieId=${popularList[0].id}" class="movieTitleSmall">${popularList[0].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[8].id}" class="movieTitleSmall">${nowPlaying[8].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${popularList[9].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[9].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/movies/viewMovie?movieId=${popularList[9].id}" class="movieTitleSmall">${popularList[9].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[9].id}" class="movieTitleSmall">${nowPlaying[9].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${popularList[10].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[10].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/movies/viewMovie?movieId=${popularList[10].id}" class="movieTitleSmall">${popularList[10].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[10].id}" class="movieTitleSmall">${nowPlaying[10].title}</a></h5>
 							          </div>
 							        </div>
 							      </div>
@@ -130,8 +131,8 @@ body {
 							        <span class="glyphicon glyphicon-chevron-right"></span>
 							      </a>
 							    </div>    
-					    </div>
-					    <div class='col-md-6' style="padding-bottom: 10px;">						
+					    	</div>
+					    	<div class='col-md-6' style="padding-bottom: 10px;">						
 							    <div id="carousel-example-generic2" class="carousel slide" data-ride="carousel">
 							      <!-- Indicators -->
 							      <ol class="carousel-indicators">
@@ -143,21 +144,21 @@ body {
 							      <!-- Wrapper for slides -->
 							      <div class="carousel-inner">
 							        <div class="item active">
-							          <img src="${popularList[11].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[11].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/movies/viewMovie?movieId=${popularList[11].id}" class="movieTitleSmall">${popularList[11].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[11].id}" class="movieTitleSmall">${nowPlaying[11].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${popularList[12].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[12].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/movies/viewMovie?movieId=${popularList[12].id}" class="movieTitleSmall">${popularList[12].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[12].id}" class="movieTitleSmall">${nowPlaying[12].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${popularList[13].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[13].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/movies/viewMovie?movieId=${popularList[13].id}" class="movieTitleSmall">${popularList[13].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[13].id}" class="movieTitleSmall">${nowPlaying[13].title}</a></h5>
 							          </div>
 							        </div>
 							      </div>
@@ -170,27 +171,46 @@ body {
 							        <span class="glyphicon glyphicon-chevron-right"></span>
 							      </a>
 							    </div>    
-					    </div>
+					    	</div>
 						</div>
 						<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -20px;">
 			            	<div class="page-header">
-							  <h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Most Popular</h3>
+							  <h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Now Playing</h3>
 							</div>
-							<c:forEach var="i" begin="1" end="8">
-								<c:url var="popularLink" value="/movies/viewMovie">
-			                    	<c:param name="movieId" value="${popularList[i].id}"></c:param>
+							<c:forEach var="i" begin="0" end="7">
+								<c:url var="nowPlayingLink" value="/movies/viewMovie">
+			                    	<c:param name="movieId" value="${nowPlaying[i].id}"></c:param>
 			                    </c:url>
 								<div class="col-md-3" style="padding-bottom: 20px;">
-									<a href="${popularLink}">
-										<img src="${popularList[i].poster_path}" alt="Title" class="img-responsive">
+									<a href="${nowPlayingLink}">
+										<img src="${nowPlaying[i].poster_path}" alt="${nowPlaying[i].title}" class="img-responsive">
 									</a>
 									<!--  -->
 									<div class="ss-item-text" style="text-align: center;">
-										<h5>${popularList[i].title}</h5>
+										<h5>${nowPlaying[i].title}</h5>
 								    </div>			    
 								</div>
 							</c:forEach>		
 						</div>
+						<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -25px;">
+					    	<div class="page-header">
+								<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
+							</div>
+		                    <c:forEach var="i" begin="0" end="${fn:length(upcomingList)-1}">
+								<c:url var="upcomingLink" value="/movies/viewMovie">
+			                    	<c:param name="movieId" value="${upcomingList[i].id}"></c:param>
+			                    </c:url>
+								<div class="col-md-3" style="padding-bottom: 20px;">
+									<a href="${upcomingLink}">
+										<img src="${upcomingList[i].poster_path}" alt="${upcomingList[i].title}" class="img-responsive">
+									</a>
+									<!--  -->
+									<div class="ss-item-text" style="text-align: center;">
+										<h5>${upcomingList[i].title} - ${upcomingList[i].dayLeft} days left</h5>
+								    </div>			    
+								</div>
+							</c:forEach>
+               			</div>
 					</div>
 				    <div class="col-md-3" style="padding-left: 20px;">
 				    <!-- Filter -->
@@ -219,10 +239,8 @@ body {
 				    					<c:url var="yearLink" value="/movies/byYear">
 					                    	<c:param name="year" value="${year-i}"></c:param>
 					                    </c:url>
-									   <a href="${yearLink}">
-										   	<div class="col-md-3  filterYearBg">
-										   		<span class="filterYearText"><c:out value="${2018-i}"/></span>
-										   	</div>
+									   <a href="${yearLink}" style="text-decoration:none;">
+									   		<button class="filterYearBt"><c:out value="${2018-i}"/></button>
 									   </a>
 									</c:forEach>
 				    			</div>
@@ -230,28 +248,51 @@ body {
 				    	</div>
 				    	<div class="col-md-12">
 				    		<div class="row">
-				    			<div class="col-md-12">
-				    				<h5 class="filterTitle">Short By</h5>
+				    			<h5 class="filterTitle">Short By</h5>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Popularity Descending</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Popularity Ascending</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Rating Descending</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Rating Ascending</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Release Date Descending</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Release Date Ascending</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Title (A-Z)</a>
+				    			</div>
+				    		</div>
+				    		<div class="row">
+				    			<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<a href="#" class="filterText">Title (Z-A)</a>
 				    			</div>
 				    		</div>
 				    	</div>
 				    </div>        		
            		</div>
-				<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -10px;">
-			    	<div class="page-header">
-						<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
-					</div>
-                    <div class="col-md-12" style="background-color: white;" >
-                            Upcoming<br>
-                            Upcoming<br>
-                            Upcoming<br>
-                            Upcoming<br>
-                            Upcoming<br>
-                            Upcoming<br>
-                            Upcoming<br>
-                            Upcoming<br>
-                    </div>
-                </div>
             </div>
         </div>
 </body>
