@@ -24,6 +24,8 @@ public class movieObj {
 	private String music;
 	private List<Country> countries;
 	private String countryString;
+	
+	private List<movieObj> recommendedMovies = new ArrayList<>();
 
     public movieObj(){
 
@@ -293,6 +295,14 @@ public class movieObj {
 
 	public void setCountryString(String countryString) {
 		this.countryString = countryString;
+	}
+
+	public List<movieObj> getRecommendedMovies() {
+		return recommendedMovies;
+	}
+
+	public void setRecommendedMovies(List<movieObj> recommendedMovies) {
+		this.recommendedMovies = recommendedMovies;
 	}
 
 

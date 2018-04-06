@@ -269,8 +269,14 @@ public class JsonProcess {
             imageList.add(postcp);
         }
         tempMovie.setImageList(imageList);
-		
+        
+        //get recommended movies
+        List<movieObj> recommendedArray = getMoviesFromUrl("https://api.themoviedb.org/3/movie/"+tempMovie.getId()+"/recommendations?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+        
+        tempMovie.setRecommendedMovies(recommendedArray);
+        
 		return tempMovie;
+			
 	
 	}
 }

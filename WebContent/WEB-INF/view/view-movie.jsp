@@ -27,8 +27,10 @@
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/movieImagesSlider.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reviews.css" />
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/recommendedmovies.css" />
 	<script src="${pageContext.request.contextPath}/resources/js/movieImagesSlider.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/starRating.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/starRating.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/recommendedmovies.jsp"></script>
 	</head>
 <body>
 <!-- navigation -->
@@ -150,7 +152,7 @@
 						</div>
 						<!-- Trailer -->
 						<div class="col-md-12">
-							<h3 class="page-header primaryColor">Trailer</h3>
+							<h3 class="page-header primaryColor">Videos</h3>
 							<c:forEach var="trailer" items="${movie.videoList}">
 								<div class="col-md-4" style="margin-bottom: 20px;">
 									<div class="vid">
@@ -226,10 +228,10 @@
 				</div>
 				<div class="col-md-3">
 					<div class="col-md-6 col-xs-6">
-						<div class="col-md-6 col-xs-6">
+						<div class="col-md-8 col-xs-4">
 							<img style="width: 40px; height: auto;" src="${pageContext.request.contextPath}/resources/img/tmdb-logo.png" alt="TMDB Logo"/>
 						</div>
-						<div class="col-md-6 col-xs-6" style="margin-top: -15px;">
+						<div class="col-md-4 col-xs-8" style="margin-top: -15px; margin-left: -15px;">
 							<h3 class="voteText">${movie.vote_average}</h3>
 						</div>
 						<div class="col-md-12 col-xs-12">
@@ -237,10 +239,10 @@
 						</div>
 					</div>
 					<div class="col-md-6 col-xs-6">
-						<div class="col-md-6 col-xs-6">
+						<div class="col-md-8 col-xs-4">
 							<img style="width: 40px; height: auto;" src="${pageContext.request.contextPath}/resources/img/logo.png" alt="TMDB Logo"/>
 						</div>
-						<div class="col-md-6 col-xs-6" style="margin-top: -15px;">
+						<div class="col-md-4 col-xs-8" style="margin-top: -15px; margin-left: -15px;">
 							<h3 class="voteText">X.X</h3>
 						</div>
 						<div class="col-md-12 col-xs-12">
@@ -278,7 +280,7 @@
 					</div>
 					<div class="col-md-12 col-xs-12" style="padding-bottom: 10px;">
 						<div class="col-md-2 col-xs-2">
-							<img src="${pageContext.request.contextPath}/resources/img/icons/director-logo.png" style="width: 30px; height: auto; margin-left: 6px;"/>
+							<i class="fas fa-video fa-3x"></i>
 						</div>
 						<div class="col-md-10 col-xs-10">
 							<div class="col-md-12 col-xs-12">
@@ -498,6 +500,93 @@
 			                </a>
 			    		</div>
 					</div>	
+			</div>
+			<div class="col-md-12 hidden-sm hidden-xs">
+				<div class="col-md-12">
+					<h3 class="page-header primaryColor">Recommended Movies</h3>
+				</div>
+				<div class="col-md-12" style="margin-left: -20px;">
+					<div class="carousel slide" id="myCarouselrec">
+						<div class="carousel-inner">
+					    	<c:forEach varStatus="status" var="i" begin="0" end="${fn:length(movie.recommendedMovies)}" step="4">
+								<c:if test="${i == 0}">
+									<div class="item active">
+						            	<ul class="thumbnails">
+						                	<li class="col-sm-3">
+						    					<div class="fff">
+													<div class="thumbnail">
+														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i].id}"><img src="${movie.recommendedMovies[i].poster_path}" alt=""></a>
+													</div>
+						                       	</div>
+						                    </li>
+						                    <li class="col-sm-3">
+												<div class="fff">
+													<div class="thumbnail">
+														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+1].id}"><img src="${movie.recommendedMovies[i+1].poster_path}" alt=""></a>
+													</div>
+						                        </div>
+						                    </li>
+						                    <li class="col-sm-3">
+												<div class="fff">
+													<div class="thumbnail">
+														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+2].id}"><img src="${movie.recommendedMovies[i+2].poster_path}" alt=""></a>
+													</div>
+						                        </div>
+						                    </li>
+						                    <li class="col-sm-3">
+												<div class="fff">
+													<div class="thumbnail">
+														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+3].id}"><img src="${movie.recommendedMovies[i+3].poster_path}" alt=""></a>
+													</div>
+						                        </div>
+						                    </li>
+						             	</ul>
+						              </div>
+								  	</c:if>
+								  	<c:if test="${i > 0}">
+								  		<div class="item">
+						                    <ul class="thumbnails">
+						                        <li class="col-sm-3">
+						    						<div class="fff">
+														<div class="thumbnail">
+															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i].id}"><img src="${movie.recommendedMovies[i].poster_path}" alt=""></a>
+														</div>
+						                            </div>
+						                        </li>
+						                        <li class="col-sm-3">
+													<div class="fff">
+														<div class="thumbnail">
+															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+1].id}"><img src="${movie.recommendedMovies[i+1].poster_path}" alt=""></a>
+														</div>
+						                            </div>
+						                        </li>
+						                        <li class="col-sm-3">
+													<div class="fff">
+														<div class="thumbnail">
+															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+2].id}"><img src="${movie.recommendedMovies[i+2].poster_path}" alt=""></a>
+														</div>
+						                            </div>
+						                        </li>
+						                        <li class="col-sm-3">
+													<div class="fff">
+														<div class="thumbnail">
+															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+3].id}"><img src="${movie.recommendedMovies[i+3].poster_path}" alt=""></a>
+														</div>
+						                            </div>
+						                        </li>
+						                    </ul>
+						              </div>
+								  	</c:if>
+								</c:forEach>			            
+					        </div>
+						   	<nav>
+								<ul class="control-box pager">
+									<li><a data-slide="prev" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
+									<li><a data-slide="next" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-right"></i></li>
+								</ul>
+							</nav>			                              
+					    </div>
+				</div>
 			</div>
 		</div>
 	</div>
