@@ -8,6 +8,8 @@ public interface UserService {
 	public void saveUser(Users theUser);
 
 	public Users getUser(int theId);
+	
+	public Users getUser(String userName);
 
 	public void deleteUser(int theId);
 
@@ -20,4 +22,5 @@ public interface UserService {
 	public String getUsernameByLogin(String email, String password);
 
 	public void saveActivity(User_activities activity);
+	
 }

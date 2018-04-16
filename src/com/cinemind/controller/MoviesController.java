@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cinemind.json.JsonProcess;
+import com.cinemind.objects.genreObj;
 import com.cinemind.objects.movieObj;
 
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ public class MoviesController {
 		
 		List<movieObj> movieList = JsonProcess.getMoviesFromUrl("https://api.themoviedb.org/3/movie/upcoming?api_key=a092bd16da64915723b2521295da3254&sort_by=release_date.asc&page=1");
 		theModel.addAttribute("movieList", movieList);
+		
+		List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("genreList", genreList);
 		
 		return "movies";
 	}
@@ -39,6 +43,9 @@ public class MoviesController {
 		
 		movieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
 		theModel.addAttribute("movie",tempMovie);
+		
+		List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("genreList", genreList);
 		
 		return "view-movie";
 	}

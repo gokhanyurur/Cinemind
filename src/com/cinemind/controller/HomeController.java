@@ -27,83 +27,50 @@ import com.cinemind.service.UserService;
 //@RequestMapping("/")
 public class HomeController {
 
-	@Autowired
-	private UserService userService;
-	
-	
 	@GetMapping("/")
 	public String showIndexPage(Model theModel) throws IOException, JSONException {
 		
 		//https://api.themoviedb.org/3/movie/popular?api_key=a092bd16da64915723b2521295da3254
 		List<movieObj> nowPlayingList = JsonProcess.getMoviesFromUrl("https://api.themoviedb.org/3/movie/now_playing?api_key=a092bd16da64915723b2521295da3254&region=US");
+		List<movieObj> nowPlayingSlider = JsonProcess.getMoviesFromUrl("https://api.themoviedb.org/3/movie/now_playing?api_key=a092bd16da64915723b2521295da3254&region=US&page=2");
+		nowPlayingList.addAll(nowPlayingSlider);
 		theModel.addAttribute("nowPlaying", nowPlayingList);
 		
 		List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
 		theModel.addAttribute("genreList", genreList);
 		
 		List<movieObj> upcomingList = JsonProcess.getUpcomingFromUrl("https://api.themoviedb.org/3/movie/upcoming?api_key=a092bd16da64915723b2521295da3254");
+		List<movieObj> upcomingListPg2=JsonProcess.getUpcomingFromUrl("https://api.themoviedb.org/3/movie/upcoming?api_key=a092bd16da64915723b2521295da3254&page=2");
+		List<movieObj> upcomingListPg3=JsonProcess.getUpcomingFromUrl("https://api.themoviedb.org/3/movie/upcoming?api_key=a092bd16da64915723b2521295da3254&page=3");
+		upcomingList.addAll(upcomingListPg2);
+		upcomingList.addAll(upcomingListPg3);
 		theModel.addAttribute("upcomingList",upcomingList);
 		
 		return "index";
 	}
 	
 	@GetMapping("/signup")
-	public String showFormForSignup(Model theModel,@RequestParam(name="registerMessage",required = false) String message) {
-		Users theUser = new Users();
-		theModel.addAttribute("user",theUser);
-		theModel.addAttribute("registerMessage",message);
-		return "signup";	
-		//show sign up page
-	}
-	
-	@PostMapping("/registerUser")
-	public String registerUser(@ModelAttribute("user") Users theUser,Model theModel) {
-		if((String.valueOf(theUser.getPassword()).equals(String.valueOf(theUser.getPasswordConf()))) && !userService.checkUsername(theUser.getUsername())) {
-			userService.saveUser(theUser);
-			userService.saveActivity(new User_activities(userService.getUserIdByLogin(theUser.getEmail(), theUser.getPassword())," joined to cinemind"));
-			return "redirect:/";
-			//redirect home
+	public String showFormForSignup(Model theModel,@RequestParam(name="registerMessage",required = false) String message, HttpSession loginSession) {
+		if(loginSession.getAttribute("loginedUser") == null) {
+			Users theUser = new Users();
+			theModel.addAttribute("user",theUser);
+			theModel.addAttribute("registerMessage",message);
+			return "signup";	
 		}else {
-			System.out.println("Username is already exist or passwords are not matching.");
-			theModel.addAttribute("registerMessage", "Username is already exist or passwords are not matching.");
-			return "redirect:/signup";
+			return "redirect:/profile";
 		}
-
 	}
-	
+		
 	@RequestMapping("/login")
-	public String login(Model theModel,@RequestParam(name="loginMessage",required = false) String message) {
-		Users theUser = new Users();
-		theModel.addAttribute("user",theUser);
-		theModel.addAttribute("loginMessage",message);
-		return "login";
-		//show login form
-	}
-	
-	@PostMapping("/loginUser")
-	public String loginUser(HttpSession loginSession,@ModelAttribute("user") Users theUser,Model theModel) {
-		if(userService.checkLogin(theUser.getEmail(),theUser.getPassword())) {
-			System.out.println("User Exist");
-			theUser.setId(userService.getUserIdByLogin(theUser.getEmail(),theUser.getPassword()));
-			theUser.setUsername(userService.getUsernameByLogin(theUser.getEmail(),theUser.getPassword()));
-			loginSession.setAttribute("loginedUser", theUser);
-			return "redirect:/";
+	public String login(Model theModel,@RequestParam(name="loginMessage",required = false) String message, HttpSession loginSession) {
+		if(loginSession.getAttribute("loginedUser") == null) {
+			Users theUser = new Users();
+			theModel.addAttribute("user",theUser);
+			theModel.addAttribute("loginMessage",message);
+			return "login";
 		}else {
-			System.out.println("Login failed. Try again.");
-			theModel.addAttribute("loginMessage", "Login failed. Try again.");
-			return "redirect:/login";
+			return "redirect:/profile";
 		}
 	}
-	
-	@GetMapping("/logout")
-	public String logout(HttpSession loginSession) {
-		loginSession.invalidate();
-		return "redirect:/login";
-	}
-	
-	@GetMapping("/info")
-    public String userInfo(HttpSession session) {
-		//session.getAttribute("loginedUser");
-	return "profile";
-	}
+		
 }

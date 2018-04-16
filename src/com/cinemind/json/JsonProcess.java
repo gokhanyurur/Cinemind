@@ -42,16 +42,18 @@ public class JsonProcess {
 			String title = tempObj.getString("original_title");
 			String release = tempObj.getString("release_date");
 			String poster,backdrop;
-			String imagePrefixPoster= "http://image.tmdb.org/t/p/w185";
-			String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w300";
+			String imagePrefixPoster= "http://image.tmdb.org/t/p/w342";
+			String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w780";
 			if(!tempObj.get("poster_path").getClass().equals(String.class)) {
-				poster="null";
+				//poster="null";
+				poster= "http://placehold.it/342x513";
 			}else {
 				poster = imagePrefixPoster + tempObj.getString("poster_path");
 			}
 			
 			if(!tempObj.get("backdrop_path").getClass().equals(String.class)) {
-				backdrop="null";
+				//backdrop="null";
+				backdrop="http://placehold.it/780x439";
 			}else {
 				backdrop = imagePrefixBackdrop + tempObj.getString("backdrop_path");
 			}
@@ -80,18 +82,20 @@ public class JsonProcess {
 				String title = tempObj.getString("original_title");
 				String release = tempObj.getString("release_date");
 				String poster,backdrop;
-				String imagePrefixPoster= "http://image.tmdb.org/t/p/w185";
-				String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w300";
+				String imagePrefixPoster= "http://image.tmdb.org/t/p/w342";
+				String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w780";
 				int dayLeft = dayLeft(release);
 				
 				if(!tempObj.get("poster_path").getClass().equals(String.class)) {
-					poster="null";
+					//poster="null";
+					poster= "http://placehold.it/342x513";
 				}else {
 					poster = imagePrefixPoster + tempObj.getString("poster_path");
 				}
 				
 				if(!tempObj.get("backdrop_path").getClass().equals(String.class)) {
-					backdrop="null";
+					//backdrop="null";
+					backdrop="http://placehold.it/780x439";
 				}else {
 					backdrop = imagePrefixBackdrop + tempObj.getString("backdrop_path");
 				}
@@ -180,11 +184,22 @@ public class JsonProcess {
 		String imagePrefixPoster= "http://image.tmdb.org/t/p/w300";
 		String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w1280";
 		
-		String poster_path = jsonMovie.getString("poster_path");
-		tempMovie.setPoster_path(imagePrefixPoster+poster_path);
+		if(!jsonMovie.get("poster_path").getClass().equals(String.class)) {
+			//tempMovie.setPoster_path("null");
+			tempMovie.setPoster_path("http://placehold.it/342x513");
+		}else {
+			String poster_path = jsonMovie.getString("poster_path");
+			tempMovie.setPoster_path(imagePrefixPoster+poster_path);
+		}
 		
-		String backdrop_path = jsonMovie.getString("backdrop_path");
-		tempMovie.setBackdrop_path(imagePrefixBackdrop+backdrop_path);
+		if(!jsonMovie.get("backdrop_path").getClass().equals(String.class)) {
+			//tempMovie.setBackdrop_path("null");
+			tempMovie.setBackdrop_path("http://placehold.it/780x439");
+		}else {
+			String backdrop_path = jsonMovie.getString("backdrop_path");
+			tempMovie.setBackdrop_path(imagePrefixBackdrop+backdrop_path);
+		}
+		
 		
 		String release_date = jsonMovie.getString("release_date");
 		String[] parsedDate= release_date.split("-");

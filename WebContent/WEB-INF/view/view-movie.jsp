@@ -28,6 +28,7 @@
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reviews.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/recommendedmovies.css" />
+	
 	<script src="${pageContext.request.contextPath}/resources/js/movieImagesSlider.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/starRating.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/recommendedmovies.jsp"></script>
@@ -36,7 +37,6 @@
 <!-- navigation -->
 	<div class="row" style="margin-top: -20px;">
             <nav class="navbar navbar-inverse navbar-static-top">
-			<!-- container-fluid -->
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
@@ -46,7 +46,17 @@
                     </div>
                     <ul class="nav navbar-nav">
                         <li><a href="/cinemind">Home</a></li>
-                        <li><a href="#">Genres</a></li>
+                        <li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<c:forEach var="genre" items="${genreList}">
+					    			<c:url var="genreLink" value="/movies/genre">
+					                 	<c:param name="genreId" value="${genre.id}" />
+					                </c:url>
+				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    			</c:forEach>
+							</ul>
+						</li>
                         <li><a href="/cinemind/movies">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -61,12 +71,19 @@
                             </form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
-         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
-                        	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
+         					<li><a href="/cinemind/signup"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
+                        	<li><a href="/cinemind/login"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
-         					<li><a href="#" onclick="window.location.href='info'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
-                        	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
+                        	<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">15</span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> page <span class="badge">Video</span> sayfasinda etiketlendi.</a></li>
+									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
+								</ul>
+							</li>
+         					<li><a href="/cinemind/profile"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
+                        	<li><a href="/cinemind/logout"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
      					</c:if>
                     </ul>
                 </div>
@@ -88,16 +105,19 @@
 							<img src="${movie.poster_path}" alt="${movie.title}" class="img-responsive"/>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin-left: 15px;">
+						<!--  ADD FAVORITES -->
 							<a href="#">
 								<button class="addListBt"><i class="fa fa-heart fa-2x"></i></button>
 							</a>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin-left: -15px;">
+						<!--  ADD WATCHLIST -->
 							<a href="#">
 								<button class="addListBt"><i class="fa fa-eye fa-2x"></i></button>
 							</a>
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin-left: -15px;">
+						<!--  ADD REMINDER LIST -->
 							<a href="#">
 								<button class="addListBt"><i class="fa fa-bell fa-2x"></i></button>
 							</a>
@@ -209,7 +229,7 @@
 								</div>
 								<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
 									<div class="widget-area no-padding blank">
-										<div class="status-upload">
+										<div class="status-upload" style="padding-bottom: 10px;">
 											<form>
 												<textarea placeholder="What do you think about the movie?" ></textarea>
 													<c:if test = "${loginedUser.username == null}">
@@ -361,15 +381,17 @@
 							<h5 class="primaryColor bold">External Links:</h5>
 							<div class="col-md-12">
 								<a href="#" class="filterText">IMDb</a><br>
-								<a href="#" class="filterText">TheMovieDb</a>
+								<a href="#" class="filterText">TheMovieDb</a><br>
+								<a href="#" class="filterText">Official Website</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- review  -->
-			<div class="col-md-12">
-				<div class="col-md-12"><h3 class="page-header primaryColor">Reviews</h3></div>
+			<div class="col-md-12"><h3 class="page-header primaryColor">Reviews</h3></div>
+			<div class="col-md-1"></div>
+			<div class="col-md-10" style="margin-left: 10px; margin-right: 10px;">
 					<div class="carousel-reviews broun-block">
 			            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">           
 			                <div class="carousel-inner">
@@ -501,93 +523,96 @@
 			    		</div>
 					</div>	
 			</div>
-			<div class="col-md-12 hidden-sm hidden-xs">
-				<div class="col-md-12">
-					<h3 class="page-header primaryColor">Recommended Movies</h3>
+			<div class="col-md-1"></div>
+			<c:if test="${fn:length(movie.recommendedMovies) > 0}">
+				<div class="col-md-12 hidden-sm hidden-xs">
+					<div class="col-md-12">
+						<h3 class="page-header primaryColor">Recommended Movies</h3>
+					</div>
+					<div class="col-md-12" style="margin-left: -20px;">
+						<div class="carousel slide" id="myCarouselrec">
+							<div class="carousel-inner">
+						    	<c:forEach varStatus="status" var="i" begin="0" end="${fn:length(movie.recommendedMovies)}" step="4">
+									<c:if test="${i == 0}">
+										<div class="item active">
+							            	<ul class="thumbnails">
+							                	<li class="col-sm-3">
+							    					<div class="fff">
+														<div class="thumbnail">
+															<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i].id}"><img src="${movie.recommendedMovies[i].poster_path}" alt=""></a>
+														</div>
+							                       	</div>
+							                    </li>
+							                    <li class="col-sm-3">
+													<div class="fff">
+														<div class="thumbnail">
+															<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+1].id}"><img src="${movie.recommendedMovies[i+1].poster_path}" alt=""></a>
+														</div>
+							                        </div>
+							                    </li>
+							                    <li class="col-sm-3">
+													<div class="fff">
+														<div class="thumbnail">
+															<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+2].id}"><img src="${movie.recommendedMovies[i+2].poster_path}" alt=""></a>
+														</div>
+							                        </div>
+							                    </li>
+							                    <li class="col-sm-3">
+													<div class="fff">
+														<div class="thumbnail">
+															<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+3].id}"><img src="${movie.recommendedMovies[i+3].poster_path}" alt=""></a>
+														</div>
+							                        </div>
+							                    </li>
+							             	</ul>
+							              </div>
+									  	</c:if>
+									  	<c:if test="${i > 0 && i < fn:length(movie.recommendedMovies)}">
+									  		<div class="item">
+							                    <ul class="thumbnails">
+							                        <li class="col-sm-3">
+							    						<div class="fff">
+															<div class="thumbnail">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i].id}"><img src="${movie.recommendedMovies[i].poster_path}" alt=""></a>
+															</div>
+							                            </div>
+							                        </li>
+							                        <li class="col-sm-3">
+														<div class="fff">
+															<div class="thumbnail">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+1].id}"><img src="${movie.recommendedMovies[i+1].poster_path}" alt=""></a>
+															</div>
+							                            </div>
+							                        </li>
+							                        <li class="col-sm-3">
+														<div class="fff">
+															<div class="thumbnail">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+2].id}"><img src="${movie.recommendedMovies[i+2].poster_path}" alt=""></a>
+															</div>
+							                            </div>
+							                        </li>
+							                        <li class="col-sm-3">
+														<div class="fff">
+															<div class="thumbnail">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+3].id}"><img src="${movie.recommendedMovies[i+3].poster_path}" alt=""></a>
+															</div>
+							                            </div>
+							                        </li>
+							                    </ul>
+							              </div>
+									  	</c:if>
+									</c:forEach>			            
+						        </div>
+							   	<nav>
+									<ul class="control-box pager">
+										<li><a data-slide="prev" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-left" style="color: #FF4D4D;"></i></a></li>
+										<li><a data-slide="next" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-right" style="color: #FF4D4D;"></i></li>
+									</ul>
+								</nav>			                              
+						    </div>
+					</div>
 				</div>
-				<div class="col-md-12" style="margin-left: -20px;">
-					<div class="carousel slide" id="myCarouselrec">
-						<div class="carousel-inner">
-					    	<c:forEach varStatus="status" var="i" begin="0" end="${fn:length(movie.recommendedMovies)}" step="4">
-								<c:if test="${i == 0}">
-									<div class="item active">
-						            	<ul class="thumbnails">
-						                	<li class="col-sm-3">
-						    					<div class="fff">
-													<div class="thumbnail">
-														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i].id}"><img src="${movie.recommendedMovies[i].poster_path}" alt=""></a>
-													</div>
-						                       	</div>
-						                    </li>
-						                    <li class="col-sm-3">
-												<div class="fff">
-													<div class="thumbnail">
-														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+1].id}"><img src="${movie.recommendedMovies[i+1].poster_path}" alt=""></a>
-													</div>
-						                        </div>
-						                    </li>
-						                    <li class="col-sm-3">
-												<div class="fff">
-													<div class="thumbnail">
-														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+2].id}"><img src="${movie.recommendedMovies[i+2].poster_path}" alt=""></a>
-													</div>
-						                        </div>
-						                    </li>
-						                    <li class="col-sm-3">
-												<div class="fff">
-													<div class="thumbnail">
-														<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+3].id}"><img src="${movie.recommendedMovies[i+3].poster_path}" alt=""></a>
-													</div>
-						                        </div>
-						                    </li>
-						             	</ul>
-						              </div>
-								  	</c:if>
-								  	<c:if test="${i > 0}">
-								  		<div class="item">
-						                    <ul class="thumbnails">
-						                        <li class="col-sm-3">
-						    						<div class="fff">
-														<div class="thumbnail">
-															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i].id}"><img src="${movie.recommendedMovies[i].poster_path}" alt=""></a>
-														</div>
-						                            </div>
-						                        </li>
-						                        <li class="col-sm-3">
-													<div class="fff">
-														<div class="thumbnail">
-															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+1].id}"><img src="${movie.recommendedMovies[i+1].poster_path}" alt=""></a>
-														</div>
-						                            </div>
-						                        </li>
-						                        <li class="col-sm-3">
-													<div class="fff">
-														<div class="thumbnail">
-															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+2].id}"><img src="${movie.recommendedMovies[i+2].poster_path}" alt=""></a>
-														</div>
-						                            </div>
-						                        </li>
-						                        <li class="col-sm-3">
-													<div class="fff">
-														<div class="thumbnail">
-															<a href="/cinemind/movies/viewMovie?movieId=${movie.recommendedMovies[i+3].id}"><img src="${movie.recommendedMovies[i+3].poster_path}" alt=""></a>
-														</div>
-						                            </div>
-						                        </li>
-						                    </ul>
-						              </div>
-								  	</c:if>
-								</c:forEach>			            
-					        </div>
-						   	<nav>
-								<ul class="control-box pager">
-									<li><a data-slide="prev" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-left"></i></a></li>
-									<li><a data-slide="next" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-right"></i></li>
-								</ul>
-							</nav>			                              
-					    </div>
-				</div>
-			</div>
+			</c:if>
 		</div>
 	</div>
 </body>

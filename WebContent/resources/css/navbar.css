@@ -19,3 +19,49 @@
 .transparent-black{
     background-color:rgba(0, 0, 0, 0.8);
 }
+
+
+nav.navbar-inverse li.divider {
+	background: #ccc; 
+}
+
+nav.navbar-inverse button.navbar-toggle {
+	background: #FB4D4D;
+	border-radius: 2px;
+}
+
+nav.navbar-inverse button.navbar-toggle:hover {
+	background: #999;
+}
+
+nav.navbar-inverse button.navbar-toggle > span.icon-bar {
+	background: #fff;
+}
+
+nav.navbar-inverse ul.dropdown-menu {
+	border: 0;
+	background: #222222;
+	border-radius: 4px;
+	margin: 4px 0;
+	box-shadow: 0 0 4px 0 #222222;
+}
+
+nav.navbar-inverse ul.dropdown-menu > li > a {
+	color: #fff;
+}
+
+nav.navbar-inverse ul.dropdown-menu > li > a:hover {
+	background: #FB4D4D; color: #fff;
+}
+
+nav.navbar-inverse span.badge {
+	background: #FB4D4D;
+	font-weight: normal;
+	font-size: 10px;
+	margin-top: -4px;
+}
+
+nav.navbar-inverse span.badge.new {
+	background: rgba(255, 0, 0, 0.8);
+	color: #fff;
+}

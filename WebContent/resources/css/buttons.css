@@ -47,3 +47,30 @@
 	background-color: #ff4d4d;
 	color: #ffffff;
 }
+a.profileNavBtn{
+	height: : 50px;
+	width: auto;
+	font-weight: 700;
+	color: #9E9E9E;
+	font-size: 13px;
+	padding-bottom: 10px;
+	margin-right: 20px;
+	text-decoration: none;
+}
+a.profileNavBtn:hover{
+	color: #6D6D6D;
+	text-decoration: none;
+}
+
+a.profileActivePage{
+	color: #6D6D6D;
+	border-bottom:3px solid #FF4D4D;
+	text-decoration: none;
+}
+
+a.profileSideNav{
+	color: #6D6D6D;
+}
+a.profileSideNav:hover{
+	color: #FF4D4D;
+}

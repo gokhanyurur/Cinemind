@@ -18,13 +18,11 @@
 <body background="${pageContext.request.contextPath}/resources/img/bg/signup_bg.jpg">
         <div class="row">
             <nav class="navbar navbar-inverse navbar-static-top">
-			<!-- container-fluid -->
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
                             <img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
                             <span style="display: inline-block;">CINEMIND</span>
-                        <!--<a class="navbar-brand" href="#" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">CINEMIND</a>-->
                         </a>     
                     </div>
                     <ul class="nav navbar-nav">
@@ -48,6 +46,13 @@
                         	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
+                        	<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">15</span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> page <span class="badge">Video</span> sayfasinda etiketlendi.</a></li>
+									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
+								</ul>
+							</li>
          					<li><a href="#" onclick="window.location.href='info'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
                         	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
      					</c:if>

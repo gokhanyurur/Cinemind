@@ -20,29 +20,39 @@
 	
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/verticalmovie.css" />
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/recommendedmovies.css" />
+	<script src="${pageContext.request.contextPath}/resources/js/recommendedmovies.jsp"></script>
+	
+	<script>
+	     $(document).ready(function(){
+	        $('.dropdown-toggle').dropdown()
+	    });
+	</script>
 </head>
-<!--
-<style>
-body {
-    background-color: #313131;
-}
-</style>
-  -->
 <body>
 	<div class="row">
             <nav class="navbar navbar-inverse navbar-static-top">
-			<!-- container-fluid -->
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
                             <img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
                             <span style="display: inline-block;">CINEMIND</span>
-                        <!--<a class="navbar-brand" href="#" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">CINEMIND</a>-->
                         </a>     
                     </div>
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/cinemind">Home</a></li>
-                        <li><a href="#">Genres</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<c:forEach var="genre" items="${genreList}">
+					    			<c:url var="genreLink" value="/movies/genre">
+					                 	<c:param name="genreId" value="${genre.id}" />
+					                </c:url>
+				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    			</c:forEach>
+							</ul>
+						</li>
                         <li><a href="#" onclick="window.location.href='movies'; return false;">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -61,7 +71,14 @@ body {
                         	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
-         					<li><a href="#" onclick="window.location.href='info'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
+                        	<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">15</span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> page <span class="badge">Video</span> sayfasinda etiketlendi.</a></li>
+									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
+								</ul>
+							</li>
+         					<li><a href="#" onclick="window.location.href='profile'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
                         	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
      					</c:if>
                     </ul>
@@ -104,21 +121,21 @@ body {
 							      <!-- Wrapper for slides -->
 							      <div class="carousel-inner">
 							        <div class="item active">
-							          <img src="${nowPlaying[8].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[31].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[8].id}" class="movieTitleSmall">${nowPlaying[8].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[31].id}" class="movieTitleSmall">${nowPlaying[31].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${nowPlaying[9].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[32].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[9].id}" class="movieTitleSmall">${nowPlaying[9].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[32].id}" class="movieTitleSmall">${nowPlaying[32].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${nowPlaying[10].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[33].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[10].id}" class="movieTitleSmall">${nowPlaying[10].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[33].id}" class="movieTitleSmall">${nowPlaying[33].title}</a></h5>
 							          </div>
 							        </div>
 							      </div>
@@ -144,21 +161,21 @@ body {
 							      <!-- Wrapper for slides -->
 							      <div class="carousel-inner">
 							        <div class="item active">
-							          <img src="${nowPlaying[11].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[34].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[11].id}" class="movieTitleSmall">${nowPlaying[11].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[34].id}" class="movieTitleSmall">${nowPlaying[34].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${nowPlaying[12].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[35].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[12].id}" class="movieTitleSmall">${nowPlaying[12].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[35].id}" class="movieTitleSmall">${nowPlaying[35].title}</a></h5>
 							          </div>
 							        </div>
 							        <div class="item">
-							          <img src="${nowPlaying[13].backdrop_path}" alt="...">
+							          <img src="${nowPlaying[36].backdrop_path}" alt="...">
 							          <div class="carousel-caption">
-							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[13].id}" class="movieTitleSmall">${nowPlaying[13].title}</a></h5>
+							            <h5><a href="/cinemind/movies/viewMovie?movieId=${nowPlaying[36].id}" class="movieTitleSmall">${nowPlaying[36].title}</a></h5>
 							          </div>
 							        </div>
 							      </div>
@@ -174,42 +191,205 @@ body {
 					    	</div>
 						</div>
 						<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -20px;">
-			            	<div class="page-header">
-							  <h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Now Playing</h3>
-							</div>
-							<c:forEach var="i" begin="0" end="7">
-								<c:url var="nowPlayingLink" value="/movies/viewMovie">
-			                    	<c:param name="movieId" value="${nowPlaying[i].id}"></c:param>
-			                    </c:url>
-								<div class="col-md-3" style="padding-bottom: 20px;">
-									<a href="${nowPlayingLink}">
-										<img src="${nowPlaying[i].poster_path}" alt="${nowPlaying[i].title}" class="img-responsive">
-									</a>
-									<!--  -->
-									<div class="ss-item-text" style="text-align: center;">
-										<h5>${nowPlaying[i].title}</h5>
-								    </div>			    
+							<!-- Now playing for desktop -->
+							<div class="col-md-12 col-lg-12 hidden-xs hidden-sm" style="height: 450px;">
+								<div class="page-header">
+									<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Now Playing</h3>
 								</div>
-							</c:forEach>		
+								<nav>
+									<ul class="control-box pager" style="margin-left: -10px; margin-top: -55px;">
+										<li><a data-slide="prev" href="#myCarouselnowP" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
+										<li><a data-slide="next" href="#myCarouselnowP" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>
+									</ul>
+								</nav>	
+								<div class="carousel slide" id="myCarouselnowP" style="margin-left: -45px; margin-top: 30px;">
+									<div class="carousel-inner">
+							    		<c:forEach varStatus="status" var="i" begin="0" end="${fn:length(nowPlaying)}" step="4">
+											<c:if test="${i == 0}">
+												<div class="item active">
+								            		<ul class="thumbnails">
+								                		<li class="col-sm-3">
+								    						<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i].id}"><img src="${nowPlaying[i].poster_path}" alt=""></a>
+																<h5 style="text-align: center; width: 100%;">${nowPlaying[i].title}</h5>
+								                       		</div>
+								                    	</li>
+								                    	<li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i+1].id}"><img src="${nowPlaying[i+1].poster_path}" alt=""></a>
+								                       			<h5 style="text-align: center; width: 100%;">${nowPlaying[i+1].title}</h5>
+								                       		</div>
+								                    	</li>
+								                    	<li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i+2].id}"><img src="${nowPlaying[i+2].poster_path}" alt=""></a>
+								                        		<h5 style="text-align: center; width: 100%;">${nowPlaying[i+2].title}</h5>
+								                        	</div>
+								                    	</li>
+								                    	<li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i+3].id}"><img src="${nowPlaying[i+3].poster_path}" alt=""></a>
+									                        	<h5 style="text-align: center; width: 100%;">${nowPlaying[i+3].title}</h5>
+									                        </div>
+								                    	</li>
+								             		</ul>
+								            	</div>
+										  	</c:if>
+										  	<c:if test="${i > 0 && i < fn:length(nowPlaying)-8}">
+										  		<div class="item">
+								                    <ul class="thumbnails">
+								                        <li class="col-sm-3">
+								    						<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i].id}"><img src="${nowPlaying[i].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${nowPlaying[i].title}</h5>
+								                            </div>
+								                        </li>
+								                        <li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i+1].id}"><img src="${nowPlaying[i+1].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${nowPlaying[i+1].title}</h5>
+								                            </div>
+								                        </li>
+								                        <li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i+2].id}"><img src="${nowPlaying[i+2].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${nowPlaying[i+2].title}</h5>
+								                            </div>
+								                        </li>
+								                        <li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${nowPlaying[i+3].id}"><img src="${nowPlaying[i+3].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${nowPlaying[i+3].title}</h5>
+								                            </div>
+								                        </li>
+								                    </ul>
+								              	</div>
+											</c:if>
+										</c:forEach>			            
+							        </div>		                              
+							    </div>
+							</div>
+							<!-- Now playing for mobile -->
+							<div class="col-xs-12 hidden-md hidden-lg">
+								<div class="page-header">
+								  <h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Now Playing</h3>
+								</div>
+								<c:forEach var="i" begin="0" end="${fn:length(nowPlaying)}">
+									<c:url var="nowPlayingLink" value="/movies/viewMovie">
+				                    	<c:param name="movieId" value="${nowPlaying[i].id}"></c:param>
+				                    </c:url>
+									<div class="col-md-3" style="padding-bottom: 20px;">
+										<a href="${nowPlayingLink}">
+											<img src="${nowPlaying[i].poster_path}" alt="${nowPlaying[i].title}" class="img-responsive">
+										</a>
+										<!--  -->
+										<div class="ss-item-text" style="text-align: center;">
+											<h5>${nowPlaying[i].title}</h5>
+									    </div>			    
+									</div>
+								</c:forEach>
+							</div>		
 						</div>
-						<div class="row" style="padding-left: 15px; padding-right: 15px; margin-top: -25px;">
-					    	<div class="page-header">
-								<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
-							</div>
-		                    <c:forEach var="i" begin="0" end="${fn:length(upcomingList)-1}">
-								<c:url var="upcomingLink" value="/movies/viewMovie">
-			                    	<c:param name="movieId" value="${upcomingList[i].id}"></c:param>
-			                    </c:url>
-								<div class="col-md-3" style="padding-bottom: 20px;">
-									<a href="${upcomingLink}">
-										<img src="${upcomingList[i].poster_path}" alt="${upcomingList[i].title}" class="img-responsive">
-									</a>
-									<!--  -->
-									<div class="ss-item-text" style="text-align: center;">
-										<h5>${upcomingList[i].title} - ${upcomingList[i].dayLeft} days left</h5>
-								    </div>			    
+						<div class="row" style="padding-left: 15px; padding-right: 15px;">
+						<!-- Upcoming for desktop -->
+							<div class="col-md-12 col-lg-12 hidden-xs hidden-sm" style="height: 450px; margin-top: -50px;">
+								<div class="page-header">
+									<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
 								</div>
-							</c:forEach>
+								<nav>
+									<ul class="control-box pager" style="margin-left: -10px; margin-top: -55px;">
+										<li><a data-slide="prev" href="#myCarouselupC" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
+										<li><a data-slide="next" href="#myCarouselupC" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>
+									</ul>
+								</nav>
+								<div class="carousel slide" id="myCarouselupC" style="margin-left: -45px; margin-top: 30px;">
+									<div class="carousel-inner">
+							    		<c:forEach varStatus="status" var="i" begin="0" end="${fn:length(upcomingList)}" step="4">
+											<c:if test="${i == 0}">
+												<div class="item active">
+								            		<ul class="thumbnails">
+								                		<li class="col-sm-3">
+								    						<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i].id}"><img src="${upcomingList[i].poster_path}" alt=""></a>
+																<h5 style="text-align: center; width: 100%;">${upcomingList[i].title}</h5>
+								                       		</div>
+								                    	</li>
+								                    	<li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i+1].id}"><img src="${upcomingList[i+1].poster_path}" alt=""></a>
+								                       			<h5 style="text-align: center; width: 100%;">${upcomingList[i+1].title}</h5>
+								                       		</div>
+								                    	</li>
+								                    	<li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i+2].id}"><img src="${upcomingList[i+2].poster_path}" alt=""></a>
+								                        		<h5 style="text-align: center; width: 100%;">${upcomingList[i+2].title}</h5>
+								                        	</div>
+								                    	</li>
+								                    	<li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i+3].id}"><img src="${upcomingList[i+3].poster_path}" alt=""></a>
+									                        	<h5 style="text-align: center; width: 100%;">${upcomingList[i+3].title}</h5>
+									                        </div>
+								                    	</li>
+								             		</ul>
+								            	</div>
+										  	</c:if>
+										  	<c:if test="${i > 0 && i < fn:length(upcomingList)}">
+										  		<div class="item">
+								                    <ul class="thumbnails">
+								                        <li class="col-sm-3">
+								    						<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i].id}"><img src="${upcomingList[i].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${upcomingList[i].title}</h5>
+								                            </div>
+								                        </li>
+								                        <li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i+1].id}"><img src="${upcomingList[i+1].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${upcomingList[i+1].title}</h5>
+								                            </div>
+								                        </li>
+								                        <li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i+2].id}"><img src="${upcomingList[i+2].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${upcomingList[i+2].title}</h5>
+								                            </div>
+								                        </li>
+								                        <li class="col-sm-3">
+															<div class="fff">
+																<a class="rec-image" href="/cinemind/movies/viewMovie?movieId=${upcomingList[i+3].id}"><img src="${upcomingList[i+3].poster_path}" alt=""></a>
+								                            	<h5 style="text-align: center; width: 100%;">${upcomingList[i+3].title}</h5>
+								                            </div>
+								                        </li>
+								                    </ul>
+								              	</div>
+											</c:if>
+										</c:forEach>			            
+							        </div>			                              
+							    </div>
+							</div>
+						
+						<!-- Upcoming for mobile -->
+							<div class="col-xs-12 hidden-md hidden-lg">
+						    	<div class="page-header">
+									<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
+								</div>
+			                    <c:forEach var="i" begin="0" end="${fn:length(upcomingList)}">
+									<c:url var="upcomingLink" value="/movies/viewMovie">
+				                    	<c:param name="movieId" value="${upcomingList[i].id}"></c:param>
+				                    </c:url>
+									<div class="col-md-3" style="padding-bottom: 20px;">
+										<a href="${upcomingLink}">
+											<img src="${upcomingList[i].poster_path}" alt="${upcomingList[i].title}" class="img-responsive">
+										</a>
+										<!--  -->
+										<div class="ss-item-text" style="text-align: center;">
+											<h5>${upcomingList[i].title} - ${upcomingList[i].dayLeft} days left</h5>
+									    </div>			    
+									</div>
+								</c:forEach>
+							</div>
                			</div>
 					</div>
 				    <div class="col-md-3" style="padding-left: 20px;">

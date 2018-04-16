@@ -1,7 +1,9 @@
 package com.cinemind.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,17 @@ public class UserDAOImpl implements UserDAO{
 	public Users getUser(int theId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Users tempUser = currentSession.get(Users.class, theId);
+		return tempUser;
+	}
+	
+	@Override
+	public Users getUser(String userName) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query theQuery=currentSession.createQuery("from Users where username=:userName");
+		theQuery.setParameter("userName", userName);
+		Users tempUser = (Users) theQuery.uniqueResult();
+		System.out.println("Found user "+tempUser.getUsername());
 		return tempUser;
 	}
 
@@ -67,7 +80,7 @@ public class UserDAOImpl implements UserDAO{
 		System.out.println("User id is "+id);
 		return id;
 	}
-
+	
 	@Override
 	public String getUsernameByLogin(String email, String password) {
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -87,4 +100,5 @@ public class UserDAOImpl implements UserDAO{
 		currentSession.save(activity);
 		
 	}
+
 }

@@ -11,35 +11,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<!--
-<style>
-body {
-    background-color: #313131;
-}
-</style>
-  -->
 <body>
 	<div class="row">
             <nav class="navbar navbar-inverse navbar-static-top">
-			<!-- container-fluid -->
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
                             <img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
                             <span style="display: inline-block;">CINEMIND</span>
-                        <!--<a class="navbar-brand" href="#" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">CINEMIND</a>-->
                         </a>     
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">HOME</a></li>
-                        <li><a href="#" onclick="window.location.href='movies'; return false;">MOVIES</a></li>
-                        <li><a href="#">GENRES</a></li>
+                        <li><a href="/cinemind">Home</a></li>
+						<li class="dropdown active">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<c:forEach var="genre" items="${genreList}">
+					    			<c:url var="genreLink" value="/movies/genre">
+					                 	<c:param name="genreId" value="${genre.id}" />
+					                </c:url>
+				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    			</c:forEach>
+							</ul>
+						</li>
+                        <li><a href="#" onclick="window.location.href='movies'; return false;">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li style="padding-left: 5px; padding-right: 5px;">
                             <form class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="SEARCH" name="q">
+                                    <input type="text" class="form-control" placeholder="Search" name="q">
                                     <div class="input-group-btn">
                                         <button class="btn btn-danger" type="submit" style="height: 34px; background: #ff4d4d"><i class="glyphicon glyphicon-search"></i></button>
                                     </div>
@@ -47,12 +48,19 @@ body {
                             </form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
-         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> SIGN UP</a></li>
-                        	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> LOGIN</a></li>
+         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
+                        	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
-         					<li><a href="#" onclick="window.location.href='info'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${fn:toUpperCase(loginedUser.username)}"/></a></li>
-                        	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> LOGOUT</a></li>
+                        	<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">15</span></a>
+								<ul class="dropdown-menu" role="menu">
+									<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> page <span class="badge">Video</span> sayfasinda etiketlendi.</a></li>
+									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
+								</ul>
+							</li>
+         					<li><a href="#" onclick="window.location.href='profile'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
+                        	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
      					</c:if>
                     </ul>
                 </div>

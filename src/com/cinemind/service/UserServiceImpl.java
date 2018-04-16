@@ -28,6 +28,12 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
+	public Users getUser(String userName) {
+		return userDAO.getUser(userName);
+	}
+	
+	@Override
+	@Transactional
 	public void deleteUser(int theId) {
 		userDAO.deleteUser(theId);
 	}

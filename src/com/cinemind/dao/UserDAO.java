@@ -8,6 +8,8 @@ public interface UserDAO {
 	public void saveUser(Users theUser);
 
 	public Users getUser(int theId);
+	
+	public Users getUser(String userName);
 
 	public void deleteUser(int theId);
 
