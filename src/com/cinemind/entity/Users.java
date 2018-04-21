@@ -1,12 +1,22 @@
 package com.cinemind.entity;
 
+import java.io.IOException;
+import java.util.ArrayList;
 /*import java.text.ParseException;
 import java.text.SimpleDateFormat;*/
 import java.util.Date;
+import java.util.List;
+import java.util.Iterator;
 
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.json.JSONException;
+
+import com.cinemind.json.JsonProcess;
+import com.cinemind.objects.movieObj;
 
 @Entity
 @Table(name="users")
@@ -45,6 +55,25 @@ public class Users {
 	@CreationTimestamp
 	protected Date createdAt;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	//@JoinColumn(name="user_id")
+	private List<User_activities> activities;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	//@JoinColumn(name="user_id")
+	private List<Favorites_list> favoriteMovies;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	//@JoinColumn(name="user_id")
+	private List<Reminder_list> reminderMovies;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	//@JoinColumn(name="user_id")
+	private List<Watchlist> watchlistMovies;
 
 	public Users() {
 		
@@ -135,6 +164,123 @@ public class Users {
 	public void setPasswordConf(String passwordConf) {
 		this.passwordConf = passwordConf;
 	}
+	
+	
+
+	public List<User_activities> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(List<User_activities> activities) {
+		this.activities = activities;
+	}
+	
+	public void addActivitiy(User_activities activity) {
+		if(activities == null) {
+			activities = new ArrayList<>();
+		}
+		activities.add(activity);
+		
+		activity.setUser(this);	
+	}
+	
+	
+	public List<Favorites_list> getFavoriteMovies() {
+		return favoriteMovies;
+	}
+
+	public void setFavoriteMovies(List<Favorites_list> favoriteMovies) {
+		this.favoriteMovies = favoriteMovies;
+	}
+	
+	public void addToFavorites(Favorites_list favorite) {
+		if(favoriteMovies == null) {
+			favoriteMovies = new ArrayList<>();
+		}
+		favoriteMovies.add(favorite);
+		
+		favorite.setUser(this);	
+	}
+	
+	public void removeFromFavorites(Favorites_list favoriteMovie) {	
+		
+		Iterator<Favorites_list> iter = favoriteMovies.iterator();
+		while(iter.hasNext()) {
+			Favorites_list currentObj = iter.next();
+			if(currentObj.getShow_id() == favoriteMovie.getShow_id()) {
+				iter.remove();
+			}
+		}
+			
+	}
+	
+	public List<Reminder_list> getReminderMovies() {
+		return reminderMovies;
+	}
+
+	public void setReminderMovies(List<Reminder_list> reminderMovies) {
+		this.reminderMovies = reminderMovies;
+	}
+	
+	public void addToReminder(Reminder_list reminderMovie) {
+		if(reminderMovies == null) {
+			reminderMovies = new ArrayList<>();
+		}
+		reminderMovies.add(reminderMovie);
+		
+		reminderMovie.setUser(this);	
+	}
+	
+	public void removeFromReminder(Reminder_list reminderMovie) {	
+		
+		Iterator<Reminder_list> iter = reminderMovies.iterator();
+		while(iter.hasNext()) {
+			Reminder_list currentObj = iter.next();
+			if(currentObj.getShow_id() == reminderMovie.getShow_id()) {
+				iter.remove();
+			}
+		}
+			
+	}
+
+	public List<Watchlist> getWatchlistMovies() {
+		return watchlistMovies;
+	}
+
+	public void setWatchlistMovies(List<Watchlist> watchlistMovies) {
+		this.watchlistMovies = watchlistMovies;
+	}
+	
+	public void addToWatchlist(Watchlist watchlistMovie){
+		if(watchlistMovies == null) {
+			watchlistMovies = new ArrayList<>();
+		}
+		watchlistMovies.add(watchlistMovie);		
+		watchlistMovie.setUser(this);	
+	}
+		
+	public void removeFromWatchlist(Watchlist watchlistMovie) {	
+		
+		Iterator<Watchlist> iter = watchlistMovies.iterator();
+		while(iter.hasNext()) {
+			Watchlist currentObj = iter.next();
+			if(currentObj.getShow_id() == watchlistMovie.getShow_id()) {
+				iter.remove();
+			}
+		}
+			
+	}
+	
+	public boolean watchlistContain(int movieId) {
+		boolean result = false;
+		
+		for(Watchlist item : watchlistMovies) {
+			if(item.getId() == movieId) {
+				result=true;
+			}
+		}		
+		return result;
+	}
 
 	@Override
 	public String toString() {
@@ -142,9 +288,6 @@ public class Users {
 				+ ", firstName=" + firstName + ", lastName=" + lastName + ", location=" + location + ", bio=" + bio
 				+ ", createdAt=" + createdAt + "]";
 	}
-	
-	
-	
-	
-	
+
+		
 }

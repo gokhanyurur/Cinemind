@@ -206,8 +206,14 @@ public class JsonProcess {
 		release_date = parsedDate[2]+"-"+parsedDate[1]+"-"+parsedDate[0];
 		tempMovie.setRelease_date(release_date);
 		
-		int length = jsonMovie.getInt("runtime");
-		tempMovie.setLength(length);	
+		tempMovie.setDayLeft(dayLeft(jsonMovie.getString("release_date")));
+		
+		if(!jsonMovie.get("runtime").getClass().equals(Integer.class)) {
+			tempMovie.setLength(0);
+		}else {
+			int length = jsonMovie.getInt("runtime");
+			tempMovie.setLength(length);
+		}
 		
 		long budget = jsonMovie.getLong("budget");
 		tempMovie.setBudget(budget);

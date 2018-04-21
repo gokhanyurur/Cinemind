@@ -196,7 +196,6 @@
 								<div class="page-header">
 									<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Now Playing</h3>
 								</div>
-								<nav>
 									<ul class="control-box pager" style="margin-left: -10px; margin-top: -55px;">
 										<li><a data-slide="prev" href="#myCarouselnowP" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
 										<li><a data-slide="next" href="#myCarouselnowP" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>
@@ -296,7 +295,6 @@
 								<div class="page-header">
 									<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Upcoming</h3>
 								</div>
-								<nav>
 									<ul class="control-box pager" style="margin-left: -10px; margin-top: -55px;">
 										<li><a data-slide="prev" href="#myCarouselupC" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
 										<li><a data-slide="next" href="#myCarouselupC" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>

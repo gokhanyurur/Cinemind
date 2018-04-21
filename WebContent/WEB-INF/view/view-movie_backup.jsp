@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -107,95 +106,24 @@
 						<div class="col-md-12 hidden-xs hidden-sm">
 							<img src="${movie.poster_path}" alt="${movie.title}" class="img-responsive"/>
 						</div>
-						<c:if test = "${loginedUser.username != null}">
-							<div class="col-md-12">
-								<!-- Favorite Button  -->
-								<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-									<c:set var="contains" value="false" />
-									<c:forEach var="item" items="${userFavList}">
-										<c:if test="${item.show_id eq movie.id}">
-											<c:set var="contains" value="true" />
-									  	</c:if>
-									</c:forEach>
-									<c:if test="${contains == true}">
-										<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=removeFavorites">
-											<button type="submit" class="addListBt-active" name="addList" value="favorites"><i class="fa fa-heart fa-2x"></i></button>
-										</a>
-									</c:if>
-									<c:if test="${contains == false}">
-										<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=favorites">
-											<button type="submit" class="addListBt" name="addList" value="favorites"><i class="fa fa-heart fa-2x"></i></button>
-										</a>
-									</c:if>	
-								</div>
-								<!-- Watchlist Button  -->
-								<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-									<c:set var="contains" value="false" />
-									<c:forEach var="item" items="${userWatchList}">
-										<c:if test="${item.show_id eq movie.id}">
-											<c:set var="contains" value="true" />
-									  	</c:if>
-									</c:forEach>
-									<c:if test="${contains == true}">
-										<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=removeWatchlist">
-											<button type="submit" class="addListBt-active" name="addList" value="watchlist"><i class="fa fa-eye fa-2x"></i></button>
-										</a>
-									</c:if>
-									<c:if test="${contains == false}">
-										<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=watchlist">
-											<button type="submit" class="addListBt" name="addList" value="watchlist"><i class="fa fa-eye fa-2x"></i></button>
-										</a>
-									</c:if>		
-								</div>
-								<!-- Reminder Button  -->
-								<c:if test="${movie.dayLeft > 0}">
-									<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-										<c:set var="contains" value="false" />
-										<c:forEach var="item" items="${userReminderList}">
-											<c:if test="${item.show_id eq movie.id}">
-												<c:set var="contains" value="true" />
-										  	</c:if>
-										</c:forEach>
-										<c:if test="${contains == true}">
-											<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=removeReminder">
-												<button type="submit" class="addListBt-active" name="addList" value="reminder"><i class="fa fa-bell fa-2x"></i></button>
-											</a>
-										</c:if>
-										<c:if test="${contains == false}">
-											<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=reminder">
-												<button type="submit" class="addListBt" name="addList" value="reminder"><i class="fa fa-bell fa-2x"></i></button>
-											</a>
-										</c:if>		
-									</div>
-								</c:if>
-								<c:if test="${movie.dayLeft <=0 }">
-									<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-										<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=reminder">
-											<button type="submit" class="addListBt" name="addList" value="reminder" disabled="disable"><i class="fa fa-bell fa-2x"></i></button>
-										</a>	
-									</div>
-								</c:if>										
-							</div>
-						</c:if>
-						<c:if test = "${loginedUser.username == null}">
-							<div class="col-md-12">
-								<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-									<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=favorites">
-										<button type="submit" class="addListBt" name="addList" value="favorites" disabled="disabled"><i class="fa fa-heart fa-2x"></i></button>
-									</a>
-								</div>
-								<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-									<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=watchlist">
-										<button type="submit" class="addListBt" name="addList" value="watchlist" disabled="disabled"><i class="fa fa-eye fa-2x"></i></button>
-									</a>
-								</div>
-								<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin: 0; padding: 0;">
-									<a href="/cinemind/movies/viewMovie?movieId=${movie.id}&addList=reminder">
-										<button type="submit" class="addListBt" name="addList" value="reminder" disabled="disabled"><i class="fa fa-bell fa-2x"></i></button>
-									</a>
-								</div>													
-							</div>
-						</c:if>
+						<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin-left: 15px;">
+						<!--  ADD FAVORITES -->
+							<a href="#">
+								<button class="addListBt"><i class="fa fa-heart fa-2x"></i></button>
+							</a>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin-left: -15px;">
+						<!--  ADD WATCHLIST -->
+							<a href="#">
+								<button class="addListBt"><i class="fa fa-eye fa-2x"></i></button>
+							</a>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4" style="background-color: #ff4d4d; margin-left: -15px;">
+						<!--  ADD REMINDER LIST -->
+							<a href="#">
+								<button class="addListBt"><i class="fa fa-bell fa-2x"></i></button>
+							</a>
+						</div>
 					</div>
 					<div class="col-md-8" style="margin-top: -20px; margin-left: -20px;">
 						<div class="col-md-12">
@@ -287,34 +215,32 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
+								<h3 class="page-header primaryColor">Write a review</h3>
 								<div class="col-md-12">
-									<h3 class="page-header primaryColor">Write a review</h3>
-									<div class="col-md-12">
-									    <div class="row lead">
-									        <div id="stars" class="starrr"></div>
-									        You gave a rating of <span id="count">0</span> star(s)
-										</div>
-									    <!--  
-									    <div class="row lead">
-									        <p>Also you can give a default rating by adding attribute data-rating</p>
-									        <div id="stars-existing" class="starrr" data-rating='4'></div>
-									        You gave a rating of <span id="count-existing">4</span> star(s)
-									    </div>
-									    -->
+								    <div class="row lead">
+								        <div id="stars" class="starrr"></div>
+								        You gave a rating of <span id="count">0</span> star(s)
 									</div>
-									<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
-										<div class="widget-area no-padding blank">
-											<div class="status-upload" style="padding-bottom: 10px;">
-												<form>
-													<textarea placeholder="What do you think about the movie?" ></textarea>
-														<c:if test = "${loginedUser.username == null}">
-								         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Login</button>	
-								     					</c:if>
-								                        <c:if test = "${loginedUser.username != null}">
-								         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
-								     					</c:if>
-												</form>
-											</div>
+								    <!--  
+								    <div class="row lead">
+								        <p>Also you can give a default rating by adding attribute data-rating</p>
+								        <div id="stars-existing" class="starrr" data-rating='4'></div>
+								        You gave a rating of <span id="count-existing">4</span> star(s)
+								    </div>
+								    -->
+								</div>
+								<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
+									<div class="widget-area no-padding blank">
+										<div class="status-upload" style="padding-bottom: 10px;">
+											<form>
+												<textarea placeholder="What do you think about the movie?" ></textarea>
+													<c:if test = "${loginedUser.username == null}">
+							         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Login</button>	
+							     					</c:if>
+							                        <c:if test = "${loginedUser.username != null}">
+							         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
+							     					</c:if>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -465,142 +391,140 @@
 				</div>
 			</div>
 			<!-- review  -->
-				<div class="col-md-12">
-					<div class="col-md-12"><h3 class="page-header primaryColor">Reviews</h3></div>
-					<div class="col-md-1"></div>
-					<div class="col-md-10" style="margin-left: 10px; margin-right: 10px;">
-							<div class="carousel-reviews broun-block">
-					            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">           
-					                <div class="carousel-inner">
-					                    <div class="item active">
-					                	    <div class="col-md-4 col-sm-6">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-					            			<div class="col-md-4 col-sm-6 hidden-xs">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-											<div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-					                    </div>
-					                    <div class="item">
-					                	    <div class="col-md-4 col-sm-6">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content								                    
-															</p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-					            			<div class="col-md-4 col-sm-6 hidden-xs">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content								                   
-															</p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-											<div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-												<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									          </article>
-											</div>
-					                    </div>                                  
-					                </div>
-					                <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
-					                    <span class="glyphicon glyphicon-chevron-left"></span>
-					                </a>
-					                <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
-					                    <span class="glyphicon glyphicon-chevron-right"></span>
-					                </a>
-					    		</div>
-							</div>	
-					</div>
-				</div>
+			<div class="col-md-12"><h3 class="page-header primaryColor">Reviews</h3></div>
+			<div class="col-md-1"></div>
+			<div class="col-md-10" style="margin-left: 10px; margin-right: 10px;">
+					<div class="carousel-reviews broun-block">
+			            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">           
+			                <div class="carousel-inner">
+			                    <div class="item active">
+			                	    <div class="col-md-4 col-sm-6">
+							        	<article class="row">
+								            <div class="col-md-10 col-sm-10">
+								              <div class="panel panel-default arrow left">
+								                <div class="panel-body">
+								                  <header class="text-left">
+								                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+								                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+								                  </header>
+								                  <div class="comment-post">
+								                    <p>
+														Review Content
+								                    </p>
+								                  </div>
+								                </div>
+								              </div>
+								            </div>
+							        	</article>
+									</div>
+			            			<div class="col-md-4 col-sm-6 hidden-xs">
+							        	<article class="row">
+								            <div class="col-md-10 col-sm-10">
+								              <div class="panel panel-default arrow left">
+								                <div class="panel-body">
+								                  <header class="text-left">
+								                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+								                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+								                  </header>
+								                  <div class="comment-post">
+								                    <p>
+														Review Content
+								                    </p>
+								                  </div>
+								                </div>
+								              </div>
+								            </div>
+							        	</article>
+									</div>
+									<div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
+							        	<article class="row">
+								            <div class="col-md-10 col-sm-10">
+								              <div class="panel panel-default arrow left">
+								                <div class="panel-body">
+								                  <header class="text-left">
+								                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+								                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+								                  </header>
+								                  <div class="comment-post">
+								                    <p>
+														Review Content
+								                    </p>
+								                  </div>
+								                </div>
+								              </div>
+								            </div>
+							        	</article>
+									</div>
+			                    </div>
+			                    <div class="item">
+			                	    <div class="col-md-4 col-sm-6">
+							        	<article class="row">
+								            <div class="col-md-10 col-sm-10">
+								              <div class="panel panel-default arrow left">
+								                <div class="panel-body">
+								                  <header class="text-left">
+								                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+								                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+								                  </header>
+								                  <div class="comment-post">
+								                    <p>
+														Review Content								                    
+													</p>
+								                  </div>
+								                </div>
+								              </div>
+								            </div>
+							        	</article>
+									</div>
+			            			<div class="col-md-4 col-sm-6 hidden-xs">
+							        	<article class="row">
+								            <div class="col-md-10 col-sm-10">
+								              <div class="panel panel-default arrow left">
+								                <div class="panel-body">
+								                  <header class="text-left">
+								                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+								                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+								                  </header>
+								                  <div class="comment-post">
+								                    <p>
+														Review Content								                   
+													</p>
+								                  </div>
+								                </div>
+								              </div>
+								            </div>
+							        	</article>
+									</div>
+									<div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
+										<article class="row">
+								            <div class="col-md-10 col-sm-10">
+								              <div class="panel panel-default arrow left">
+								                <div class="panel-body">
+								                  <header class="text-left">
+								                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+								                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+								                  </header>
+								                  <div class="comment-post">
+								                    <p>
+														Review Content
+								                    </p>
+								                  </div>
+								                </div>
+								              </div>
+								            </div>
+							          </article>
+									</div>
+			                    </div>                                  
+			                </div>
+			                <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
+			                    <span class="glyphicon glyphicon-chevron-left"></span>
+			                </a>
+			                <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
+			                    <span class="glyphicon glyphicon-chevron-right"></span>
+			                </a>
+			    		</div>
+					</div>	
+			</div>
 			<div class="col-md-1"></div>
 			<c:if test="${fn:length(movie.recommendedMovies) > 0}">
 				<div class="col-md-12 hidden-sm hidden-xs">

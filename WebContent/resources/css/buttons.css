@@ -21,14 +21,34 @@
 	margin: 0px;
 	box-shadow: none;
  	border-radius: 0px;
- 	padding-top: 1px;
- 	padding-bottom: 1px;
+ 	padding-top: 3px;
+ 	padding-bottom: 3px;
  	border: 0;
  	width: 100%;
 }
 .addListBt:hover{
-	background-color: #F9F9F9;
-	color: #474747;
+	color: white;
+	background-color: #2bae3a;
+}
+.addListBt:disabled{
+	color: #9e9e9e;
+	background-color: #7c2b2b;
+}
+.addListBt-active {
+    pointer-events: none;
+	color: white;
+	background-color: #2bae3a;
+	margin: 0px;
+	box-shadow: none;
+ 	border-radius: 0px;
+ 	padding-top: 3px;
+ 	padding-bottom: 3px;
+ 	border: 0;
+ 	width: 100%;
+}
+
+.no-click{
+	pointer-events: none;
 }
 
 .movieGenreBt{
@@ -73,4 +93,40 @@ a.profileSideNav{
 }
 a.profileSideNav:hover{
 	color: #FF4D4D;
+}
+
+.badgebox
+{
+    opacity: 0;
+}
+
+.badgebox + .badge
+{
+    /* Move the check mark away when unchecked */
+    text-indent: -999999px;
+    /* Makes the badge's width stay the same checked and unchecked */
+	width: 27px;
+}
+
+.badgebox:focus + .badge
+{
+    /* Set something to make the badge looks focused */
+    /* This really depends on the application, in my case it was: */
+    
+    /* Adding a light border */
+    box-shadow: inset 0px 0px 5px;
+    /* Taking the difference out of the padding */
+}
+
+.badgebox:checked + .badge
+{
+    /* Move the check mark back when checked */
+	text-indent: 0;
+}
+
+.btn span.glyphicon {    			
+	opacity: 0;				
+}
+.btn.active span.glyphicon {				
+	opacity: 1;				
 }

@@ -3,6 +3,10 @@ package com.cinemind.objects;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Reminder_list;
+import com.cinemind.entity.Watchlist;
+
 public class movieObj {
     private int vote_count,id,length,dayLeft;
     private double popularity,vote_average;
@@ -225,15 +229,6 @@ public class movieObj {
         this.status=status;
     }
 
-    public static movieObj getMovieByID(List<movieObj> movies, int id){
-        for(int i=0;i<movies.size();i++){
-            if(movies.get(i).getId()==id){
-                return movies.get(i);
-            }
-        }
-        return null;
-    }
-
 	public void setTagline(String tagline) {
 		this.tagline=tagline;
 	}
@@ -304,7 +299,15 @@ public class movieObj {
 	public void setRecommendedMovies(List<movieObj> recommendedMovies) {
 		this.recommendedMovies = recommendedMovies;
 	}
-
-
+	
+    public static movieObj getMovieByID(List<movieObj> movies, int id){
+        for(int i=0;i<movies.size();i++){
+            if(movies.get(i).getId()==id){
+                return movies.get(i);
+            }
+        }
+        return null;
+    }
+    
 }
 

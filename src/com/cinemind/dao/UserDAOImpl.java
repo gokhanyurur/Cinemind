@@ -1,5 +1,7 @@
 package com.cinemind.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,8 +10,11 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
+import com.cinemind.entity.Watchlist;
 
 @Repository
 public class UserDAOImpl implements UserDAO{
@@ -97,8 +102,98 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public void saveActivity(User_activities activity) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		currentSession.save(activity);
+		Users tempUser = currentSession.get(Users.class, activity.getUser().getId());
+		tempUser.addActivitiy(activity);
+		currentSession.saveOrUpdate(tempUser);
 		
+	}
+
+	@Override
+	public void addFavorites(Favorites_list movie) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Users tempUser = currentSession.get(Users.class, movie.getUser().getId());
+		tempUser.addToFavorites(movie);
+		currentSession.saveOrUpdate(tempUser);
+	}
+	@Override
+	public void removeFavorites(Favorites_list movie) {
+		Session currentSession = sessionFactory.getCurrentSession();
+				
+		Users tempUser = currentSession.get(Users.class, movie.getUser().getId());		
+		Favorites_list orgListObj = getFavoritesListObj(tempUser.getFavoriteMovies(),movie.getShow_id());
+		
+		tempUser.removeFromFavorites(movie);	
+		currentSession.remove(orgListObj);
+
+	}
+	private Favorites_list getFavoritesListObj(List<Favorites_list> list,int show_id) {
+		for(Favorites_list obj: list) {
+			if(obj.getShow_id()==show_id) {
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void addReminder(Reminder_list movie) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Users tempUser = currentSession.get(Users.class, movie.getUser().getId());
+		tempUser.addToReminder(movie);
+		currentSession.saveOrUpdate(tempUser);
+	}
+	@Override
+	public void removeReminder(Reminder_list movie) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		/*Users tempUser = currentSession.get(Users.class, movie.getUser().getId());
+		tempUser.removeFromReminder(movie);
+		Query theQuery=currentSession.createQuery("delete from Reminder_list where user_id=:userID AND show_id=:showID");
+		theQuery.setParameter("userID", tempUser.getId());
+		theQuery.setParameter("showID", movie.getShow_id());
+		theQuery.executeUpdate();*/
+		
+		Users tempUser = currentSession.get(Users.class, movie.getUser().getId());		
+		Reminder_list orgListObj = getReminderListObj(tempUser.getReminderMovies(),movie.getShow_id());
+		tempUser.removeFromReminder(movie);	
+		currentSession.remove(orgListObj);
+
+	}
+
+	private Reminder_list getReminderListObj(List<Reminder_list> list,int show_id) {
+		for(Reminder_list obj: list) {
+			if(obj.getShow_id()==show_id) {
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void addWatchlist(Watchlist movie) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Users tempUser = currentSession.get(Users.class, movie.getUser().getId());
+		tempUser.addToWatchlist(movie);
+		currentSession.saveOrUpdate(tempUser);
+	}
+	@Override
+	public void removeWatchlist(Watchlist movie) {
+		Session currentSession = sessionFactory.getCurrentSession();
+				
+		Users tempUser = currentSession.get(Users.class, movie.getUser().getId());		
+		Watchlist orgListObj = getWatchlistObj(tempUser.getWatchlistMovies(),movie.getShow_id());
+		
+		tempUser.removeFromWatchlist(movie);	
+		currentSession.remove(orgListObj);
+
+	}
+	private Watchlist getWatchlistObj(List<Watchlist> list,int show_id) {
+		for(Watchlist obj: list) {
+			if(obj.getShow_id()==show_id) {
+				return obj;
+			}
+		}
+		return null;
 	}
 
 }

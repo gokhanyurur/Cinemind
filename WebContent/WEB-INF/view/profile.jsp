@@ -147,12 +147,16 @@
 							                    </tr>
 							                </thead>
 							                <tbody>
-							                    <tr>
-							                        <td>299536</td>
-							                        <td>Avengers: Infinity War</td>
-							                        <td>25-04-2018</td>
-							                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-							                    </tr>
+							                    <c:forEach var="movie" items="${reminderList}">
+							                    	<c:if test="${fn:length(reminderList)>0}">
+								                    	<tr>
+									                        <td>${movie.id}</td>
+									                        <td>${movie.title}</td>
+									                        <td>${movie.release_date}</td>
+									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+								                    	</tr>
+								                    </c:if>
+							                    </c:forEach>
 							                </tbody>
 							            </table>
 						        	</div>
@@ -175,12 +179,16 @@
 							                    </tr>
 							                </thead>
 							                <tbody>
-							                    <tr>
-							                        <td>299536</td>
-							                        <td>Avengers: Infinity War</td>
-							                        <td>25-04-2018</td>
-							                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-							                    </tr>
+							                    <c:forEach var="movie" items="${watchList}">
+							                    	<c:if test="${fn:length(watchList)>0}">
+								                    	<tr>
+									                        <td>${movie.id}</td>
+									                        <td>${movie.title}</td>
+									                        <td>${movie.release_date}</td>
+									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+								                    	</tr>
+								                    </c:if>
+							                    </c:forEach>
 							                </tbody>
 							            </table>
 					        		</div>
@@ -203,12 +211,16 @@
 							                    </tr>
 							                </thead>
 							                <tbody>
-							                    <tr>
-							                        <td>299536</td>
-							                        <td>Avengers: Infinity War</td>
-							                        <td>25-04-2018</td>
-							                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-							                    </tr>
+							                    <c:forEach var="movie" items="${favoritesList}">
+							                    	<c:if test="${fn:length(favoritesList)>0}">
+								                    	<tr>
+									                        <td>${movie.id}</td>
+									                        <td>${movie.title}</td>
+									                        <td>${movie.release_date}</td>
+									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+								                    	</tr>
+								                    </c:if>
+							                    </c:forEach>
 							                </tbody>
 							            </table>
 					        		</div>
@@ -231,12 +243,18 @@
 							                    </tr>
 							                </thead>
 							                <tbody>
-							                    <tr>
-							                        <td>Avengers: Civil War</td>
-							                        <td>It was good.</td>
-							                        <td>10-02-2018 10:12:48</td>
-							                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-							                    </tr>
+							                <!--
+							                    <c:forEach var="review" items="${userReviewList}">
+							                    	<c:if test="${fn:length(userReviewList)>0}">
+								                    	<tr>
+									                        <td>${review.id}</td>
+									                        <td>${review.review}</td>
+									                        <td>${review.reviewed_at}</td>
+									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+								                    	</tr>
+								                    </c:if>
+							                    </c:forEach>
+							                -->
 							                </tbody>
 							            </table>
 					        		</div>
@@ -252,17 +270,21 @@
 							            <table class="table">
 							                <thead>
 							                    <tr class="filters">
+							                        <th><input type="text" class="form-control" placeholder="#" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Activity" disabled></th>
-							                        <th><input type="text" class="form-control" placeholder="Happened At" disabled></th>
-							                        <th>Action</th>
+							                        <th>Happened At</th>
 							                    </tr>
 							                </thead>
 							                <tbody>
-							                    <tr>
-							                        <td>You reviewed Avengers: Infinity War.</td>
-							                        <td>10-02-2018 10:12:48</td>
-							                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-							                    </tr>
+							                    <c:forEach varStatus="theCount" var="activity" items="${userActivityList}">
+							                    	<c:if test="${fn:length(userActivityList)>0}">
+								                    	<tr>
+									                        <td>${theCount.count}</td>
+									                        <td>You ${activity.activity}</td>
+									                        <td>${activity.createdAt}</td>
+								                    	</tr>
+								                    </c:if>
+							                    </c:forEach>
 							                </tbody>
 							            </table>
 					        		</div>

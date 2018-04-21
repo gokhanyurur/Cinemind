@@ -10,14 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
-@Table(name="user_activities")
-public class User_activities {
+@Table(name="watchlist")
+public class Watchlist {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -28,20 +27,24 @@ public class User_activities {
 	@JoinColumn(name="user_id")
 	private Users user;
 	
-	@Column(name="activity")
-	private String activity;
+	@Column(name="show_id")
+	private int show_id;
 	
-	@Column(name="created_at")
+	@Column(name="added_at")
 	@CreationTimestamp
-	protected Date createdAt;
+	protected Date added_at;
 	
-	public User_activities() {
+	public Watchlist() {
 		
 	}
-
-	public User_activities(Users user,String activity) {
+	
+	public Watchlist(int show_id) {
+		this.show_id=show_id;
+	}
+	
+	public Watchlist(Users user, int show_id) {
 		this.user=user;
-		this.activity=activity;
+		this.show_id=show_id;
 	}
 	
 
@@ -61,29 +64,26 @@ public class User_activities {
 		this.user = user;
 	}
 
-	public String getActivity() {
-		return activity;
+	public int getShow_id() {
+		return show_id;
 	}
 
-	public void setActivity(String activity) {
-		this.activity = activity;
+	public void setShow_id(int show_id) {
+		this.show_id = show_id;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public Date getAdded_at() {
+		return added_at;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setAdded_at(Date added_at) {
+		this.added_at = added_at;
 	}
 
 	@Override
 	public String toString() {
-		return "Activity [id=" + id + ", user_id=" + user.getId() + ", activity=" + activity + ", createdAt=" + createdAt
-				+ "]";
+		return "Watchlist [id=" + id + ", user_id=" + user.getId() + ", show_id=" + show_id + ", added_at=" + added_at + "]";
 	}
 	
 	
-	
-
 }

@@ -1,7 +1,10 @@
 package com.cinemind.dao;
 
+import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
+import com.cinemind.entity.Watchlist;
 
 public interface UserDAO {
 	
@@ -22,4 +25,14 @@ public interface UserDAO {
 	public String getUsernameByLogin(String email, String password);
 
 	public void saveActivity(User_activities activity);
+
+	public void addFavorites(Favorites_list movie);
+	public void removeFavorites(Favorites_list movie);
+
+	public void addReminder(Reminder_list movie);
+	public void removeReminder(Reminder_list movie);
+
+	public void addWatchlist(Watchlist movie);
+	public void removeWatchlist(Watchlist movie);
+
 }
