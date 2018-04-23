@@ -1,6 +1,6 @@
 package com.cinemind.objects;
 
-public class crew {
+public class Crew {
     private String credit_id;
     private String department;
     private int gender;
@@ -9,10 +9,10 @@ public class crew {
     private String name;
     private String imagePath;
 
-    public crew(){
+    public Crew(){
 
     }
-    public crew(int id, String name, String imageId,String department, String job){
+    public Crew(int id, String name, String imageId,String department, String job){
         this.id=id;
         this.name = name;
         this.imagePath =imageId;

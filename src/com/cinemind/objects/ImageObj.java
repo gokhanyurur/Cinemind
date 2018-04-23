@@ -1,21 +1,21 @@
 package com.cinemind.objects;
 
-public class image {
+public class ImageObj {
     private float aspect_ratio;
     private String filePath;
     private int height,width;
 
 
-    public image(){
+    public ImageObj(){
 
     }
-    public image(float aspect_ratio, String file_path,int width,int height){
+    public ImageObj(float aspect_ratio, String file_path,int width,int height){
         this.aspect_ratio=aspect_ratio;
         this.filePath = file_path;
         this.width =width;
         this.height =height;
     }
-    public image(String file_path){
+    public ImageObj(String file_path){
         this.filePath = file_path;
     }
 

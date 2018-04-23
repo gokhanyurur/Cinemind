@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Soon</title>
+	<title>${releaseYear} Movies</title>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/navbar.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/texts.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css" />
@@ -28,12 +28,10 @@
 	        $('.dropdown-toggle').dropdown()
 	    });
 	</script>
-
-	</head>
+</head>
 <body>
 	<div class="row">
             <nav class="navbar navbar-inverse navbar-static-top">
-			<!-- container-fluid -->
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
@@ -57,7 +55,7 @@
 				    			</c:forEach>
 							</ul>
 						</li>
-                        <li class="active"><a href="#" onclick="window.location.href='movies'; return false;">Movies</a></li>  
+                        <li class="active"><a href="/cinemind/movies">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li style="padding-left: 5px; padding-right: 5px;">
@@ -71,8 +69,8 @@
                             </form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
-         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
-                        	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
+         					<li><a href="/cinemind/signup"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
+                        	<li><a href="/cinemind/login"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
                         	<li class="dropdown">
@@ -89,52 +87,22 @@
                 </div>
             </nav>
 	</div>
-	<!--
 	<div class="row" style="margin-top: -40px; background-color: #e5e5e5"">
-		<div class="container" style="padding: 30px; background-color: white">
-        	<div class="row">
-            	<div class="col-md-12" style="margin-top: -20px;">
-            		<div class="page-header" style="padding-bottom: 0px;">
-						<h3 style="color: #FF4D4D; font-weight: normal;">Soon</h3>
-					</div>
-	                <c:forEach var="tempMovie" items="${movieList}">
-	                	<c:url var="movieLink" value="/movies/viewMovie">
-	                    	<c:param name="movieId" value="${tempMovie.id}" />
-	                    </c:url>
-						<div class="col-md-4" style="padding: 0; margin: 0; margin-bottom: -1px;">
-							<figure class="imghvr-reveal-up">
-								<img src="${tempMovie.backdrop_path}" class="img-responsive" style="padding: 0; margin: 0;"/>
-								<figcaption>
-									<h5>${tempMovie.title}</h5>
-									<p>${tempMovie.release_date}</p>
-									<div class="btn-group">
-										<a class="btn btn-danger" href="${movieLink}">View Movie</a>
-									</div>
-							  	</figcaption>
-							</figure>
-						</div>
-	                </c:forEach>
-            	</div>
-			</div>
-		</div>
-	</div>
-	  -->
-	<div class="row" style="margin-top: -40px; background-color: #e5e5e5">
 		<div class="container" style="padding: 30px; background-color: white">
         	<div class="row">
             	<div class="col-md-12" style="margin-top: -20px;">
             		<div class="col-md-12">
             			<div class="page-header" style="padding-bottom: 0px;">
-							<h3 style="color: #FF4D4D; font-weight: normal;">Soon</h3>
+							<h3 style="color: #FF4D4D; font-weight: normal;">${releaseYear}</h3>
 						</div>
-            		</div>					
-					<div class="col-md-12 hidden-xs hidden-sm">
+            		</div>
+            		<div class="col-md-9 hidden-xs hidden-sm">
             			<ul class="thumbnails" style="margin-left: -50px;"> 
-	            			<c:forEach var="tempMovie" items="${movieList}">
+	            			<c:forEach var="tempMovie" items="${releaseYearMovieList}">
 			                	<c:url var="movieLink" value="/movies/viewMovie">
 			                    	<c:param name="movieId" value="${tempMovie.id}" />
 			                    </c:url>
-								<li class="col-sm-2" style="height: 290px;">
+								<li class="col-sm-3" style="height: 320px;">
 									<div class="fff">
 										<a class="rec-image" href="${movieLink}"><img src="${tempMovie.poster_path}" alt=""></a>
 								    	<h5 style="text-align: center; width: 100%;">${tempMovie.title}</h5>
@@ -143,50 +111,91 @@
 			                </c:forEach>
 			        	</ul>
             		</div>
-					<div class="col-xs-12 hidden-md hidden-lg">
-			        	<c:forEach var="tempMovie" items="${movieList}">
-							<c:url var="movieLink" value="/movies/viewMovie">
-				            	<c:param name="movieId" value="${tempMovie.id}"></c:param>
-				            </c:url>
-									<div class="col-md-3" style="padding-bottom: 20px;">
-										<a href="${movieLink}">
-											<img src="${tempMovie.poster_path}" alt="${tempMovie.title}" class="img-responsive">
-										</a>
-										<div class="ss-item-text" style="text-align: center;">
-											<h5>${tempMovie.title}</h5>
-									    </div>			    
-									</div>
-						</c:forEach>
-					</div>
+            		<div class="col-xs-12 col-sm-12 hidden-md hidden-lg">
+            			<c:forEach var="tempMovie" items="${releaseYearMovieList}">
+		                	<c:url var="movieLink" value="/movies/viewMovie">
+		                    	<c:param name="movieId" value="${tempMovie.id}" />
+		                    </c:url>
+							<div class="col-md-3" style="padding-bottom: 0px;">
+								<a href="${movieLink}">
+									<img src="${tempMovie.poster_path}" alt="${tempMovie.title}" class="img-responsive">			
+								</a>
+								<div class="ss-item-text" style="text-align: center;">
+									<h5>${tempMovie.title}</h5>
+								</div>		    
+							</div>
+		                </c:forEach>
+            		</div>
+	                <div class="col-md-3 col-xs-12" style="height: 100%; margin-top: -10px;">
+	                	<div class="col-md-12">
+				    		<h5 class="filterTitle">Filter: Genres</h5>
+				    	</div>
+	                	<div class="col-md-12">
+	                		<c:forEach var="genre" items="${genreList}">
+								<div class="col-md-12" style="padding-bottom: 5px;">
+									<a class="filterText" href="/cinemind/movies/release/${releaseYear}?genreId=${genre.id}">${genre.title}</a>
+								</div>
+						   	</c:forEach>
+	                	</div>
+	                </div>
             	</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12" align="center">
-					<a href="/cinemind/movies?page=1" class="pageText" style="margin-right: 5px;">1</a>
-					<c:if test="${param.page > 5}">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" align="center">
+			<!-- pages without genreids -->
+			<c:if test="${param.genreId == null}">
+				<a href="/cinemind/movies/release/${releaseYear}?page=1" class="pageText" style="margin-right: 5px;">1</a>
+				<c:if test="${param.page > 5}">
+					<label class="pageTextNoLink" style="margin-right: 5px;">...</label>
+				</c:if>
+			    <c:forEach var="i" begin="2" end="${totalPages}" step="1">
+					<c:url var="pageLink" value="/movies/release/${releaseYear}">
+				        <c:param name="page" value="${i}"></c:param>
+				    </c:url>
+					<c:if test="${(i>param.page-3) and (i < param.page+3)}">
+						<c:if test="${i == param.page}">
+							<a href="${pageLink}" class="pageText-active" style="margin-right: 5px;">${i}</a>
+						</c:if>
+						<c:if test="${(i != param.page) and (i != totalPages)}">
+							<a href="${pageLink}" class="pageText" style="margin-right: 5px;">${i}</a>
+						</c:if>
+					</c:if>
+					<c:if test="${i == param.page+5}">
 						<label class="pageTextNoLink" style="margin-right: 5px;">...</label>
 					</c:if>
-			    	<c:forEach var="i" begin="2" end="${totalPages}" step="1">
-						<c:url var="pageLink" value="/movies">
-				        	<c:param name="page" value="${i}"></c:param>
-				        </c:url>
-						<c:if test="${(i>param.page-3) and (i < param.page+3)}">
-							<c:if test="${i == param.page}">
-								<a href="${pageLink}" class="pageText-active" style="margin-right: 5px;">${i}</a>
-							</c:if>
-							<c:if test="${i != param.page}">
-								<a href="${pageLink}" class="pageText" style="margin-right: 5px;">${i}</a>
-							</c:if>
+				</c:forEach>
+				<c:if test="${param.page != totalPages}">
+					<a href="/cinemind/movies/release/${releaseYear}?page=${totalPages}" class="pageText" style="margin-right: 5px;">${totalPages}</a>
+				</c:if>		
+			</c:if>
+			<!-- pages with genreids -->
+			<c:if test="${param.genreId != null}">
+				<a href="/cinemind/movies/release/${releaseYear}?page=1&genreId=${param.genreId}" class="pageText" style="margin-right: 5px;">1</a>
+				<c:if test="${param.page > 5}">
+					<label class="pageTextNoLink" style="margin-right: 5px;">...</label>
+				</c:if>
+			    <c:forEach var="i" begin="2" end="${totalPages}" step="1">
+					<c:url var="pageLink" value="/movies/release/${releaseYear}?genreId=${param.genreId}">
+				        <c:param name="page" value="${i}"></c:param>
+				    </c:url>
+					<c:if test="${(i>param.page-3) and (i < param.page+3)}">
+						<c:if test="${i == param.page}">
+							<a href="${pageLink}" class="pageText-active" style="margin-right: 5px;">${i}</a>
 						</c:if>
-						<c:if test="${i == param.page+5}">
-							<label class="pageTextNoLink" style="margin-right: 5px;">...</label>
+						<c:if test="${(i != param.page) and (i != totalPages)}">
+							<a href="${pageLink}" class="pageText" style="margin-right: 5px;">${i}</a>
 						</c:if>
-					</c:forEach>
-					<c:if test="${param.page != totalPages}">
-						<a href="/cinemind/movies?page=${totalPages}" class="pageText" style="margin-right: 5px;">${totalPages}</a>
 					</c:if>
-				</div>
-			</div>
+					<c:if test="${i == param.page+5}">
+						<label class="pageTextNoLink" style="margin-right: 5px;">...</label>
+					</c:if>
+				</c:forEach>
+				<c:if test="${param.page != totalPages}">
+					<a href="/cinemind/movies/release/${releaseYear}?page=${totalPages}&genreId=${param.genreId}" class="pageText" style="margin-right: 5px;">${totalPages}</a>	
+				</c:if>	
+			</c:if>
 		</div>
 	</div>
 </body>

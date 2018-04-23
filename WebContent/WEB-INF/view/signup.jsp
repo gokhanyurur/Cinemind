@@ -27,7 +27,20 @@
                     </div>
                     <ul class="nav navbar-nav">
                         <li><a href="/cinemind">Home</a></li>
-                        <li><a href="#">Genres</a></li>
+                        <li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<c:forEach var="genre" items="${genreList}">
+					    			<!-- 
+					    			<c:url var="genreLink" value="/movies/genre">
+					                 	<c:param name="genreId" value="${genre.id}" />
+					                </c:url>
+				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    				-->
+				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
+				    			</c:forEach>
+							</ul>
+						</li>
                         <li><a href="#" onclick="window.location.href='movies'; return false;">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">

@@ -15,12 +15,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.cinemind.objects.Country;
-import com.cinemind.objects.cast;
-import com.cinemind.objects.crew;
-import com.cinemind.objects.genreObj;
-import com.cinemind.objects.image;
-import com.cinemind.objects.movieObj;
-import com.cinemind.objects.video;
+import com.cinemind.objects.Cast;
+import com.cinemind.objects.Crew;
+import com.cinemind.objects.GenreObj;
+import com.cinemind.objects.ImageObj;
+import com.cinemind.objects.MovieObj;
+import com.cinemind.objects.VideoObj;
 
 public class JsonReader {
 
@@ -57,8 +57,8 @@ public class JsonReader {
 	    }
   }
   
-  public static List<movieObj> jsonArrayToList(JSONArray jsonArray) throws IOException, JSONException {
-		List<movieObj> tempList = new ArrayList<>();
+  public static List<MovieObj> jsonArrayToList(JSONArray jsonArray) throws IOException, JSONException {
+		List<MovieObj> tempList = new ArrayList<>();
 		
 		for(int i=0;i<jsonArray.length();i++) {
 			JSONObject tempObj = jsonArray.getJSONObject(i);
@@ -73,15 +73,15 @@ public class JsonReader {
 				poster = tempObj.getString("poster_path");
 			}
 			
-			tempList.add(new movieObj(id,title,release,poster));
+			tempList.add(new MovieObj(id,title,release,poster));
 		}
 		
 		return tempList;
   }
   
-  public static genreObj parseGenresArray(String response) throws JSONException{
+  public static GenreObj parseGenresArray(String response) throws JSONException{
       JSONObject object=new JSONObject(response);
-      genreObj genre= new genreObj();
+      GenreObj genre= new GenreObj();
 
       genre.setId(object.getInt("id"));
       genre.setTitle(object.getString("name"));
@@ -89,9 +89,9 @@ public class JsonReader {
       return genre;
   }
 
-  public static crew parseCrewArray(String response) throws  JSONException{
+  public static Crew parseCrewArray(String response) throws  JSONException{
       JSONObject object=new JSONObject(response);
-      crew person= new crew();
+      Crew person= new Crew();
       
 	String imagePrefixProfile= "http://image.tmdb.org/t/p/w185";
 
@@ -110,9 +110,9 @@ public class JsonReader {
 	    return crewArray;
 	}
 
-	public static String getDirector(List<crew> crewList) {
+	public static String getDirector(List<Crew> crewList) {
 		String director="";
-		for(crew person : crewList) {
+		for(Crew person : crewList) {
             if(person.getJob().equals("Director") && director==""){
                 director=person.getName();
             }
@@ -127,9 +127,9 @@ public class JsonReader {
 		return director;
 	}
 	
-	public static String getWriter(List<crew> crewList) {
+	public static String getWriter(List<Crew> crewList) {
 		String writer="";
-		for(crew person : crewList) {
+		for(Crew person : crewList) {
             if(person.getJob().equals("Screenplay") && writer==""){
             	writer=person.getName();
             }
@@ -143,9 +143,9 @@ public class JsonReader {
 		return writer;
 	}
 	
-	public static String getMusic(List<crew> crewList) {
+	public static String getMusic(List<Crew> crewList) {
 		String music="";
-		for(crew person : crewList) {
+		for(Crew person : crewList) {
             if(person.getJob().equals("Music") && music==""){
             	music=person.getName();
             }
@@ -184,8 +184,8 @@ public class JsonReader {
 		return countriesString;
 	}
 
-	public static cast parseCastArray(JSONObject object) throws JSONException {
-	    cast person= new cast();
+	public static Cast parseCastArray(JSONObject object) throws JSONException {
+	    Cast person= new Cast();
 	      
 		String imagePrefixProfile= "http://image.tmdb.org/t/p/w185";
 
@@ -212,8 +212,8 @@ public class JsonReader {
 	    return imagesArray;
 	}
 
-	public static image parseImageArray(JSONObject jsonobject) throws JSONException {
-		image tempImg = new image();
+	public static ImageObj parseImageArray(JSONObject jsonobject) throws JSONException {
+		ImageObj tempImg = new ImageObj();
 		
 		String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w780";
 		
@@ -229,8 +229,8 @@ public class JsonReader {
 	    return videosArray;
 	}
 
-	public static video parseVideoArray(JSONObject object) throws JSONException {
-        video movieVideo= new video();
+	public static VideoObj parseVideoArray(JSONObject object) throws JSONException {
+        VideoObj movieVideo= new VideoObj();
 
         movieVideo.setId(object.getString("id"));
         movieVideo.setKey(object.getString("key"));

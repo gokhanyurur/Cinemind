@@ -7,17 +7,17 @@ import com.cinemind.entity.Favorites_list;
 import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.Watchlist;
 
-public class movieObj {
+public class MovieObj {
     private int vote_count,id,length,dayLeft;
     private double popularity,vote_average;
     private String title,poster_path,original_language,original_title,backdrop_path,overview;
     private String release_date;
     private boolean adult,video;
-    private List<genreObj> genres=new ArrayList<>();
-    private List<cast> castList=new ArrayList<>();
-    private List<crew> crewList=new ArrayList<>();
-    private List<video> videoList=new ArrayList<>();
-    private List<image> imageList=new ArrayList<>();
+    private List<GenreObj> genres=new ArrayList<>();
+    private List<Cast> castList=new ArrayList<>();
+    private List<Crew> crewList=new ArrayList<>();
+    private List<VideoObj> videoList=new ArrayList<>();
+    private List<ImageObj> imageList=new ArrayList<>();
     private String status;
 	private String tagline;
 	private long budget;
@@ -29,13 +29,13 @@ public class movieObj {
 	private List<Country> countries;
 	private String countryString;
 	
-	private List<movieObj> recommendedMovies = new ArrayList<>();
+	private List<MovieObj> recommendedMovies = new ArrayList<>();
 
-    public movieObj(){
+    public MovieObj(){
 
     }
 
-    public movieObj(int id,String title,String release_date,String poster_path){
+    public MovieObj(int id,String title,String release_date,String poster_path){
         this.id=id;
         this.title=title;
         this.release_date=release_date;
@@ -43,7 +43,7 @@ public class movieObj {
     }
 
 
-    public movieObj(int id,String title,String release_date,int dayLeft ,String poster_path, String backdrop_path, String overview, double vote_average){
+    public MovieObj(int id,String title,String release_date,int dayLeft ,String poster_path, String backdrop_path, String overview, double vote_average){
         this.id=id;
         this.title=title;
         this.release_date=release_date;
@@ -54,7 +54,7 @@ public class movieObj {
         this.dayLeft=dayLeft;
     }
 
-    public movieObj(int id,String title,String release_date,String poster_path, String backdrop_path, String overview, double vote_average){
+    public MovieObj(int id,String title,String release_date,String poster_path, String backdrop_path, String overview, double vote_average){
         this.id=id;
         this.title=title;
         this.release_date=release_date;
@@ -65,7 +65,7 @@ public class movieObj {
     }
 
 
-    public movieObj(int vote_count, int id, boolean video,double vote_average, String title, double popularity, String poster_path, String original_language, String original_title,List<genreObj> genres,String backdrop_path, boolean adult,String overview,String release_date){
+    public MovieObj(int vote_count, int id, boolean video,double vote_average, String title, double popularity, String poster_path, String original_language, String original_title,List<GenreObj> genres,String backdrop_path, boolean adult,String overview,String release_date){
         this.vote_count=vote_count;
         this.id=id;
         this.video=video;
@@ -145,10 +145,10 @@ public class movieObj {
         this.original_title=original_title;
     }
 
-    public List<genreObj> getGenres(){
+    public List<GenreObj> getGenres(){
         return genres;
     }
-    public void setGenres(List<genreObj> genres){
+    public void setGenres(List<GenreObj> genres){
         this.genres=genres;
     }
 
@@ -187,31 +187,31 @@ public class movieObj {
         this.length=length;
     }
 
-    public List<cast> getCastList(){
+    public List<Cast> getCastList(){
         return castList;
     }
-    public void setCastList(List<cast> castList){
+    public void setCastList(List<Cast> castList){
         this.castList=castList;
     }
 
-    public List<crew> getCrewList()    {
+    public List<Crew> getCrewList()    {
         return crewList;
     }
-    public void setCrewList(List<crew> crewList){
+    public void setCrewList(List<Crew> crewList){
         this.crewList=crewList;
     }
 
-    public List<video> getVideoList(){
+    public List<VideoObj> getVideoList(){
         return videoList;
     }
-    public void setVideoList(List<video> videoList){
+    public void setVideoList(List<VideoObj> videoList){
         this.videoList=videoList;
     }
 
-    public List<image> getImageList(){
+    public List<ImageObj> getImageList(){
         return imageList;
     }
-    public void setImageList(List<image> imageList){
+    public void setImageList(List<ImageObj> imageList){
         this.imageList=imageList;
     }
 
@@ -292,15 +292,15 @@ public class movieObj {
 		this.countryString = countryString;
 	}
 
-	public List<movieObj> getRecommendedMovies() {
+	public List<MovieObj> getRecommendedMovies() {
 		return recommendedMovies;
 	}
 
-	public void setRecommendedMovies(List<movieObj> recommendedMovies) {
+	public void setRecommendedMovies(List<MovieObj> recommendedMovies) {
 		this.recommendedMovies = recommendedMovies;
 	}
 	
-    public static movieObj getMovieByID(List<movieObj> movies, int id){
+    public static MovieObj getMovieByID(List<MovieObj> movies, int id){
         for(int i=0;i<movies.size();i++){
             if(movies.get(i).getId()==id){
                 return movies.get(i);

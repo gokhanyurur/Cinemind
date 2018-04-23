@@ -53,10 +53,13 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<c:forEach var="genre" items="${genreList}">
+					    			<!-- 
 					    			<c:url var="genreLink" value="/movies/genre">
 					                 	<c:param name="genreId" value="${genre.id}" />
 					                </c:url>
 				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    				-->
+				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
 				    			</c:forEach>
 							</ul>
 						</li>
@@ -206,10 +209,15 @@
 						</div>
 						<div class="col-md-12">
 							<c:forEach var="genre" items="${movie.genres}">
+							<!-- >
 								<c:url var="genreLink" value="/movies/genre">
 					            	<c:param name="genreId" value="${genre.id}" />
 					            </c:url>
 					    		<a href="${genreLink}" style="text-decoration:none;">
+									<button class="movieGenreBt"><c:out value="${genre.title}"/></button>
+								 </a>
+								 -->
+								 <a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}" style="text-decoration:none;">
 									<button class="movieGenreBt"><c:out value="${genre.title}"/></button>
 								 </a>
 							</c:forEach>
@@ -275,50 +283,62 @@
 							        </div>
 							        
 							        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-							            <span class="glyphicon glyphicon-chevron-left"></span>
+							            <span class="glyphicon glyphicon-chevron-left" style="color:red;"></span>
 							            <span class="sr-only">Previous</span>
 							        </a>
 							        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-							            <span class="glyphicon glyphicon-chevron-right"></span>
+							            <span class="glyphicon glyphicon-chevron-right" style="color:red;"></span>
 							            <span class="sr-only">Next</span>
 							        </a>
 							    </div>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
+							<c:if test="${movie.dayLeft < 1}">
 								<div class="col-md-12">
-									<h3 class="page-header primaryColor">Write a review</h3>
 									<div class="col-md-12">
-									    <div class="row lead">
-									        <div id="stars" class="starrr"></div>
-									        You gave a rating of <span id="count">0</span> star(s)
+										<h3 class="page-header primaryColor">Write a review</h3>
+										<div class="col-md-12">
+										    <div class="row lead">
+										        <div id="stars" class="starrr"></div>
+										        You gave a rating of <span id="count">0</span> star(s)
+											</div>
+										    <!--  
+										    <div class="row lead">
+										        <p>Also you can give a default rating by adding attribute data-rating</p>
+										        <div id="stars-existing" class="starrr" data-rating='4'></div>
+										        You gave a rating of <span id="count-existing">4</span> star(s)
+										    </div>
+										    -->
 										</div>
-									    <!--  
-									    <div class="row lead">
-									        <p>Also you can give a default rating by adding attribute data-rating</p>
-									        <div id="stars-existing" class="starrr" data-rating='4'></div>
-									        You gave a rating of <span id="count-existing">4</span> star(s)
-									    </div>
-									    -->
-									</div>
-									<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
-										<div class="widget-area no-padding blank">
-											<div class="status-upload" style="padding-bottom: 10px;">
-												<form>
-													<textarea placeholder="What do you think about the movie?" ></textarea>
-														<c:if test = "${loginedUser.username == null}">
-								         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Login</button>	
-								     					</c:if>
-								                        <c:if test = "${loginedUser.username != null}">
-								         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
-								     					</c:if>
-												</form>
+										<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
+											<div class="widget-area no-padding blank">
+												<div class="status-upload" style="padding-bottom: 10px;">
+													<form>
+														<textarea placeholder="What do you think about the movie?" ></textarea>
+															<c:if test = "${loginedUser.username == null}">
+									         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Login</button>	
+									     					</c:if>
+									                        <c:if test = "${loginedUser.username != null}">
+									         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
+									     					</c:if>
+													</form>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</c:if>
+							<c:if test="${movie.dayLeft > 0}">
+								<div class="col-md-12">
+									<div class="col-md-12">
+										<h3 class="page-header primaryColor">Write a review</h3>
+									</div>
+									<div class="col-md-12">
+										<h4>You can not write review before movie release.</h4>
+									</div>
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -464,7 +484,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- review  -->
+			<!-- review  todo: check if review > 0 -->
 				<div class="col-md-12">
 					<div class="col-md-12"><h3 class="page-header primaryColor">Reviews</h3></div>
 					<div class="col-md-1"></div>

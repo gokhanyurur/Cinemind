@@ -43,6 +43,48 @@ a.filterText:hover{
 	color: #ff4d4d;
 }
 
+.pageTextNoLink{
+	padding: 3px;
+	color: #474747;
+	font-size: 18px;
+	font-weight: normal;
+}
+
+a.pageText{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: solid;
+	border-width: 0.01em;
+	color: #474747;
+	font-size: 18px;
+	font-weight: normal;
+	border-radius: 3px;
+	text-decoration: none;
+}
+a.pageText:hover{
+	color: #f75b5b;
+	text-decoration: none;
+}
+a.pageText-active{
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-style: solid;
+	border-width: 0.01em;
+	color: #ff4d4d;
+	font-size: 18px;
+	font-weight: normal;
+	border-radius: 3px;
+	text-decoration: none;
+}
+a.pageText-active:hover{
+	color: #f75b5b;
+	text-decoration: none;
+}
+
 .voteText{
 	color: #4A4A4A;
 }

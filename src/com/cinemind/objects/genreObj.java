@@ -1,26 +1,26 @@
 package com.cinemind.objects;
 
 
-public class genreObj {
+public class GenreObj {
     private String title;
     private int imageId,id;
 
-    public genreObj(){
+    public GenreObj(){
 
     }
 
-    public genreObj(int id, String title){
+    public GenreObj(int id, String title){
         this.id=id;
         this.title=title;
     }
 
-    public genreObj(int id, String title, int imageId){
+    public GenreObj(int id, String title, int imageId){
         this.id=id;
         this.title=title;
         this.imageId=imageId;
     }
 
-    public genreObj(String title, int imageId){
+    public GenreObj(String title, int imageId){
         this.title=title;
         this.imageId=imageId;
     }

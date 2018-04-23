@@ -16,48 +16,51 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.cinemind.objects.Country;
-import com.cinemind.objects.cast;
-import com.cinemind.objects.crew;
-import com.cinemind.objects.genreObj;
-import com.cinemind.objects.image;
-import com.cinemind.objects.movieObj;
-import com.cinemind.objects.video;
+import com.cinemind.objects.Cast;
+import com.cinemind.objects.Crew;
+import com.cinemind.objects.GenreObj;
+import com.cinemind.objects.ImageObj;
+import com.cinemind.objects.MovieObj;
+import com.cinemind.objects.VideoObj;
 
 
 public class JsonProcess {
 	
-	public static List<movieObj> getMoviesFromUrl(String url) throws IOException, JSONException{
+	public static List<MovieObj> getMoviesFromUrl(String url) throws IOException, JSONException{
 		
 		JSONObject jsonObj = JsonReader.readJsonObjFromUrl(url);
 		
 		String resultsText = jsonObj.get("results").toString();
 		JSONArray jsonResults = new JSONArray(resultsText);
 		
-		List<movieObj> tempMovieList = new ArrayList<>();
+		List<MovieObj> tempMovieList = new ArrayList<>();
 		
 		for(int i=0;i<jsonResults.length();i++) {
 			JSONObject tempObj = jsonResults.getJSONObject(i);
 			
 			int id = tempObj.getInt("id");
 			String title = tempObj.getString("original_title");
-			String release = tempObj.getString("release_date");
+			String release;
+			if(tempObj.get("release_date").getClass().equals(String.class)) {
+				release = tempObj.getString("release_date");
+			}else {
+				release = "unknown";
+			}
 			String poster,backdrop;
 			String imagePrefixPoster= "http://image.tmdb.org/t/p/w342";
 			String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w780";
-			if(!tempObj.get("poster_path").getClass().equals(String.class)) {
-				//poster="null";
-				poster= "http://placehold.it/342x513";
-			}else {
+			if(tempObj.get("poster_path").getClass().equals(String.class)) {
 				poster = imagePrefixPoster + tempObj.getString("poster_path");
+			}else {
+				poster= "http://placehold.it/342x513";
 			}
 			
-			if(!tempObj.get("backdrop_path").getClass().equals(String.class)) {
-				//backdrop="null";
-				backdrop="http://placehold.it/780x439";
-			}else {
+			if(tempObj.get("backdrop_path").getClass().equals(String.class)) {
 				backdrop = imagePrefixBackdrop + tempObj.getString("backdrop_path");
+			}else {			
+				backdrop="http://placehold.it/780x439";
 			}
-			movieObj tempMovie = new movieObj(id,title,release,poster);
+			MovieObj tempMovie = new MovieObj(id,title,release,poster);
 			tempMovie.setBackdrop_path(backdrop);
 			tempMovieList.add(tempMovie);
 		}
@@ -65,14 +68,21 @@ public class JsonProcess {
 		return tempMovieList;
 	}
 	
-	public static List<movieObj> getUpcomingFromUrl(String url) throws JSONException, IOException{
+	public static int getTotalPage(String url) throws IOException, JSONException {
+		JSONObject jsonObj = JsonReader.readJsonObjFromUrl(url);
+		
+		return jsonObj.getInt("total_pages");
+		
+	}
+	
+	public static List<MovieObj> getUpcomingFromUrl(String url) throws JSONException, IOException{
 				
 		JSONObject jsonObj = JsonReader.readJsonObjFromUrl(url);
 		
 		String resultsText = jsonObj.get("results").toString();
 		JSONArray jsonResults = new JSONArray(resultsText);
 		
-		List<movieObj> tempMovieList = new ArrayList<>();
+		List<MovieObj> tempMovieList = new ArrayList<>();
 		
 		for(int i=0;i<jsonResults.length();i++) {
 			JSONObject tempObj = jsonResults.getJSONObject(i);
@@ -86,20 +96,19 @@ public class JsonProcess {
 				String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w780";
 				int dayLeft = dayLeft(release);
 				
-				if(!tempObj.get("poster_path").getClass().equals(String.class)) {
-					//poster="null";
-					poster= "http://placehold.it/342x513";
-				}else {
+				if(tempObj.get("poster_path").getClass().equals(String.class)) {
 					poster = imagePrefixPoster + tempObj.getString("poster_path");
+				}else {
+					poster= "http://placehold.it/342x513";
 				}
 				
-				if(!tempObj.get("backdrop_path").getClass().equals(String.class)) {
-					//backdrop="null";
-					backdrop="http://placehold.it/780x439";
-				}else {
+				if(tempObj.get("backdrop_path").getClass().equals(String.class)) {
 					backdrop = imagePrefixBackdrop + tempObj.getString("backdrop_path");
+				}else {
+					backdrop="http://placehold.it/780x439";
+
 				}
-				movieObj tempMovie = new movieObj(id,title,release,poster);
+				MovieObj tempMovie = new MovieObj(id,title,release,poster);
 				tempMovie.setBackdrop_path(backdrop);
 				tempMovie.setDayLeft(dayLeft);
 				tempMovieList.add(tempMovie);
@@ -131,14 +140,14 @@ public class JsonProcess {
 		
 	}
 	
-	public static List<genreObj> getGenresFromUrl(String url) throws JSONException, IOException{
+	public static List<GenreObj> getGenresFromUrl(String url) throws JSONException, IOException{
 		
 		JSONObject jsonObj = JsonReader.readJsonObjFromUrl(url);
 		
 		String resultText = jsonObj.get("genres").toString();
 		JSONArray jsonResults = new JSONArray(resultText);
 		
-		List<genreObj> tempGenreList = new ArrayList<>();
+		List<GenreObj> tempGenreList = new ArrayList<>();
 		
 		for(int i=0;i<jsonResults.length();i++) {
 			JSONObject tempObj = jsonResults.getJSONObject(i);
@@ -146,7 +155,7 @@ public class JsonProcess {
 			int id= tempObj.getInt("id");
 			String title=tempObj.getString("name");
 			
-			genreObj tempGenre = new genreObj(id,title);
+			GenreObj tempGenre = new GenreObj(id,title);
 			tempGenreList.add(tempGenre);
 		}
 		
@@ -154,11 +163,11 @@ public class JsonProcess {
 		
 	}
 
-	public static movieObj getMovieFromUrl(String url) throws JSONException, IOException{
+	public static MovieObj getMovieFromUrl(String url) throws JSONException, IOException{
 		
 		JSONObject jsonMovie = JsonReader.readJsonObjFromUrl(url);
 		
-		movieObj tempMovie = new movieObj();
+		MovieObj tempMovie = new MovieObj();
 		
 		int id = jsonMovie.getInt("id");
 		tempMovie.setId(id);
@@ -184,20 +193,18 @@ public class JsonProcess {
 		String imagePrefixPoster= "http://image.tmdb.org/t/p/w300";
 		String imagePrefixBackdrop= "http://image.tmdb.org/t/p/w1280";
 		
-		if(!jsonMovie.get("poster_path").getClass().equals(String.class)) {
-			//tempMovie.setPoster_path("null");
-			tempMovie.setPoster_path("http://placehold.it/342x513");
-		}else {
+		if(jsonMovie.get("poster_path").getClass().equals(String.class)) {
 			String poster_path = jsonMovie.getString("poster_path");
 			tempMovie.setPoster_path(imagePrefixPoster+poster_path);
+		}else {
+			tempMovie.setPoster_path("http://placehold.it/342x513");
 		}
 		
-		if(!jsonMovie.get("backdrop_path").getClass().equals(String.class)) {
-			//tempMovie.setBackdrop_path("null");
-			tempMovie.setBackdrop_path("http://placehold.it/780x439");
-		}else {
+		if(jsonMovie.get("backdrop_path").getClass().equals(String.class)) {
 			String backdrop_path = jsonMovie.getString("backdrop_path");
 			tempMovie.setBackdrop_path(imagePrefixBackdrop+backdrop_path);
+		}else {
+			tempMovie.setBackdrop_path("http://placehold.it/780x439");
 		}
 		
 		
@@ -208,11 +215,11 @@ public class JsonProcess {
 		
 		tempMovie.setDayLeft(dayLeft(jsonMovie.getString("release_date")));
 		
-		if(!jsonMovie.get("runtime").getClass().equals(Integer.class)) {
-			tempMovie.setLength(0);
-		}else {
+		if(jsonMovie.get("runtime").getClass().equals(Integer.class)) {
 			int length = jsonMovie.getInt("runtime");
 			tempMovie.setLength(length);
+		}else {
+			tempMovie.setLength(0);
 		}
 		
 		long budget = jsonMovie.getLong("budget");
@@ -234,20 +241,20 @@ public class JsonProcess {
 		
 		//get genres
 		JSONArray genresJsonArray = jsonMovie.getJSONArray("genres");
-		List<genreObj> genreList= new ArrayList<>();
+		List<GenreObj> genreList= new ArrayList<>();
 		for (int i = 0; i < genresJsonArray.length(); i++) {
 			JSONObject jsonobject = genresJsonArray.getJSONObject(i);
-            genreObj postcp=JsonReader.parseGenresArray(jsonobject.toString());
+            GenreObj postcp=JsonReader.parseGenresArray(jsonobject.toString());
             genreList.add(postcp);
 		}
 		tempMovie.setGenres(genreList);
 		
 		//get crew
         JSONArray crewJsonArray=JsonReader.getJsonCrew(jsonMovie.getJSONObject("credits").toString());
-        List<crew> crewList =new ArrayList<>();
+        List<Crew> crewList =new ArrayList<>();
         for (int i = 0; i < crewJsonArray.length(); i++) {
             JSONObject jsonobject = crewJsonArray.getJSONObject(i);
-            crew postcp=JsonReader.parseCrewArray(jsonobject.toString());
+            Crew postcp=JsonReader.parseCrewArray(jsonobject.toString());
             crewList.add(postcp);
         }
         tempMovie.setCrewList(crewList);
@@ -263,36 +270,36 @@ public class JsonProcess {
         
 		//get cast
         JSONArray castJsonArray=JsonReader.getJsonCast(jsonMovie.getJSONObject("credits").toString());
-        List<cast> castList =new ArrayList<>();
+        List<Cast> castList =new ArrayList<>();
         for (int i = 0; i < castJsonArray.length(); i++) {
             JSONObject jsonobject = castJsonArray.getJSONObject(i);
-            cast postcp=JsonReader.parseCastArray(jsonobject);
+            Cast postcp=JsonReader.parseCastArray(jsonobject);
             castList.add(postcp);
         }
         tempMovie.setCastList(castList);
         
 		//get videos
         JSONArray videosJsonArray=JsonReader.getJsonVideo(jsonMovie.getJSONObject("videos").toString());
-        List<video> videoList =new ArrayList<>();
+        List<VideoObj> videoList =new ArrayList<>();
         for (int i = 0; i < videosJsonArray.length(); i++) {
             JSONObject jsonobject = videosJsonArray.getJSONObject(i);
-            video postcp=JsonReader.parseVideoArray(jsonobject);
+            VideoObj postcp=JsonReader.parseVideoArray(jsonobject);
             videoList.add(postcp);
         }
         tempMovie.setVideoList(videoList);
         
 		//get images
         JSONArray imagesJsonArray=JsonReader.getJsonImage(jsonMovie.getJSONObject("images").toString());
-        List<image> imageList =new ArrayList<>();
+        List<ImageObj> imageList =new ArrayList<>();
         for (int i = 0; i < imagesJsonArray.length(); i++) {
             JSONObject jsonobject = imagesJsonArray.getJSONObject(i);
-            image postcp=JsonReader.parseImageArray(jsonobject);
+            ImageObj postcp=JsonReader.parseImageArray(jsonobject);
             imageList.add(postcp);
         }
         tempMovie.setImageList(imageList);
         
         //get recommended movies
-        List<movieObj> recommendedArray = getMoviesFromUrl("https://api.themoviedb.org/3/movie/"+tempMovie.getId()+"/recommendations?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+        List<MovieObj> recommendedArray = getMoviesFromUrl("https://api.themoviedb.org/3/movie/"+tempMovie.getId()+"/recommendations?api_key=a092bd16da64915723b2521295da3254&language=en-US");
         
         tempMovie.setRecommendedMovies(recommendedArray);
         

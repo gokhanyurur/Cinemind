@@ -46,10 +46,13 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<c:forEach var="genre" items="${genreList}">
+								<!-- 
 					    			<c:url var="genreLink" value="/movies/genre">
 					                 	<c:param name="genreId" value="${genre.id}" />
 					                </c:url>
 				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    				-->
+				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
 				    			</c:forEach>
 							</ul>
 						</li>
@@ -281,7 +284,6 @@
 										<a href="${nowPlayingLink}">
 											<img src="${nowPlaying[i].poster_path}" alt="${nowPlaying[i].title}" class="img-responsive">
 										</a>
-										<!--  -->
 										<div class="ss-item-text" style="text-align: center;">
 											<h5>${nowPlaying[i].title}</h5>
 									    </div>			    
@@ -399,10 +401,12 @@
 				    		<div class="row">
 				    			<c:forEach var="genre" items="${genreList}">
 				    				<div class="col-md-12" style="padding-bottom: 5px;">
+				    				<!-- 
 					    			<c:url var="genreLink" value="/movies/genre">
 					                 	<c:param name="genreId" value="${genre.id}" />
-					                </c:url>
-				    					<a href="${genreLink}" class="filterText">${genre.title}</a>
+					                </c:url>     
+				    					<a href="${genreLink}" class="filterText">${genre.title}</a>-->
+				    					<a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}" class="filterText">${genre.title}</a>
 				    				</div>
 				    			</c:forEach>
 				    		</div>
@@ -414,10 +418,15 @@
 				    				<jsp:useBean id="now" class="java.util.Date" />
 									<fmt:formatDate var="year" value="${now}" pattern="yyyy" />
 				    				<c:forEach var="i" begin="0" end="26" step="1">
+				    				<!--  
 				    					<c:url var="yearLink" value="/movies/byYear">
 					                    	<c:param name="year" value="${year-i}"></c:param>
 					                    </c:url>
 									   <a href="${yearLink}" style="text-decoration:none;">
+									   		<button class="filterYearBt"><c:out value="${2018-i}"/></button>
+									   </a>
+									   -->
+									   <a href="/cinemind/movies/release/${2018-i}" style="text-decoration:none;">
 									   		<button class="filterYearBt"><c:out value="${2018-i}"/></button>
 									   </a>
 									</c:forEach>

@@ -31,10 +31,13 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<c:forEach var="genre" items="${genreList}">
+					    			<!-- 
 					    			<c:url var="genreLink" value="/movies/genre">
 					                 	<c:param name="genreId" value="${genre.id}" />
 					                </c:url>
 				    				<li><a href="${genreLink}">${genre.title}</a></li>
+				    				-->
+				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
 				    			</c:forEach>
 							</ul>
 						</li>

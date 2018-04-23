@@ -1,15 +1,15 @@
 package com.cinemind.objects;
 
-public class video {
+public class VideoObj {
 
     private String id,iso_639_1,iso_3166_1,key,name,site,type;
     private int size;
 
-    public video(){
+    public VideoObj(){
 
     }
 
-    public video(String id,String key,String name,String site,int size,String type){
+    public VideoObj(String id,String key,String name,String site,int size,String type){
         this.id=id;
         this.key=key;
         this.name=name;

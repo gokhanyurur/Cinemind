@@ -22,8 +22,8 @@ import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
 import com.cinemind.entity.Watchlist;
 import com.cinemind.json.JsonProcess;
-import com.cinemind.objects.genreObj;
-import com.cinemind.objects.movieObj;
+import com.cinemind.objects.GenreObj;
+import com.cinemind.objects.MovieObj;
 import com.cinemind.service.UserService;
 
 @Controller
@@ -37,7 +37,7 @@ public class UserController {
 		if(loginSession.getAttribute("loginedUser") !=null) {
 			
 			//GENRE LIST
-			List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+			List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
 			theModel.addAttribute("genreList", genreList);
 			
 			Users loginedUser = (Users) loginSession.getAttribute("loginedUser");	
@@ -47,21 +47,21 @@ public class UserController {
 			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
 			
 			//REMINDER LIST
-			List<movieObj> tempRemList = new ArrayList<movieObj>();
+			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
 			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
 				tempRemList.add(JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images"));
 			}
 			theModel.addAttribute("reminderList",tempRemList);
 			
 			//WATCHLIST
-			List<movieObj> tempWatchlist = new ArrayList<movieObj>();
+			List<MovieObj> tempWatchlist = new ArrayList<MovieObj>();
 			for(Watchlist list_obj:tempUser.getWatchlistMovies()) {
 				tempWatchlist.add(JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images"));
 			}
 			theModel.addAttribute("watchList",tempWatchlist);
 			
 			//FAVORITE LIST
-			List<movieObj> tempFavList = new ArrayList<movieObj>();
+			List<MovieObj> tempFavList = new ArrayList<MovieObj>();
 			for(Favorites_list list_obj:tempUser.getFavoriteMovies()) {
 				tempFavList.add(JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images"));
 			}
@@ -86,14 +86,14 @@ public class UserController {
 	public String registerUser(@ModelAttribute("user") Users theUser,Model theModel) {
 		if((String.valueOf(theUser.getPassword()).equals(String.valueOf(theUser.getPasswordConf()))) && !userService.checkUsername(theUser.getUsername())) {
 			userService.saveUser(theUser);
-			//userService.saveActivity(new User_activities(userService.getUserIdByLogin(theUser.getEmail(), theUser.getPassword()))," joined to cinemind"));
 			Users tempUser = userService.getUser(userService.getUserIdByLogin(theUser.getEmail(), theUser.getPassword()));
-			//System.out.println("TEST THE ID is "+ tempUser.getId());
 			userService.saveActivity(new User_activities(tempUser,"joined to Cinemind"));
+			
 			return "redirect:/";
 		}else {
 			System.out.println("Username is already exist or passwords are not matching.");
 			theModel.addAttribute("registerMessage", "Username is already exist or passwords are not matching.");
+			
 			return "redirect:/signup";
 		}
 
@@ -125,13 +125,13 @@ public class UserController {
 			@RequestParam(required=false, value="addList") String addList) throws JSONException, IOException {
 		
 		//MOVIE WILL BE SHOWN
-		movieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+		MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
 		theModel.addAttribute("movie",tempMovie);
 		
 		System.out.println("Day Left "+tempMovie.getDayLeft());
 		
 		//GENRE LIST
-		List<genreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
 		theModel.addAttribute("genreList", genreList);
 		
 		Users loginedUser = new Users();;

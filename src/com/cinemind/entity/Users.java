@@ -16,7 +16,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.json.JSONException;
 
 import com.cinemind.json.JsonProcess;
-import com.cinemind.objects.movieObj;
+import com.cinemind.objects.MovieObj;
 
 @Entity
 @Table(name="users")

@@ -1,6 +1,6 @@
 package com.cinemind.objects;
 
-public class cast {
+public class Cast {
     private int cast_id;
     private String character;
     private String credit_id;
@@ -10,10 +10,10 @@ public class cast {
     private int order;
     private String imagePath;
 
-    public cast(){
+    public Cast(){
 
     }
-    public cast(int id,String name, String imagePath, String character){
+    public Cast(int id,String name, String imagePath, String character){
         this.id=id;
         this.name = name;
         this.imagePath =imagePath;
