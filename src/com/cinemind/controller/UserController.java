@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cinemind.entity.Favorites_list;
@@ -33,7 +32,9 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping("/profile")
-	public String userProfile(HttpSession loginSession, Model theModel) throws JSONException, IOException {
+	public String userProfile(HttpSession loginSession, Model theModel, 
+			@RequestParam(required=false, value="movieId") String movieId,
+			@RequestParam(required=false, value="removeList") String list) throws JSONException, IOException {
 		if(loginSession.getAttribute("loginedUser") !=null) {
 			
 			//GENRE LIST
@@ -43,9 +44,22 @@ public class UserController {
 			Users loginedUser = (Users) loginSession.getAttribute("loginedUser");	
 			Users tempUser = userService.getUser(loginedUser.getId());
 			
-			//USER REGISTER TIME
-			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
-			
+			//REMOVE FROM LIST
+			if(list != null && movieId != null) {
+				MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(list.equals("watchlist")) {
+					userService.removeWatchlist(new Watchlist(tempUser,Integer.parseInt(movieId)));
+					userService.saveActivity(new User_activities(tempUser,"removed from the watchlist "+tempMovie.getTitle()));
+				}else if(list.equals("reminderlist")) {
+					userService.removeReminder(new Reminder_list(tempUser,Integer.parseInt(movieId)));
+					userService.saveActivity(new User_activities(tempUser,"removed from the reminder list "+tempMovie.getTitle()));
+				}else if(list.equals("favoriteslist")) {
+					userService.removeFavorites(new Favorites_list(tempUser,Integer.parseInt(movieId)));
+					userService.saveActivity(new User_activities(tempUser,"removed from the favorites "+tempMovie.getTitle()));
+				}
+				return "redirect:/profile";
+			}
+						
 			//REMINDER LIST
 			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
 			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
@@ -73,6 +87,9 @@ public class UserController {
 				tempActivityList.add(list_obj);
 			}
 			theModel.addAttribute("userActivityList",tempActivityList);
+						
+			//USER REGISTER TIME
+			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
 								
 			return "profile";
 		}
@@ -179,7 +196,7 @@ public class UserController {
 		
 		return "view-movie";
 	}
-	
+		
 	public boolean isWatchlistContain(Users user,int movieId) {
 		boolean contain = false;
 		

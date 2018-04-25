@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>${genreTitle} Movies</title>
+	<title>Results</title>
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/navbar.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/texts.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css" />
@@ -91,12 +91,17 @@
             	<div class="col-md-12" style="margin-top: -20px;">
             		<div class="col-md-12">
             			<div class="page-header" style="padding-bottom: 0px;">
-							<h3 style="color: #FF4D4D; font-weight: normal;">${genreTitle}</h3>
+							<h3 style="color: #FF4D4D; font-weight: normal;">Results found: ${param.q}</h3>
 						</div>
-            		</div>					
-					<div class="col-md-12 hidden-xs hidden-sm">
+            		</div>
+            		<c:if test="${fn:length(searchResultList) < 1}">
+            			<div class="col-md-12" style="min-height: 630px;">
+            				<h3>We are sorry we could not find any result for : ${param.q}</h3>
+            			</div>	
+            		</c:if>
+					<div class="col-md-12 hidden-xs hidden-sm" style="min-height: 630px;">
             			<ul class="thumbnails" style="margin-left: -50px;"> 
-	            			<c:forEach var="tempMovie" items="${genreMoviesList}">
+	            			<c:forEach var="tempMovie" items="${searchResultList}">
 			                	<c:url var="movieLink" value="/movies/viewMovie">
 			                    	<c:param name="movieId" value="${tempMovie.id}" />
 			                    </c:url>
@@ -110,7 +115,7 @@
 			        	</ul>
             		</div>
 					<div class="col-xs-12 hidden-md hidden-lg">
-			        	<c:forEach var="tempMovie" items="${genreMoviesList}">
+			        	<c:forEach var="tempMovie" items="${searchResultList}">
 							<c:url var="movieLink" value="/movies/viewMovie">
 				            	<c:param name="movieId" value="${tempMovie.id}"></c:param>
 				            </c:url>
@@ -126,15 +131,15 @@
 					</div>
             	</div>
 			</div>
-			<div class="row">
-				<c:if test="${(fn:length(genreMoviesList) > 0) and (totalPages > 1)}">
+			<c:if test="${(fn:length(searchResultList) > 0) and (totalPages > 1)}">
+				<div class="row">
 					<div class="col-md-12" align="center">
-						<a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genreTitle),' ', '')}?page=1" class="pageText" style="margin-right: 5px;">1</a>
+						<a href="/cinemind/search?page=1&q=${param.q}" class="pageText" style="margin-right: 5px;">1</a>
 						<c:if test="${param.page > 5}">
 							<label class="pageTextNoLink" style="margin-right: 5px;">...</label>
 						</c:if>
 				    	<c:forEach var="i" begin="2" end="${totalPages}" step="1">
-							<c:url var="pageLink" value="/movies/genre/${fn:replace(fn:toLowerCase(genreTitle),' ', '')}">
+							<c:url var="pageLink" value="/search?q=${param.q}">
 					        	<c:param name="page" value="${i}"></c:param>
 					        </c:url>
 							<c:if test="${(i>param.page-3) and (i < param.page+3)}">
@@ -150,11 +155,11 @@
 							</c:if>
 						</c:forEach>
 						<c:if test="${param.page != totalPages}">
-							<a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genreTitle),' ', '')}?page=${totalPages}" class="pageText" style="margin-right: 5px;">${totalPages}</a>
+							<a href="/cinemind/search?page=${totalPages}&q=${param.q}" class="pageText" style="margin-right: 5px;">${totalPages}</a>
 						</c:if>	
 					</div>
-				</c:if>
-			</div>
+				</div>
+			</c:if>
 		</div>
 	</div>
 </body>

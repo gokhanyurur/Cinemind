@@ -81,66 +81,36 @@ public class MoviesController {
 	}
 	
 	@GetMapping("movies/release/{releaseYear}")
-	public String releaseYearMovies(Model theModel,@PathVariable String releaseYear, @RequestParam(required=false, value="genreId") String genreId, @RequestParam(required=false, value="page") String page) throws JSONException, IOException {
+	public String releaseYearMovies(Model theModel,@PathVariable String releaseYear, 
+			@RequestParam(required=false, value="genreId") String genreId, 
+			@RequestParam(required=false, value="page") String page,
+			@RequestParam(required=false, value="sortBy") String sortBy) throws JSONException, IOException {
 		
 		int	totalPages = 1;
 		String currentLink = "";
 		
 		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
 		theModel.addAttribute("genreList", genreList);
+		
+		if(page == null ) {
+			page = "1";
+		}
+		
+		if(sortBy != null) {
+			sortBy = "&sort_by="+sortBy;
+		}
 				
 		if(genreId !=null) {
-			if(page != null) {
-				//page - genre
-				currentLink = "http://api.themoviedb.org/3/discover/movie?with_genres="+genreId+"&primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254&page="+page;
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}else {
-				//no page - genre
-				currentLink = "http://api.themoviedb.org/3/discover/movie?with_genres="+genreId+"&primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254";
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}
-		}else {
-			if(page != null) {
-				//no genre - page
-				currentLink = "http://api.themoviedb.org/3/discover/movie?primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254&page"+page;
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}else {
-				//no genre - no page
-				currentLink = "http://api.themoviedb.org/3/discover/movie?primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254";
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}
+			currentLink = "http://api.themoviedb.org/3/discover/movie?with_genres="+genreId+"&primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254&page="+page+sortBy;
+			List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
+			theModel.addAttribute("releaseYearMovieList", movieList);
 		}
-		
-		if(page != null ) {
-			if(genreId != null) {
-				//page - genre
-				currentLink = "http://api.themoviedb.org/3/discover/movie?with_genres="+genreId+"&primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254&page="+page;
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}else {
-				//page - no genre
-				currentLink = "http://api.themoviedb.org/3/discover/movie?primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254&page="+page;
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}
-		}else {
-			if(genreId != null) {
-				//no page - genre
-				currentLink = "http://api.themoviedb.org/3/discover/movie?with_genres="+genreId+"&primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254";
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}else {
-				//no page - no genre
-				currentLink = "http://api.themoviedb.org/3/discover/movie?primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254";
-				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
-				theModel.addAttribute("releaseYearMovieList", movieList);
-			}
+		else{
+			currentLink = "http://api.themoviedb.org/3/discover/movie?primary_release_year="+releaseYear+"&api_key=a092bd16da64915723b2521295da3254&page"+page+sortBy;
+			List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
+			theModel.addAttribute("releaseYearMovieList", movieList);
 		}
-		
+				
 		totalPages = JsonProcess.getTotalPage(currentLink);
 		theModel.addAttribute("totalPages",totalPages);
 		
@@ -148,6 +118,34 @@ public class MoviesController {
 		
 		return "releaseYear-movie";
 		
+	}
+	
+	@GetMapping("/search")
+	public String searchMovie(Model theModel, @RequestParam(required=false, value="q") String query, @RequestParam(required=false, value="page") String page) throws IOException, JSONException {
+		
+		//https://api.themoviedb.org/3/search/movie?api_key=a092bd16da64915723b2521295da3254&query="+searchViewText+"&page="+page
+		String currentLink;
+		int totalPages = 0;
+		
+		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("genreList", genreList);
+		
+		if(query != null) {
+			query = query.replace(" ", "%2B");
+			if(page != null) {
+				currentLink = "https://api.themoviedb.org/3/search/movie?api_key=a092bd16da64915723b2521295da3254&query="+query+"&page="+page;
+				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
+				theModel.addAttribute("searchResultList", movieList);
+			}else {
+				currentLink = "https://api.themoviedb.org/3/search/movie?api_key=a092bd16da64915723b2521295da3254&query="+query;
+				List<MovieObj> movieList = JsonProcess.getMoviesFromUrl(currentLink);
+				theModel.addAttribute("searchResultList", movieList);
+			}
+			totalPages = JsonProcess.getTotalPage(currentLink);
+			theModel.addAttribute("totalPages",totalPages);
+		}		
+		
+		return "search";
 	}
 
 

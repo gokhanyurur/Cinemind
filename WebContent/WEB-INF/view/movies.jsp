@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,6 +23,9 @@
 	
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/recommendedmovies.css" />
 	<script src="${pageContext.request.contextPath}/resources/js/recommendedmovies.jsp"></script>
+	
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
+	
 	
 	<script>
 	     $(document).ready(function(){
@@ -47,12 +51,6 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<c:forEach var="genre" items="${genreList}">
-					    			<!-- 
-					    			<c:url var="genreLink" value="/movies/genre">
-					                 	<c:param name="genreId" value="${genre.id}" />
-					                </c:url>
-				    				<li><a href="${genreLink}">${genre.title}</a></li>
-				    				-->
 				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
 				    			</c:forEach>
 							</ul>
@@ -61,14 +59,14 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li style="padding-left: 5px; padding-right: 5px;">
-                            <form class="navbar-form" role="search">
+                            <form:form action="/cinemind/search" modelAttribute="q" method="GET" class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="q">
+                                    <input type="text" class="form-control" placeholder="Search" name="q" required>
                                     <div class="input-group-btn">
                                         <button class="btn btn-danger" type="submit" style="height: 34px; background: #ff4d4d"><i class="glyphicon glyphicon-search"></i></button>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
          					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>

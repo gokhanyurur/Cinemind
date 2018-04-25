@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,6 +26,9 @@
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tables.css" />
 		<script src="${pageContext.request.contextPath}/resources/js/movieListTables.js"></script>
 		
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
+		
+		
 		<script>
 		     $(document).ready(function(){
 		        $('.dropdown-toggle').dropdown()
@@ -47,12 +51,6 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<c:forEach var="genre" items="${genreList}">
-					    			<!-- 
-					    			<c:url var="genreLink" value="/movies/genre">
-					                 	<c:param name="genreId" value="${genre.id}" />
-					                </c:url>
-				    				<li><a href="${genreLink}">${genre.title}</a></li>
-				    				-->
 				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
 				    			</c:forEach>
 							</ul>
@@ -61,14 +59,14 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li style="padding-left: 5px; padding-right: 5px;">
-                            <form class="navbar-form" role="search">
+                            <form:form action="/cinemind/search" modelAttribute="q" method="GET" class="navbar-form" role="search">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="q">
+                                    <input type="text" class="form-control" placeholder="Search" name="q" required>
                                     <div class="input-group-btn">
                                         <button class="btn btn-danger" type="submit" style="height: 34px; background: #ff4d4d"><i class="glyphicon glyphicon-search"></i></button>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
          					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
@@ -156,7 +154,7 @@
 									                        <td>${movie.id}</td>
 									                        <td>${movie.title}</td>
 									                        <td>${movie.release_date}</td>
-									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+									                        <td class="text-center"><a href="/cinemind/profile?removeList=reminderlist&movieId=${movie.id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
 								                    </c:if>
 							                    </c:forEach>
@@ -188,7 +186,7 @@
 									                        <td>${movie.id}</td>
 									                        <td>${movie.title}</td>
 									                        <td>${movie.release_date}</td>
-									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+									                        <td class="text-center"><a href="/cinemind/profile?removeList=watchlist&movieId=${movie.id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
 								                    </c:if>
 							                    </c:forEach>
@@ -220,7 +218,7 @@
 									                        <td>${movie.id}</td>
 									                        <td>${movie.title}</td>
 									                        <td>${movie.release_date}</td>
-									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+									                        <td class="text-center"><a href="/cinemind/profile?removeList=favorites&movieId=${movie.id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
 								                    </c:if>
 							                    </c:forEach>
