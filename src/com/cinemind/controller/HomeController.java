@@ -65,7 +65,7 @@ public class HomeController {
 	}
 		
 	@RequestMapping("/login")
-	public String login(Model theModel,@RequestParam(name="loginMessage",required = false) String message, HttpSession loginSession) throws JSONException, IOException {
+	public String showLoginForm(Model theModel,@RequestParam(name="loginMessage",required = false) String message, HttpSession loginSession) throws JSONException, IOException {
 		if(loginSession.getAttribute("loginedUser") == null) {
 			Users theUser = new Users();
 			theModel.addAttribute("user",theUser);

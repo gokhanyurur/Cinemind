@@ -99,6 +99,108 @@ public class UserController {
 	
 	}
 	
+	@GetMapping("/profile/edit-profile")
+	public String editProfile(HttpSession loginSession,Model theModel, @RequestParam(name="editMessage",required = false) String message) throws JSONException, IOException {
+		if(loginSession.getAttribute("loginedUser") != null) {
+			
+			List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+			theModel.addAttribute("genreList", genreList);
+			
+			Users loginedUser = (Users) loginSession.getAttribute("loginedUser");	
+			Users tempUser = userService.getUser(loginedUser.getId());
+			
+			theModel.addAttribute("editMessage", message);
+			
+			//USER REGISTER TIME
+			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
+			
+			theModel.addAttribute("user",tempUser);
+						
+			return "edit-profile";
+		}else {
+			return "redirect:/profile";
+		}
+	}
+	
+	@PostMapping("/profile/editUser")
+	public String editUser(@ModelAttribute("user") Users theUser,Model theModel,HttpSession loginSession) {
+		
+		Users loginedUser = (Users) loginSession.getAttribute("loginedUser");
+		Users userInDB = userService.getUser(loginedUser.getUsername());
+
+		if(!loginedUser.getUsername().equals(theUser.getUsername()) && userService.checkUsername(theUser.getUsername())){
+			theModel.addAttribute("editMessage", "Username is already exist.");
+		}else {
+			userInDB.setUsername(theUser.getUsername());
+		}
+		
+		if(!loginedUser.getEmail().equals(theUser.getEmail())) {
+			userInDB.setEmail(theUser.getEmail());
+			}
+		if(theUser.getFirstName() !=null) {
+			userInDB.setFirstName(theUser.getFirstName());
+		}
+		if(theUser.getLastName() != null) {
+			userInDB.setLastName(theUser.getLastName());
+		}
+		if(theUser.getLocation() != null) {
+			userInDB.setLocation(theUser.getLocation());
+		}
+		userService.saveUser(userInDB);
+		loginSession.setAttribute("loginedUser", userInDB);
+		userService.saveActivity(new User_activities(userInDB,"updated your profile."));
+		
+		
+		return "redirect:/profile/edit-profile";
+	}
+	
+	@GetMapping("/profile/password")
+	public String changePassword(HttpSession loginSession,Model theModel, @RequestParam(name="changePassMsgPositive",required = false) String positiveMsg, @RequestParam(name="changePassMsgNegative",required = false) String negativeMsg) throws JSONException, IOException {
+		if(loginSession.getAttribute("loginedUser") != null) {
+			
+			List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+			theModel.addAttribute("genreList", genreList);
+			
+			Users loginedUser = (Users) loginSession.getAttribute("loginedUser");	
+			Users tempUser = userService.getUser(loginedUser.getId());
+			
+			theModel.addAttribute("changePassMsgPositive", positiveMsg);
+			theModel.addAttribute("changePassMsgNegative", negativeMsg);
+			
+			//USER REGISTER TIME
+			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
+			
+			theModel.addAttribute("user",tempUser);
+						
+			return "edit-password";
+		}else {
+			return "redirect:/profile";
+		}
+	}
+	
+	@PostMapping("/profile/changePass")
+	public String changePass(@ModelAttribute("user") Users theUser,Model theModel,HttpSession loginSession) {
+		
+		Users loginedUser = (Users) loginSession.getAttribute("loginedUser");
+		Users userInDB = userService.getUser(loginedUser.getUsername());
+		
+		boolean oldPassMatch = (userInDB.getPassword().equals(theUser.getPasswordConf()));
+		boolean newPassMatch = (theUser.getNewPass().equals(theUser.getNewPassConf()));
+
+		//check if everything OK change pass
+		if(oldPassMatch && newPassMatch) {
+			userInDB.setPassword(theUser.getNewPass());
+			userService.saveUser(userInDB);
+			loginSession.setAttribute("loginedUser", userInDB);
+			userService.saveActivity(new User_activities(userInDB,"updated your password."));
+			theModel.addAttribute("changePassMsgPositive", "You have changed your password successfully.");
+		}else {
+			theModel.addAttribute("changePassMsgNegative", "Passwords are not matching.");
+		}
+				
+		return "redirect:/profile/password";
+	}
+	
 	@PostMapping("/registerUser")
 	public String registerUser(@ModelAttribute("user") Users theUser,Model theModel) {
 		if((String.valueOf(theUser.getPassword()).equals(String.valueOf(theUser.getPasswordConf()))) && !userService.checkUsername(theUser.getUsername())) {

@@ -34,7 +34,13 @@ public class Users {
 	private String password;
 
 	@Transient
-	private String passwordConf;	
+	private String passwordConf;
+	
+	@Transient
+	private String newPass;
+	
+	@Transient
+	private String newPassConf;	
 	
 	@Column(name="email")
 	private String email;
@@ -165,8 +171,6 @@ public class Users {
 		this.passwordConf = passwordConf;
 	}
 	
-	
-
 	public List<User_activities> getActivities() {
 		return activities;
 	}
@@ -280,6 +284,24 @@ public class Users {
 			}
 		}		
 		return result;
+	}
+	
+	
+
+	public String getNewPass() {
+		return newPass;
+	}
+
+	public void setNewPass(String newPass) {
+		this.newPass = newPass;
+	}
+
+	public String getNewPassConf() {
+		return newPassConf;
+	}
+
+	public void setNewPassConf(String newPassConf) {
+		this.newPassConf = newPassConf;
 	}
 
 	@Override

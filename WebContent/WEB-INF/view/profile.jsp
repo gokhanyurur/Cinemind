@@ -55,7 +55,7 @@
 				    			</c:forEach>
 							</ul>
 						</li>
-                        <li><a href="#" onclick="window.location.href='movies'; return false;">Movies</a></li>  
+                        <li><a href="/cinemind/movies">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li style="padding-left: 5px; padding-right: 5px;">
@@ -69,8 +69,8 @@
                             </form:form>
                         </li>
                         <c:if test = "${loginedUser.username == null}">
-         					<li><a href="#" onclick="window.location.href='signup'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
-                        	<li><a href="#" onclick="window.location.href='login'; return false;"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
+         					<li><a href="/cinemind/signup"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
+                        	<li><a href="/cinemind/login"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
                         	<li class="dropdown">
@@ -80,8 +80,8 @@
 									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
 								</ul>
 							</li>
-         					<li class="active"><a href="#" onclick="window.location.href='profile'; return false;"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
-                        	<li><a href="#" onclick="window.location.href='logout'; return false;"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
+         					<li class="active"><a href="/cinemind/profile"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
+                        	<li><a href="/cinemind/logout"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
      					</c:if>
                     </ul>
                 </div>
@@ -106,9 +106,9 @@
 			<div class="row" style="background-color: white;">
 				<div class="container" align="center" style="padding-top: 10px; padding-bottom: 10px;">
 					<nav>
-						<a href="#" class="profileNavBtn profileActivePage">PROFILE</a>
-						<a href="#" class="profileNavBtn">EDIT PROFILE</a>
-						<a href="#" class="profileNavBtn">PASSWORD</a>
+						<a href="/cinemind/profile" class="profileNavBtn profileActivePage">PROFILE</a>
+						<a href="/cinemind/profile/edit-profile" class="profileNavBtn">EDIT PROFILE</a>
+						<a href="/cinemind//profile/password" class="profileNavBtn">PASSWORD</a>
 						<a href="#" onclick="window.location.href='logout'; return false;" class="profileNavBtn">LOGOUT</a>
 					</nav>
 				</div>
