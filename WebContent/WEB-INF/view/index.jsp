@@ -12,6 +12,8 @@
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/texts.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css" />
 	
+	<link href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" rel="stylesheet">
+	
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -36,24 +38,24 @@
 </head>
 <body>
 	<div class="row">
-            <nav class="navbar navbar-inverse navbar-static-top">
-                <div class="container">
-                    <div class="navbar-header"> 
-                        <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
-                            <img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
-                            <span style="display: inline-block;">CINEMIND</span>
-                        </a>     
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="/cinemind">Home</a></li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
-							<ul class="dropdown-menu" role="menu">
-								<c:forEach var="genre" items="${genreList}">
-				    				<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
-				    			</c:forEach>
-							</ul>
-						</li>
+		<nav class="navbar navbar-inverse navbar-static-top">
+        	<div class="container">
+            	<div class="navbar-header"> 
+                	<a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
+                    	<img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;"/>
+                    	<span style="display: inline-block;">CINEMIND</span>
+                    </a>     
+                </div>
+                <ul class="nav navbar-nav">
+                	<li class="active"><a href="/cinemind">Home</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Genres <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<c:forEach var="genre" items="${genreList}">
+				    			<li><a href="/cinemind/movies/genre/${fn:replace(fn:toLowerCase(genre.title),' ', '')}">${genre.title}</a></li>
+				  			</c:forEach>
+						</ul>
+					</li>
                         <li><a href="/cinemind/movies">Movies</a></li>  
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -67,24 +69,30 @@
                                 </div>
                             </form:form>
                         </li>
-                        <c:if test = "${loginedUser.username == null}">
-         					<li><a href="/cinemind/signup"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
-                        	<li><a href="/cinemind/login"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
-     					</c:if>
-                        <c:if test = "${loginedUser.username != null}">
-                        	<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">15</span></a>
-								<ul class="dropdown-menu" role="menu">
-									<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> page <span class="badge">Video</span> sayfasinda etiketlendi.</a></li>
-									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
-								</ul>
-							</li>
-         					<li><a href="/cinemind/profile"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
-                        	<li><a href="/cinemind/logout"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
-     					</c:if>
-                    </ul>
-                </div>
-            </nav>
+                    <c:if test = "${loginedUser.username == null}">
+         				<li><a href="/cinemind/signup"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> Sign up</a></li>
+                    	<li><a href="/cinemind/login"><span class="glyphicon glyphicon-log-in" style="color: #ff4d4d"></span> Login</a></li>
+     				</c:if>
+                    <c:if test = "${loginedUser.username != null}">
+                        <li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">${fn:length(notifications)}</span></a>
+							<ul class="dropdown-menu" role="menu">
+								<c:if test="${fn:length(notifications)>0}">
+									<c:forEach var="notification" items="${notifications}">
+										<li><a href="/cinemind/movies/viewMovie?movieId=${notification.movieId}"><i class="far fa-calendar-check"></i> <span class="badge">${notification.movieTitle}</span>${notification.bodyText}<span class="badge">${notification.dayLeft}</span></a></li>
+									</c:forEach>
+								</c:if>
+								<c:if test="${fn:length(notifications)<1}">
+									<li><a href="#">There is no notification.</a></li>
+								</c:if>
+							</ul>
+						</li>
+         				<li><a href="/cinemind/profile"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
+                    	<li><a href="/cinemind/logout"><span class="glyphicon glyphicon-log-out" style="color: #ff4d4d"></span> Logout</a></li>
+     				</c:if>
+            	</ul>
+        	</div>
+    	</nav>
 	</div>
         <div class="row" style="margin-top: -20px; background-color: #e5e5e5">
         	<div class="container" style="background-color: white">
@@ -199,6 +207,7 @@
 								<div class="page-header">
 									<h3 style="color: #FF4D4D; font-weight: normal; padding-left: 5px; margin-bottom: 0px;">Now Playing</h3>
 								</div>
+								<nav>
 									<ul class="control-box pager" style="margin-left: -10px; margin-top: -55px;">
 										<li><a data-slide="prev" href="#myCarouselnowP" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
 										<li><a data-slide="next" href="#myCarouselnowP" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>
@@ -484,5 +493,6 @@
            		</div>
             </div>
         </div>
+        <jsp:include page="footer.jsp"/>
 </body>
 </html>

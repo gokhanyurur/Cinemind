@@ -13,6 +13,8 @@
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css" />
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/images.css" />
 		
+		<link href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" rel="stylesheet">
+		
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -27,6 +29,7 @@
 		<script src="${pageContext.request.contextPath}/resources/js/movieListTables.js"></script>
 		
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
+		
 		
 		
 		<script>
@@ -74,10 +77,16 @@
      					</c:if>
                         <c:if test = "${loginedUser.username != null}">
                         	<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">15</span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-fw fa-bell-o"></i> Notifications <span class="badge">${fn:length(notifications)}</span></a>
 								<ul class="dropdown-menu" role="menu">
-									<li><a href="#"><i class="fa fa-fw fa-tag"></i> <span class="badge">Music</span> page <span class="badge">Video</span> sayfasinda etiketlendi.</a></li>
-									<li><a href="#"><i class="fa fa-fw fa-thumbs-o-up"></i> <span class="badge">Music</span> sayfasinda iletiniz begenildi.</a></li>
+									<c:if test="${fn:length(notifications)>0}">
+										<c:forEach var="notification" items="${notifications}">
+											<li><a href="/cinemind/movies/viewMovie?movieId=${notification.movieId}"><i class="far fa-calendar-check"></i> <span class="badge">${notification.movieTitle}</span>${notification.bodyText}<span class="badge">${notification.dayLeft}</span></a></li>
+										</c:forEach>
+									</c:if>
+									<c:if test="${fn:length(notifications)<1}">
+										<li><a href="#">There is no notification.</a></li>
+									</c:if>
 								</ul>
 							</li>
          					<li class="active"><a href="/cinemind/profile"><span class="glyphicon glyphicon-user" style="color: #ff4d4d"></span> <c:out value = "${loginedUser.username}"/></a></li>
@@ -295,7 +304,7 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
+		<jsp:include page="footer.jsp"/>
     </body>
 </html>

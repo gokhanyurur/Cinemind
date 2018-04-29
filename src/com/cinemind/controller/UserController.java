@@ -23,13 +23,14 @@ import com.cinemind.entity.Watchlist;
 import com.cinemind.json.JsonProcess;
 import com.cinemind.objects.GenreObj;
 import com.cinemind.objects.MovieObj;
+import com.cinemind.objects.Notification;
 import com.cinemind.service.UserService;
 
 @Controller
 public class UserController {
 	
 	@Autowired
-	private UserService userService;
+	public UserService userService;
 	
 	@GetMapping("/profile")
 	public String userProfile(HttpSession loginSession, Model theModel, 
@@ -43,6 +44,7 @@ public class UserController {
 			
 			Users loginedUser = (Users) loginSession.getAttribute("loginedUser");	
 			Users tempUser = userService.getUser(loginedUser.getId());
+			
 			
 			//REMOVE FROM LIST
 			if(list != null && movieId != null) {
@@ -63,7 +65,10 @@ public class UserController {
 			//REMINDER LIST
 			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
 			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
-				tempRemList.add(JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images"));
+				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(movie.getDayLeft()>=0) {
+					tempRemList.add(movie);
+				}
 			}
 			theModel.addAttribute("reminderList",tempRemList);
 			
@@ -90,6 +95,11 @@ public class UserController {
 						
 			//USER REGISTER TIME
 			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
+			
+			//loginSession.setAttribute("loginedUser", tempUser);
+			
+			List<Notification> notifications = pushNotifications(tempRemList);			
+			theModel.addAttribute("notifications",notifications);
 								
 			return "profile";
 		}
@@ -99,6 +109,24 @@ public class UserController {
 	
 	}
 	
+	public List<Notification> pushNotifications(List<MovieObj> tempRemList) {
+		List<Notification> tempList = new ArrayList<>();
+		
+		for(MovieObj movie:tempRemList) {
+			if(movie.getDayLeft() < 8) {
+				if(movie.getDayLeft()>1) {
+					tempList.add(new Notification(movie.getId(),movie.getTitle()," will release in ",movie.getDayLeft()+" days."));
+				}else if(movie.getDayLeft() == 1) {
+					tempList.add(new Notification(movie.getId(),movie.getTitle()," will tomorrow."));
+				}else if(movie.getDayLeft() == 0) {
+					tempList.add(new Notification(movie.getId(),movie.getTitle()," is releasing today."));
+				}				
+			}
+		}
+		
+		return tempList;
+	}
+
 	@GetMapping("/profile/edit-profile")
 	public String editProfile(HttpSession loginSession,Model theModel, @RequestParam(name="editMessage",required = false) String message) throws JSONException, IOException {
 		if(loginSession.getAttribute("loginedUser") != null) {
@@ -115,6 +143,17 @@ public class UserController {
 			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
 			
 			theModel.addAttribute("user",tempUser);
+			
+			//REMINDER LIST
+			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
+			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
+				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(movie.getDayLeft()>=0) {
+					tempRemList.add(movie);
+				}
+			}
+			List<Notification> notifications = pushNotifications(tempRemList);			
+			theModel.addAttribute("notifications",notifications);
 						
 			return "edit-profile";
 		}else {
@@ -171,6 +210,17 @@ public class UserController {
 			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
 			
 			theModel.addAttribute("user",tempUser);
+			
+			//REMINDER LIST
+			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
+			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
+				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(movie.getDayLeft()>=0) {
+					tempRemList.add(movie);
+				}
+			}
+			List<Notification> notifications = pushNotifications(tempRemList);			
+			theModel.addAttribute("notifications",notifications);
 						
 			return "edit-password";
 		}else {
@@ -259,43 +309,53 @@ public class UserController {
 		if(loginSession.getAttribute("loginedUser") !=null) {
 			loginedUser = (Users) loginSession.getAttribute("loginedUser");		
 			tempUser = userService.getUser(loginedUser.getId());
-		}		
-		
-		
-		//ADD REMOVE TO THE LIST
-		if(addList !=null) {
-			if(addList.equals("favorites") && !isFavoritesListContain(tempUser, movieId)) {
-				userService.addFavorites(new Favorites_list(tempUser,movieId));
-				userService.saveActivity(new User_activities(tempUser,"added to the favorites "+tempMovie.getTitle()));
-			}
-			if(addList.equals("watchlist") && !isWatchlistContain(tempUser, movieId)) {
-				userService.addWatchlist(new Watchlist(tempUser,movieId));
-				userService.saveActivity(new User_activities(tempUser,"added to the watchlist "+tempMovie.getTitle()));
-			}
-			if(addList.equals("reminder") && !isReminderListContain(tempUser, movieId)) {
-				userService.addReminder(new Reminder_list(tempUser,movieId));
-				userService.saveActivity(new User_activities(tempUser,"added to the reminder list "+tempMovie.getTitle()));
+			
+			//ADD REMOVE TO THE LIST
+			if(addList !=null) {
+				if(addList.equals("favorites") && !isFavoritesListContain(tempUser, movieId)) {
+					userService.addFavorites(new Favorites_list(tempUser,movieId));
+					userService.saveActivity(new User_activities(tempUser,"added to the favorites "+tempMovie.getTitle()));
+				}
+				if(addList.equals("watchlist") && !isWatchlistContain(tempUser, movieId)) {
+					userService.addWatchlist(new Watchlist(tempUser,movieId));
+					userService.saveActivity(new User_activities(tempUser,"added to the watchlist "+tempMovie.getTitle()));
+				}
+				if(addList.equals("reminder") && !isReminderListContain(tempUser, movieId)) {
+					userService.addReminder(new Reminder_list(tempUser,movieId));
+					userService.saveActivity(new User_activities(tempUser,"added to the reminder list "+tempMovie.getTitle()));
+				}
+				
+				if(addList.equals("removeFavorites")) {
+					userService.removeFavorites(new Favorites_list(tempUser,movieId));
+					userService.saveActivity(new User_activities(tempUser,"removed from the favorites "+tempMovie.getTitle()));
+				}
+				if(addList.equals("removeWatchlist")) {
+					userService.removeWatchlist(new Watchlist(tempUser,movieId));
+					userService.saveActivity(new User_activities(tempUser,"removed from the watchlist "+tempMovie.getTitle()));
+				}
+				if(addList.equals("removeReminder")) {
+					userService.removeReminder(new Reminder_list(tempUser,movieId));
+					userService.saveActivity(new User_activities(tempUser,"removed from the reminder list "+tempMovie.getTitle()));
+				}
+				return "redirect:/movies/viewMovie?movieId="+tempMovie.getId();
 			}
 			
-			if(addList.equals("removeFavorites")) {
-				userService.removeFavorites(new Favorites_list(tempUser,movieId));
-				userService.saveActivity(new User_activities(tempUser,"removed from the favorites "+tempMovie.getTitle()));
+			//REMINDER LIST
+			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
+			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
+				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(movie.getDayLeft()>=0) {
+					tempRemList.add(movie);
+				}
 			}
-			if(addList.equals("removeWatchlist")) {
-				userService.removeWatchlist(new Watchlist(tempUser,movieId));
-				userService.saveActivity(new User_activities(tempUser,"removed from the watchlist "+tempMovie.getTitle()));
-			}
-			if(addList.equals("removeReminder")) {
-				userService.removeReminder(new Reminder_list(tempUser,movieId));
-				userService.saveActivity(new User_activities(tempUser,"removed from the reminder list "+tempMovie.getTitle()));
-			}
-			return "redirect:/movies/viewMovie?movieId="+tempMovie.getId();
-		}
-		
-		theModel.addAttribute("userWatchList",tempUser.getWatchlistMovies());
-		theModel.addAttribute("userFavList",tempUser.getFavoriteMovies());
-		theModel.addAttribute("userReminderList",tempUser.getReminderMovies());
-		
+			List<Notification> notifications = pushNotifications(tempRemList);			
+			theModel.addAttribute("notifications",notifications);
+			
+			theModel.addAttribute("userWatchList",tempUser.getWatchlistMovies());
+			theModel.addAttribute("userFavList",tempUser.getFavoriteMovies());
+			theModel.addAttribute("userReminderList",tempUser.getReminderMovies());
+		}		
+				
 		return "view-movie";
 	}
 		

@@ -6,7 +6,10 @@
 	font-weight: bold;
 }
 .white{
-    color:white; 
+    color: white; 
+}
+.footer-text{
+	color: #f4f4f4;
 }
 .indexAlphabet{
 	color: #383838;
