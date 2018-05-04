@@ -27,6 +27,32 @@ public class MovieDAOImpl implements MovieDAO{
 		
 		return tempList;
 	}
+
+	@Override
+	public double getVoteAverage(int movieId) {
+		Session currentSession = userDAOImpl.sessionFactory.getCurrentSession();
+		
+		Query query = currentSession.createQuery("select avg(review.vote) FROM Movie_reviews review where review.movie_id=:movieID");
+		query.setParameter("movieID", movieId);
+		Double avg = (Double) query.uniqueResult();
+		if(avg == null) {
+			avg = 0.0;
+		}
+		return avg;
+	}
+
+	@Override
+	public Long getVoteCount(int movieId) {
+		Session currentSession = userDAOImpl.sessionFactory.getCurrentSession();
+		
+		Query query = currentSession.createQuery("select count(*) from Movie_reviews review where review.movie_id=:movieID");
+		query.setParameter("movieID", movieId);
+		Long count = (Long)query.uniqueResult();
+		if(count == null) {
+			count = Long.parseLong(String.valueOf(0));
+		}
+		return count;
+	}
 	
 	
 

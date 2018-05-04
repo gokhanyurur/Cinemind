@@ -21,4 +21,16 @@ public class MovieServiceImpl implements MovieService{
 		return movieDAO.getMovieReviews(movieId);
 	}
 
+	@Override
+	@Transactional
+	public double getVoteAverage(int movieId) {
+		return movieDAO.getVoteAverage(movieId);
+	}
+
+	@Override
+	@Transactional
+	public Long getVoteCount(int movieId) {
+		return movieDAO.getVoteCount(movieId);
+	}
+
 }

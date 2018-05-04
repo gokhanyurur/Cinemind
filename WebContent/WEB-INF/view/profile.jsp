@@ -259,7 +259,7 @@
 									                        <td>${review.movie_id}</td>
 									                        <td>${review.review}</td>
 									                        <td>${review.reviewed_at}</td>
-									                        <td class="text-center"><a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
+									                        <td class="text-center"><a href="/cinemind/profile?reviewId=${review.id}&movieId=${review.movie_id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
 								                    </c:if>
 							                    </c:forEach>

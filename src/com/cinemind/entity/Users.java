@@ -291,11 +291,11 @@ public class Users {
 		review.setUser(this);
 	}
 	
-	public void removeReview(Movie_reviews review) {
+	public void removeReview(int reviewId) {
 		Iterator<Movie_reviews> iter = movie_reviews.iterator();
 		while(iter.hasNext()) {
 			Movie_reviews currentObj = iter.next();
-			if(currentObj.getId() == review.getId()) {
+			if(currentObj.getId() == reviewId) {
 				iter.remove();
 			}
 		}

@@ -37,6 +37,6 @@ public interface UserDAO {
 	public void removeWatchlist(Watchlist movie);
 
 	public void addReview(Movie_reviews review);
-	public void removeReview(Movie_reviews review);
+	public void removeReview(int reviewId, int userId);
 
 }

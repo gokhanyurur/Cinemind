@@ -1,6 +1,7 @@
 package com.cinemind.controller;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,6 +156,13 @@ public class MoviesController {
 		
 		List<Movie_reviews> tempReviews= movieService.getMovieReviews(movieId);
 		theModel.addAttribute("reviewList",tempReviews);
+		
+		Long voteCount = movieService.getVoteCount(movieId);
+		theModel.addAttribute("voteCount",voteCount);
+		
+		double voteAvg = movieService.getVoteAverage(movieId);
+		voteAvg =Double.parseDouble(new DecimalFormat("##.#").format(voteAvg));
+		theModel.addAttribute("voteAvg", voteAvg);
 						
 		return "view-movie";
 	}

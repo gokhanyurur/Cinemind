@@ -207,18 +207,18 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public void removeReview(Movie_reviews review) {
+	public void removeReview(int reviewId, int userId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		Users tempUser = currentSession.get(Users.class, review.getUser().getId());		
-		Movie_reviews orgListObj = getReviewObj(tempUser.getMovie_reviews(),review.getMovie_id());
+		Users tempUser = currentSession.get(Users.class, userId);		
+		Movie_reviews orgListObj = getReviewObj(tempUser.getMovie_reviews(),reviewId);
 		
-		tempUser.removeReview(review);
+		tempUser.removeReview(reviewId);
 		currentSession.remove(orgListObj);
 	}
-	private Movie_reviews getReviewObj(List<Movie_reviews> list,int movie_id) {
+	private Movie_reviews getReviewObj(List<Movie_reviews> list,int reviewId) {
 		for(Movie_reviews obj: list) {
-			if(obj.getMovie_id()==movie_id) {
+			if(obj.getId()==reviewId) {
 				return obj;
 			}
 		}

@@ -26,12 +26,12 @@
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/movieImagesSlider.css" />
-	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating2.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reviews.css" />
 	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/recommendedmovies.css" />
 	
 	<script src="${pageContext.request.contextPath}/resources/js/movieImagesSlider.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/starRating.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/starRating2.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/recommendedmovies.jsp"></script>	
 	<script src="${pageContext.request.contextPath}/resources/js/movieAddList.jsp"></script>
 </head>
@@ -236,10 +236,10 @@
 							<c:forEach var="actor" items="${movie.castList}">
 								<c:if test="${actor.imagePath != null}">
 									<div class="col-md-6 col-xs-6 actor-container">
-										<div class="col-md-3 col-xs-3">
+										<div class="col-md-3 col-xs-5">
 											<img src="${actor.imagePath}" style="width: 60px; height: auto;"/>
 										</div>
-										<div class="col-md-9 col-xs-9">
+										<div class="col-md-9 col-xs-7">
 											<div class="col-md-12 col-xs-12">
 												<h5 class="bold">${actor.name}</h5>
 											</div>
@@ -298,28 +298,14 @@
 									<div class="col-md-12">
 										<div class="col-md-12">
 											<h3 class="page-header primaryColor">Write a review</h3>
-											<div class="col-md-12">	
-											    <div class="row lead">
-											        <div id="stars" class="starrr" style="color: #ff4d4d;"></div>
-											        You gave a rating of <span id="count" class="vote">0</span> star(s)
-												</div>
-											    <!--  
-											    <div class="row lead">
-											        <p>Also you can give a default rating by adding attribute data-rating</p>
-											        <div id="stars-existing" class="starrr" data-rating='4'></div>
-											        You gave a rating of <span id="count-existing">4</span> star(s)
-											    </div>
-											    -->
-											</div>
 											<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
 												<div class="widget-area no-padding blank">
 													<div class="status-upload" style="padding-bottom: 10px;">
 														<form:form action="writeReview" modelAttribute="userReview" method="POST">
-															<!-- wunderlistteki vote sistemini ekle -->
+															<form:input path="vote" id="input-1" name="input-1" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="0" />
 															<input id="movie_id" name="movie_id" type="hidden" value="${movie.id}"/>
 															<form:hidden path="movie_id"/>
 															<form:textarea path="review" placeholder="What do you think about the movie?" required="required"/>
-															<!-- <textarea placeholder="What do you think about the movie?" ></textarea> -->
 															<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
 														</form:form>
 													</div>
@@ -367,10 +353,10 @@
 							<img style="width: 40px; height: auto;" src="${pageContext.request.contextPath}/resources/img/logo.png" alt="TMDB Logo"/>
 						</div>
 						<div class="col-md-4 col-xs-8" style="margin-top: -15px; margin-left: -15px;">
-							<h3 class="voteText">X.X</h3>
+							<h3 class="voteText">${voteAvg}</h3>
 						</div>
 						<div class="col-md-12 col-xs-12">
-							<h6 class="voteText">XXX VOTES</h6>
+							<h6 class="voteText">${voteCount} VOTES</h6>
 						</div>
 					</div>
 					<div class="col-md-12 col-xs-12" style="padding-bottom: 10px;">
@@ -548,7 +534,7 @@
 												        	<article class="row">
 													            <div class="col-md-10 col-sm-10">
 													              <div class="panel panel-default arrow left">
-													                <div class="panel-body" style="min-height: 100px;">
+													                <div class="panel-body" style="min-height: 140px;">
 													                  <header class="text-left">
 													                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i+2].user.username} - Rated:${reviewList[i+2].vote}</label></div>
 													                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i+2].reviewed_at}" /></time>
@@ -613,7 +599,7 @@
 												        	<article class="row">
 													            <div class="col-md-10 col-sm-10">
 													              <div class="panel panel-default arrow left">
-													                <div class="panel-body" style="min-height: 100px;">
+													                <div class="panel-body" style="min-height: 140px;">
 													                  <header class="text-left">
 													                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i+2].user.username} - Rated:${reviewList[i+2].vote}</label></div>
 													                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i+2].reviewed_at}" /></time>

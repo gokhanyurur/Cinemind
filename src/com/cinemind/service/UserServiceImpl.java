@@ -114,8 +114,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public void removeReview(Movie_reviews review) {
-		userDAO.removeReview(review);
+	public void removeReview(int reviewId, int userId) {
+		userDAO.removeReview(reviewId, userId);
 	}
 
 	

@@ -36,7 +36,8 @@ public class UserController {
 	@GetMapping("/profile")
 	public String userProfile(HttpSession loginSession, Model theModel, 
 			@RequestParam(required=false, value="movieId") String movieId,
-			@RequestParam(required=false, value="removeList") String list) throws JSONException, IOException {
+			@RequestParam(required=false, value="removeList") String list,
+			@RequestParam(required=false, value="reviewId") String reviewId) throws JSONException, IOException {
 		if(loginSession.getAttribute("loginedUser") !=null) {
 			
 			//GENRE LIST
@@ -62,6 +63,16 @@ public class UserController {
 				}
 				return "redirect:/profile";
 			}
+			
+			//REMOVE REVIEW()
+			if(reviewId != null && movieId != null) {
+				MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				userService.removeReview(Integer.parseInt(reviewId), tempUser.getId());
+				userService.saveActivity(new User_activities(tempUser,"removed your review for "+tempMovie.getTitle()));
+				
+				return "redirect:/profile";
+			}
+			
 						
 			//REMINDER LIST
 			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
