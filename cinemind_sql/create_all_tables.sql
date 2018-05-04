@@ -144,4 +144,23 @@ CREATE TABLE `user_acitivites` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+--
+-- Table structure for table 'movie_reviews'
+--
+
+DROP TABLE IF EXISTS `movie_reviews`;
+CREATE TABLE `movie_reviews` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `movie_id` int(11) DEFAULT NULL,
+  `review` varchar(250) DEFAULT NULL,
+  `vote` int(11) DEFAULT NULL,
+  `reviewed_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  
+  KEY `FK_USER_idx` (`user_id`),
+  CONSTRAINT `FK_USER_F` FOREIGN KEY (`user_id`) 
+  REFERENCES `users` (`id`) 
+  
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 

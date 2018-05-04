@@ -12,18 +12,25 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Movie_reviews;
 import com.cinemind.entity.Reminder_list;
+import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
+import com.cinemind.entity.Watchlist;
 import com.cinemind.json.JsonProcess;
 import com.cinemind.objects.GenreObj;
 import com.cinemind.objects.MovieObj;
 import com.cinemind.objects.Notification;
+import com.cinemind.service.MovieService;
+import com.cinemind.service.UserService;
 
 import org.springframework.ui.Model;
 
@@ -32,6 +39,9 @@ public class MoviesController {
 	
 	@Autowired
 	private UserController userController;
+	
+	@Autowired
+	private MovieService movieService;
 	
 	@GetMapping("/movies")
 	public String movies(Model theModel, HttpSession loginSession,@RequestParam(required=false, value="page") String page) throws IOException, JSONException {
@@ -67,6 +77,102 @@ public class MoviesController {
 		}
 		
 		return "movies";
+	}
+	
+	@GetMapping("movies/viewMovie")
+	public String viewMovie(@RequestParam("movieId")int movieId, Model theModel, HttpSession loginSession,
+			@RequestParam(required=false, value="addList") String addList) throws JSONException, IOException {
+		
+		//MOVIE WILL BE SHOWN
+		MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+		theModel.addAttribute("movie",tempMovie);
+		
+		System.out.println("Day Left "+tempMovie.getDayLeft());
+		
+		//GENRE LIST
+		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("genreList", genreList);
+		
+		Users loginedUser = new Users();;
+		Users tempUser = new Users();
+		
+		Movie_reviews review = new Movie_reviews();
+		
+		if(loginSession.getAttribute("loginedUser") !=null) {
+			loginedUser = (Users) loginSession.getAttribute("loginedUser");		
+			tempUser = userController.userService.getUser(loginedUser.getId());
+			
+			//ADD REMOVE TO THE LIST
+			if(addList !=null) {
+				if(addList.equals("favorites") && !userController.isFavoritesListContain(tempUser, movieId)) {
+					userController.userService.addFavorites(new Favorites_list(tempUser,movieId));
+					userController.userService.saveActivity(new User_activities(tempUser,"added to the favorites "+tempMovie.getTitle()));
+				}
+				if(addList.equals("watchlist") && !userController.isWatchlistContain(tempUser, movieId)) {
+					userController.userService.addWatchlist(new Watchlist(tempUser,movieId));
+					userController.userService.saveActivity(new User_activities(tempUser,"added to the watchlist "+tempMovie.getTitle()));
+				}
+				if(addList.equals("reminder") && !userController.isReminderListContain(tempUser, movieId)) {
+					userController.userService.addReminder(new Reminder_list(tempUser,movieId));
+					userController.userService.saveActivity(new User_activities(tempUser,"added to the reminder list "+tempMovie.getTitle()));
+				}
+				
+				if(addList.equals("removeFavorites")) {
+					userController.userService.removeFavorites(new Favorites_list(tempUser,movieId));
+					userController.userService.saveActivity(new User_activities(tempUser,"removed from the favorites "+tempMovie.getTitle()));
+				}
+				if(addList.equals("removeWatchlist")) {
+					userController.userService.removeWatchlist(new Watchlist(tempUser,movieId));
+					userController.userService.saveActivity(new User_activities(tempUser,"removed from the watchlist "+tempMovie.getTitle()));
+				}
+				if(addList.equals("removeReminder")) {
+					userController.userService.removeReminder(new Reminder_list(tempUser,movieId));
+					userController.userService.saveActivity(new User_activities(tempUser,"removed from the reminder list "+tempMovie.getTitle()));
+				}
+				return "redirect:/movies/viewMovie?movieId="+tempMovie.getId();
+			}
+			
+			//REMINDER LIST
+			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
+			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
+				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(movie.getDayLeft()>=0) {
+					tempRemList.add(movie);
+				}
+			}
+			List<Notification> notifications = userController.pushNotifications(tempRemList);			
+			theModel.addAttribute("notifications",notifications);
+			
+			theModel.addAttribute("userWatchList",tempUser.getWatchlistMovies());
+			theModel.addAttribute("userFavList",tempUser.getFavoriteMovies());
+			theModel.addAttribute("userReminderList",tempUser.getReminderMovies());
+						
+			review.setVote(5);
+			review.setMovie_id(movieId);
+			
+			theModel.addAttribute("userReview", review);
+		}
+		
+		List<Movie_reviews> tempReviews= movieService.getMovieReviews(movieId);
+		theModel.addAttribute("reviewList",tempReviews);
+						
+		return "view-movie";
+	}
+	
+	@PostMapping("movies/writeReview")
+	public String writeReview(HttpSession loginSession,@ModelAttribute("userReview") Movie_reviews review,Model theModel) throws JSONException, IOException {
+
+		Users loginedUser = (Users)loginSession.getAttribute("loginedUser");
+		Users tempUser = userController.userService.getUser(loginedUser.getId());
+		
+		MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+review.getMovie_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+
+		
+		review.setUser(tempUser);
+		
+		userController.userService.addReview(review);
+		userController.userService.saveActivity(new User_activities(tempUser,"wrote a review for "+tempMovie.getTitle()));
+		return "redirect:/movies/viewMovie?movieId="+review.getMovie_id();
 	}
 		
 	@GetMapping("movies/genre/{genreName}")

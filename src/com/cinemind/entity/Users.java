@@ -63,23 +63,23 @@ public class Users {
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-	//@JoinColumn(name="user_id")
 	private List<User_activities> activities;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-	//@JoinColumn(name="user_id")
 	private List<Favorites_list> favoriteMovies;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-	//@JoinColumn(name="user_id")
 	private List<Reminder_list> reminderMovies;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-	//@JoinColumn(name="user_id")
 	private List<Watchlist> watchlistMovies;
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	private List<Movie_reviews> movie_reviews;
 
 	public Users() {
 		
@@ -274,7 +274,33 @@ public class Users {
 		}
 			
 	}
+		
+	public List<Movie_reviews> getMovie_reviews() {
+		return movie_reviews;
+	}
+
+	public void setMovie_reviews(List<Movie_reviews> movie_reviews) {
+		this.movie_reviews = movie_reviews;
+	}
 	
+	public void addToReviews(Movie_reviews review) {
+		if(movie_reviews == null) {
+			movie_reviews = new ArrayList<>();
+		}
+		movie_reviews.add(review);		
+		review.setUser(this);
+	}
+	
+	public void removeReview(Movie_reviews review) {
+		Iterator<Movie_reviews> iter = movie_reviews.iterator();
+		while(iter.hasNext()) {
+			Movie_reviews currentObj = iter.next();
+			if(currentObj.getId() == review.getId()) {
+				iter.remove();
+			}
+		}
+	}
+
 	public boolean watchlistContain(int movieId) {
 		boolean result = false;
 		

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Movie_reviews;
 import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
@@ -19,8 +20,9 @@ import com.cinemind.entity.Watchlist;
 @Repository
 public class UserDAOImpl implements UserDAO{
 
+	//it was private
 	@Autowired
-	private SessionFactory sessionFactory;
+	public SessionFactory sessionFactory;
 	
 	@Override
 	public void saveUser(Users theUser) {	
@@ -190,6 +192,33 @@ public class UserDAOImpl implements UserDAO{
 	private Watchlist getWatchlistObj(List<Watchlist> list,int show_id) {
 		for(Watchlist obj: list) {
 			if(obj.getShow_id()==show_id) {
+				return obj;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void addReview(Movie_reviews review) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Users tempUser = currentSession.get(Users.class, review.getUser().getId());
+		tempUser.addToReviews(review);
+		currentSession.saveOrUpdate(tempUser);
+	}
+
+	@Override
+	public void removeReview(Movie_reviews review) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Users tempUser = currentSession.get(Users.class, review.getUser().getId());		
+		Movie_reviews orgListObj = getReviewObj(tempUser.getMovie_reviews(),review.getMovie_id());
+		
+		tempUser.removeReview(review);
+		currentSession.remove(orgListObj);
+	}
+	private Movie_reviews getReviewObj(List<Movie_reviews> list,int movie_id) {
+		for(Movie_reviews obj: list) {
+			if(obj.getMovie_id()==movie_id) {
 				return obj;
 			}
 		}

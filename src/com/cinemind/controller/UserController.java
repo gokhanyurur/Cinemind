@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Movie_reviews;
 import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
@@ -55,7 +56,7 @@ public class UserController {
 				}else if(list.equals("reminderlist")) {
 					userService.removeReminder(new Reminder_list(tempUser,Integer.parseInt(movieId)));
 					userService.saveActivity(new User_activities(tempUser,"removed from the reminder list "+tempMovie.getTitle()));
-				}else if(list.equals("favoriteslist")) {
+				}else if(list.equals("favorites")) {
 					userService.removeFavorites(new Favorites_list(tempUser,Integer.parseInt(movieId)));
 					userService.saveActivity(new User_activities(tempUser,"removed from the favorites "+tempMovie.getTitle()));
 				}
@@ -92,6 +93,16 @@ public class UserController {
 				tempActivityList.add(list_obj);
 			}
 			theModel.addAttribute("userActivityList",tempActivityList);
+			
+			//REVIEW LIST
+			List<Movie_reviews> tempUserReviews = new ArrayList<Movie_reviews>();
+			List<MovieObj> reviewMovieTitles = new ArrayList<MovieObj>();
+			for(Movie_reviews list_obj:tempUser.getMovie_reviews()) {
+				tempUserReviews.add(list_obj);
+				//reviewMovieTitles.add(JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getMovie_id()+"?;api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images"));
+			}
+			theModel.addAttribute("userReviewList",tempUserReviews);
+			//theModel.addAttribute("reviewMovieTitles",reviewMovieTitles);
 						
 			//USER REGISTER TIME
 			theModel.addAttribute("userRegTime",tempUser.getCreatedAt().toString());
@@ -117,7 +128,7 @@ public class UserController {
 				if(movie.getDayLeft()>1) {
 					tempList.add(new Notification(movie.getId(),movie.getTitle()," will release in ",movie.getDayLeft()+" days."));
 				}else if(movie.getDayLeft() == 1) {
-					tempList.add(new Notification(movie.getId(),movie.getTitle()," will tomorrow."));
+					tempList.add(new Notification(movie.getId(),movie.getTitle()," will release tomorrow."));
 				}else if(movie.getDayLeft() == 0) {
 					tempList.add(new Notification(movie.getId(),movie.getTitle()," is releasing today."));
 				}				
@@ -288,77 +299,7 @@ public class UserController {
 		loginSession.invalidate();
 		return "redirect:/login";
 	}
-	
-	@GetMapping("movies/viewMovie")
-	public String viewMovie(@RequestParam("movieId")int movieId, Model theModel, HttpSession loginSession,
-			@RequestParam(required=false, value="addList") String addList) throws JSONException, IOException {
-		
-		//MOVIE WILL BE SHOWN
-		MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
-		theModel.addAttribute("movie",tempMovie);
-		
-		System.out.println("Day Left "+tempMovie.getDayLeft());
-		
-		//GENRE LIST
-		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
-		theModel.addAttribute("genreList", genreList);
-		
-		Users loginedUser = new Users();;
-		Users tempUser = new Users();
-		
-		if(loginSession.getAttribute("loginedUser") !=null) {
-			loginedUser = (Users) loginSession.getAttribute("loginedUser");		
-			tempUser = userService.getUser(loginedUser.getId());
 			
-			//ADD REMOVE TO THE LIST
-			if(addList !=null) {
-				if(addList.equals("favorites") && !isFavoritesListContain(tempUser, movieId)) {
-					userService.addFavorites(new Favorites_list(tempUser,movieId));
-					userService.saveActivity(new User_activities(tempUser,"added to the favorites "+tempMovie.getTitle()));
-				}
-				if(addList.equals("watchlist") && !isWatchlistContain(tempUser, movieId)) {
-					userService.addWatchlist(new Watchlist(tempUser,movieId));
-					userService.saveActivity(new User_activities(tempUser,"added to the watchlist "+tempMovie.getTitle()));
-				}
-				if(addList.equals("reminder") && !isReminderListContain(tempUser, movieId)) {
-					userService.addReminder(new Reminder_list(tempUser,movieId));
-					userService.saveActivity(new User_activities(tempUser,"added to the reminder list "+tempMovie.getTitle()));
-				}
-				
-				if(addList.equals("removeFavorites")) {
-					userService.removeFavorites(new Favorites_list(tempUser,movieId));
-					userService.saveActivity(new User_activities(tempUser,"removed from the favorites "+tempMovie.getTitle()));
-				}
-				if(addList.equals("removeWatchlist")) {
-					userService.removeWatchlist(new Watchlist(tempUser,movieId));
-					userService.saveActivity(new User_activities(tempUser,"removed from the watchlist "+tempMovie.getTitle()));
-				}
-				if(addList.equals("removeReminder")) {
-					userService.removeReminder(new Reminder_list(tempUser,movieId));
-					userService.saveActivity(new User_activities(tempUser,"removed from the reminder list "+tempMovie.getTitle()));
-				}
-				return "redirect:/movies/viewMovie?movieId="+tempMovie.getId();
-			}
-			
-			//REMINDER LIST
-			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
-			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
-				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
-				if(movie.getDayLeft()>=0) {
-					tempRemList.add(movie);
-				}
-			}
-			List<Notification> notifications = pushNotifications(tempRemList);			
-			theModel.addAttribute("notifications",notifications);
-			
-			theModel.addAttribute("userWatchList",tempUser.getWatchlistMovies());
-			theModel.addAttribute("userFavList",tempUser.getFavoriteMovies());
-			theModel.addAttribute("userReminderList",tempUser.getReminderMovies());
-		}		
-				
-		return "view-movie";
-	}
-		
 	public boolean isWatchlistContain(Users user,int movieId) {
 		boolean contain = false;
 		

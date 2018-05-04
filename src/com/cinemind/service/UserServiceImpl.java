@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cinemind.dao.UserDAO;
 import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Movie_reviews;
 import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
@@ -103,6 +104,18 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public void removeWatchlist(Watchlist movie) {
 		userDAO.removeWatchlist(movie);		
+	}
+
+	@Override
+	@Transactional
+	public void addReview(Movie_reviews review) {
+		userDAO.addReview(review);
+	}
+
+	@Override
+	@Transactional
+	public void removeReview(Movie_reviews review) {
+		userDAO.removeReview(review);
 	}
 
 	

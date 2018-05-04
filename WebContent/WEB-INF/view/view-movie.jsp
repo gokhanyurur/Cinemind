@@ -292,53 +292,62 @@
 							    </div>
 							</div>
 						</div>
-						<div class="row">
-							<c:if test="${movie.dayLeft < 1}">
-								<div class="col-md-12">
+						<c:if test = "${loginedUser.username != null}">
+							<div class="row">
+								<c:if test="${movie.dayLeft < 1}">
 									<div class="col-md-12">
-										<h3 class="page-header primaryColor">Write a review</h3>
 										<div class="col-md-12">
-										    <div class="row lead">
-										        <div id="stars" class="starrr"></div>
-										        You gave a rating of <span id="count">0</span> star(s)
+											<h3 class="page-header primaryColor">Write a review</h3>
+											<div class="col-md-12">	
+											    <div class="row lead">
+											        <div id="stars" class="starrr" style="color: #ff4d4d;"></div>
+											        You gave a rating of <span id="count" class="vote">0</span> star(s)
+												</div>
+											    <!--  
+											    <div class="row lead">
+											        <p>Also you can give a default rating by adding attribute data-rating</p>
+											        <div id="stars-existing" class="starrr" data-rating='4'></div>
+											        You gave a rating of <span id="count-existing">4</span> star(s)
+											    </div>
+											    -->
 											</div>
-										    <!--  
-										    <div class="row lead">
-										        <p>Also you can give a default rating by adding attribute data-rating</p>
-										        <div id="stars-existing" class="starrr" data-rating='4'></div>
-										        You gave a rating of <span id="count-existing">4</span> star(s)
-										    </div>
-										    -->
-										</div>
-										<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
-											<div class="widget-area no-padding blank">
-												<div class="status-upload" style="padding-bottom: 10px;">
-													<form>
-														<textarea placeholder="What do you think about the movie?" ></textarea>
-															<c:if test = "${loginedUser.username == null}">
-									         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Login</button>	
-									     					</c:if>
-									                        <c:if test = "${loginedUser.username != null}">
-									         					<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
-									     					</c:if>
-													</form>
+											<div class="col-md-12" style="margin-top: -30px; margin-left: -15px;">
+												<div class="widget-area no-padding blank">
+													<div class="status-upload" style="padding-bottom: 10px;">
+														<form:form action="writeReview" modelAttribute="userReview" method="POST">
+															<!-- wunderlistteki vote sistemini ekle -->
+															<input id="movie_id" name="movie_id" type="hidden" value="${movie.id}"/>
+															<form:hidden path="movie_id"/>
+															<form:textarea path="review" placeholder="What do you think about the movie?" required="required"/>
+															<!-- <textarea placeholder="What do you think about the movie?" ></textarea> -->
+															<button type="submit" class="btn btn-danger"><i class="fa fa-share"></i>Share</button>
+														</form:form>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</c:if>
-							<c:if test="${movie.dayLeft > 0}">
-								<div class="col-md-12">
+								</c:if>
+								<c:if test="${movie.dayLeft > 0}">
 									<div class="col-md-12">
-										<h3 class="page-header primaryColor">Write a review</h3>
+										<div class="col-md-12">
+											<h3 class="page-header primaryColor">Write a review</h3>
+										</div>
+										<div class="col-md-12">
+											<h4>You can not write review before movie release.</h4>
+										</div>
 									</div>
-									<div class="col-md-12">
-										<h4>You can not write review before movie release.</h4>
-									</div>
-								</div>
-							</c:if>
-						</div>
+								</c:if>
+							</div>
+						</c:if>
+						<c:if test = "${loginedUser.username == null}">
+							<div class="col-md-12">
+								<h3 class="page-header primaryColor">Write a review</h3>
+							</div>
+							<div class="col-md-12">
+								<h4>You need to login to write a review.</h4>
+							</div>
+						</c:if>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -483,142 +492,162 @@
 					</div>
 				</div>
 			</div>
-			<!-- review  todo: check if review > 0 -->
 				<div class="col-md-12">
 					<div class="col-md-12"><h3 class="page-header primaryColor">Reviews</h3></div>
-					<div class="col-md-1"></div>
-					<div class="col-md-10" style="margin-left: 10px; margin-right: 10px;">
-							<div class="carousel-reviews broun-block">
-					            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">           
-					                <div class="carousel-inner">
-					                    <div class="item active">
-					                	    <div class="col-md-4 col-sm-6">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-					            			<div class="col-md-4 col-sm-6 hidden-xs">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-											<div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-					                    </div>
-					                    <div class="item">
-					                	    <div class="col-md-4 col-sm-6">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content								                    
-															</p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-					            			<div class="col-md-4 col-sm-6 hidden-xs">
-									        	<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content								                   
-															</p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									        	</article>
-											</div>
-											<div class="col-md-4 col-sm-6 hidden-sm hidden-xs">
-												<article class="row">
-										            <div class="col-md-10 col-sm-10">
-										              <div class="panel panel-default arrow left">
-										                <div class="panel-body">
-										                  <header class="text-left">
-										                    <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-										                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-										                  </header>
-										                  <div class="comment-post">
-										                    <p>
-																Review Content
-										                    </p>
-										                  </div>
-										                </div>
-										              </div>
-										            </div>
-									          </article>
-											</div>
-					                    </div>                                  
-					                </div>
-					                <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
-					                    <span class="glyphicon glyphicon-chevron-left"></span>
-					                </a>
-					                <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
-					                    <span class="glyphicon glyphicon-chevron-right"></span>
-					                </a>
-					    		</div>
+					<c:if test="${fn:length(reviewList)>0}">
+						<div class="col-md-1"></div>
+						<div class="col-md-10" style="margin-left: 10px; margin-right: 10px;">
+								<div class="carousel-reviews broun-block">
+						            <div id="carousel-reviews" class="carousel slide" data-ride="carousel">           
+						                <div class="carousel-inner">
+						                <c:forEach varStatus="status" var="i" begin="0" end="${fn:length(reviewList)}" step="3">
+							            	<c:if test="${i==0}">
+							            		<div class="item active">
+							                	    <div class="col-md-4 col-sm-6">
+											        	<article class="row">
+												            <div class="col-md-10 col-sm-10">
+												              <div class="panel panel-default arrow left">
+												                <div class="panel-body" style="min-height: 140px;">
+												                  <header class="text-left">
+												                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i].user.username} - Rated:${reviewList[i].vote}</label></div>
+												                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i].reviewed_at}" /></time>
+												                  </header>
+												                  <div class="comment-post">
+													                  <p>
+																		<label style="bold">${reviewList[i].review}</label>
+													                  </p>
+												                  </div>
+												                </div>
+												              </div>
+												            </div>
+											        	</article>
+													</div>
+							            			<c:if test="${fn:length(reviewList) > 1}">
+							            				<div class="col-md-4 col-sm-6 hidden-xs">
+												        	<article class="row">
+													            <div class="col-md-10 col-sm-10">
+													              <div class="panel panel-default arrow left">
+													                <div class="panel-body" style="min-height: 140px;">
+													                  <header class="text-left">
+													                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i+1].user.username} - Rated:${reviewList[i+1].vote}</label></div>
+													                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i+1].reviewed_at}" /></time>
+													                  </header>
+													                  <div class="comment-post">
+														                  <p>
+																			<label style="bold">${reviewList[i+1].review}</label>
+														                  </p>
+													                  </div>
+													                </div>
+													              </div>
+													            </div>
+												        	</article>
+														</div>
+							            			</c:if>
+													<c:if test="${fn:length(reviewList) > 2}">
+							            				<div class="col-md-4 col-sm-6 hidden-xs">
+												        	<article class="row">
+													            <div class="col-md-10 col-sm-10">
+													              <div class="panel panel-default arrow left">
+													                <div class="panel-body" style="min-height: 100px;">
+													                  <header class="text-left">
+													                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i+2].user.username} - Rated:${reviewList[i+2].vote}</label></div>
+													                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i+2].reviewed_at}" /></time>
+													                  </header>
+													                  <div class="comment-post">
+														                  <p>
+																			<label style="bold">${reviewList[i+2].review}</label>
+														                  </p>
+													                  </div>
+													                </div>
+													              </div>
+													            </div>
+												        	</article>
+														</div>
+							            			</c:if>
+							                    </div>
+							            	</c:if>
+							            	<c:if test="${i > 0 && i<fn:length(reviewList) }">
+							                    <div class="item">
+							                    	<div class="col-md-4 col-sm-6">
+											        	<article class="row">
+												            <div class="col-md-10 col-sm-10">
+												              <div class="panel panel-default arrow left">
+												                <div class="panel-body" style="min-height: 140px;">
+												                  <header class="text-left">
+												                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i].user.username} - Rated:${reviewList[i].vote}</label></div>
+												                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i].reviewed_at}" /></time>
+												                  </header>
+												                  <div class="comment-post">
+													                  <p>
+																		<label style="bold">${reviewList[i].review}</label>
+													                  </p>
+												                  </div>
+												                </div>
+												              </div>
+												            </div>
+											        	</article>
+													</div>
+							            			<c:if test="${fn:length(reviewList) > i+1}">
+							            				<div class="col-md-4 col-sm-6 hidden-xs">
+												        	<article class="row">
+													            <div class="col-md-10 col-sm-10">
+													              <div class="panel panel-default arrow left">
+													                <div class="panel-body" style="min-height: 140px;">
+													                  <header class="text-left">
+													                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i+1].user.username} - Rated:${reviewList[i+1].vote}</label></div>
+													                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i+1].reviewed_at}" /></time>
+													                  </header>
+													                  <div class="comment-post">
+														                  <p>
+																			<label style="bold">${reviewList[i+1].review}</label>
+														                  </p>
+													                  </div>
+													                </div>
+													              </div>
+													            </div>
+												        	</article>
+														</div>
+							            			</c:if>
+													<c:if test="${fn:length(reviewList) > i+2}">
+							            				<div class="col-md-4 col-sm-6 hidden-xs">
+												        	<article class="row">
+													            <div class="col-md-10 col-sm-10">
+													              <div class="panel panel-default arrow left">
+													                <div class="panel-body" style="min-height: 100px;">
+													                  <header class="text-left">
+													                    <div class="comment-user"><i class="fa fa-user"></i> <label style="bold">${reviewList[i+2].user.username} - Rated:${reviewList[i+2].vote}</label></div>
+													                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> <fmt:formatDate type = "both" dateStyle = "medium" timeStyle = "medium" value = "${reviewList[i+2].reviewed_at}" /></time>
+													                  </header>
+													                  <div class="comment-post">
+														                  <p>
+																			<label style="bold">${reviewList[i+2].review}</label>
+														                  </p>
+													                  </div>
+													                </div>
+													              </div>
+													            </div>
+												        	</article>
+														</div>
+							            			</c:if>
+							                	</div>
+							                </c:if>
+							            </c:forEach>                                  
+						             </div>
+						             <a class="left carousel-control" href="#carousel-reviews" role="button" data-slide="prev">
+						             	<span class="glyphicon glyphicon-chevron-left"></span>
+						             </a>
+						             <a class="right carousel-control" href="#carousel-reviews" role="button" data-slide="next">
+						             	<span class="glyphicon glyphicon-chevron-right"></span>
+						             </a>
+						    	</div>
 							</div>	
-					</div>
+						</div>
+					</c:if>
+					<c:if test="${fn:length(reviewList)<1}">
+						<div class="col-md-12" style="padding-bottom: 50px;">
+							<h4>There is not review for this movie. Would you like to write one?</h4>
+						</div>
+					</c:if>
 				</div>
 			<div class="col-md-1"></div>
 			<c:if test="${fn:length(movie.recommendedMovies) > 0}">

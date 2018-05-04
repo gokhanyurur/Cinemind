@@ -1,6 +1,7 @@
 package com.cinemind.dao;
 
 import com.cinemind.entity.Favorites_list;
+import com.cinemind.entity.Movie_reviews;
 import com.cinemind.entity.Reminder_list;
 import com.cinemind.entity.User_activities;
 import com.cinemind.entity.Users;
@@ -34,5 +35,8 @@ public interface UserDAO {
 
 	public void addWatchlist(Watchlist movie);
 	public void removeWatchlist(Watchlist movie);
+
+	public void addReview(Movie_reviews review);
+	public void removeReview(Movie_reviews review);
 
 }

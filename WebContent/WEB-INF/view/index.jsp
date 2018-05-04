@@ -95,28 +95,22 @@
     	</nav>
 	</div>
         <div class="row" style="margin-top: -20px; background-color: #e5e5e5">
-        	<div class="container" style="background-color: white">
-        		<!-- 
+        	<div class="container" style="background-color: white"> 
            		<div class="row" style="margin-bottom: -20px;">
            			<div class="col-md-12" style="text-align: center;">
            				<div class="page-header" style="margin-top: 20px;">
            					<a href="#" class="indexAlphabet"> # </a>
-           						<c:url var="movieStartLetter" value="/search">
-			                    	<c:param name="movieStartWith" value="${9}"></c:param>
-			                    </c:url>
-	           				<a href="${movieStartLetter}" class="indexAlphabet"> 0-9 </a>
 	           				<c:forEach var="i" begin="65" end="90">
 	           					<c:url var="movieStartLetter" value="/search">
 			                    	<c:param name="movieStartWith" value="${i}"></c:param>
 			                    </c:url>
-	           					<a href="${movieStartLetter}" class="indexAlphabet">
+	           					<a href="${movieStartLetter}" class="indexAlphabet filterText">
 							    	<%=Character.toChars((Integer)pageContext.getAttribute("i"))%>
 							    </a>
 							</c:forEach>
            				</div>
            			</div>
            		</div>
-           		 -->
            		<div class="row" style="padding-bottom: 10px; margin-top: 20px;">
 					<div class="col-md-9">
 						<div class="row">
