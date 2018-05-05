@@ -182,6 +182,47 @@ public class MoviesController {
 		userController.userService.saveActivity(new User_activities(tempUser,"wrote a review for "+tempMovie.getTitle()));
 		return "redirect:/movies/viewMovie?movieId="+review.getMovie_id();
 	}
+	
+	@GetMapping("movies/actor/{actorId}")
+	public String actorMovies(Model theModel, HttpSession loginSession,
+			@PathVariable int actorId, @RequestParam(required=false, value="page") String page) throws JSONException, IOException {
+		
+		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("genreList", genreList);
+		
+		if(page !=null) {
+			List<MovieObj> movieList = JsonProcess.getMoviesFromUrl("http://api.themoviedb.org/3/discover/movie?with_cast="+actorId+"&api_key=a092bd16da64915723b2521295da3254&page="+page);
+			theModel.addAttribute("actorMoviesList", movieList);
+		}else {
+			List<MovieObj> movieList = JsonProcess.getMoviesFromUrl("http://api.themoviedb.org/3/discover/movie?with_cast="+actorId+"&api_key=a092bd16da64915723b2521295da3254&page=1");
+			theModel.addAttribute("actorMoviesList", movieList);
+		}
+		
+		int totalPages = JsonProcess.getTotalPage("http://api.themoviedb.org/3/discover/movie?with_cast="+actorId+"&api_key=a092bd16da64915723b2521295da3254&page=1");
+		theModel.addAttribute("totalPages",totalPages);
+		
+		String actorName = JsonProcess.getActorName("https://api.themoviedb.org/3/person/"+actorId+"?api_key=a092bd16da64915723b2521295da3254&language=en-US");
+		theModel.addAttribute("actorName", actorName);
+		theModel.addAttribute("actorId", actorId);
+		
+		if(loginSession.getAttribute("loginedUser") != null) {
+			Users loginedUser = (Users)loginSession.getAttribute("loginedUser");
+			Users tempUser = userController.userService.getUser(loginedUser.getId());
+			
+			//REMINDER LIST
+			List<MovieObj> tempRemList = new ArrayList<MovieObj>();
+			for(Reminder_list list_obj:tempUser.getReminderMovies()) {
+				MovieObj movie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+list_obj.getShow_id()+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
+				if(movie.getDayLeft()>=0) {
+					tempRemList.add(movie);
+				}
+			}
+			List<Notification> notifications = userController.pushNotifications(tempRemList);			
+			theModel.addAttribute("notifications",notifications);
+		}
+		
+		return "actor-movies";
+	}
 		
 	@GetMapping("movies/genre/{genreName}")
 	public String GenreMovies(Model theModel, HttpSession loginSession,

@@ -307,4 +307,11 @@ public class JsonProcess {
 			
 	
 	}
+
+	public static String getActorName(String url) throws IOException, JSONException {
+		JSONObject jsonObj = JsonReader.readJsonObjFromUrl(url);
+		
+		return jsonObj.getString("name");
+		
+	}
 }

@@ -241,7 +241,9 @@
 										</div>
 										<div class="col-md-9 col-xs-7">
 											<div class="col-md-12 col-xs-12">
-												<h5 class="bold">${actor.name}</h5>
+												<a href="/cinemind/movies/actor/${actor.id}" class="bold primaryColor">
+													${actor.name}
+												</a>
 											</div>
 											<div class="col-md-12 col-xs-12">
 												<h6>${actor.character}</h6>
