@@ -52,13 +52,13 @@ public class JsonProcess {
 			if(tempObj.get("poster_path").getClass().equals(String.class)) {
 				poster = imagePrefixPoster + tempObj.getString("poster_path");
 			}else {
-				poster= "http://placehold.it/342x513";
+				poster= "http://oi63.tinypic.com/2w1yuma.jpg";
 			}
 			
 			if(tempObj.get("backdrop_path").getClass().equals(String.class)) {
 				backdrop = imagePrefixBackdrop + tempObj.getString("backdrop_path");
 			}else {			
-				backdrop="http://placehold.it/780x439";
+				backdrop="http://oi66.tinypic.com/rgx7pd.jpg";
 			}
 			MovieObj tempMovie = new MovieObj(id,title,release,poster);
 			tempMovie.setBackdrop_path(backdrop);
@@ -99,13 +99,13 @@ public class JsonProcess {
 				if(tempObj.get("poster_path").getClass().equals(String.class)) {
 					poster = imagePrefixPoster + tempObj.getString("poster_path");
 				}else {
-					poster= "http://placehold.it/342x513";
+					poster= "http://oi63.tinypic.com/2w1yuma.jpg";
 				}
 				
 				if(tempObj.get("backdrop_path").getClass().equals(String.class)) {
 					backdrop = imagePrefixBackdrop + tempObj.getString("backdrop_path");
 				}else {
-					backdrop="http://placehold.it/780x439";
+					backdrop="http://oi66.tinypic.com/rgx7pd.jpg";
 
 				}
 				MovieObj tempMovie = new MovieObj(id,title,release,poster);
@@ -197,14 +197,14 @@ public class JsonProcess {
 			String poster_path = jsonMovie.getString("poster_path");
 			tempMovie.setPoster_path(imagePrefixPoster+poster_path);
 		}else {
-			tempMovie.setPoster_path("http://placehold.it/342x513");
+			tempMovie.setPoster_path("http://oi63.tinypic.com/2w1yuma.jpg");
 		}
 		
 		if(jsonMovie.get("backdrop_path").getClass().equals(String.class)) {
 			String backdrop_path = jsonMovie.getString("backdrop_path");
 			tempMovie.setBackdrop_path(imagePrefixBackdrop+backdrop_path);
 		}else {
-			tempMovie.setBackdrop_path("http://placehold.it/780x439");
+			tempMovie.setBackdrop_path("http://oi66.tinypic.com/rgx7pd.jpg");
 		}
 		
 		
