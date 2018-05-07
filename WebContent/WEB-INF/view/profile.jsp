@@ -30,8 +30,6 @@
 		
 		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
 		
-		
-		
 		<script>
 		     $(document).ready(function(){
 		        $('.dropdown-toggle').dropdown()
@@ -161,7 +159,7 @@
 							                    	<c:if test="${fn:length(reminderList)>0}">
 								                    	<tr>
 									                        <td>${movie.id}</td>
-									                        <td>${movie.title}</td>
+									                        <td><a class="filterText" href="/cinemind/movies/viewMovie?movieId=${movie.id}">${movie.title}</a></td>
 									                        <td>${movie.release_date}</td>
 									                        <td class="text-center"><a href="/cinemind/profile?removeList=reminderlist&movieId=${movie.id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
@@ -193,7 +191,7 @@
 							                    	<c:if test="${fn:length(watchList)>0}">
 								                    	<tr>
 									                        <td>${movie.id}</td>
-									                        <td>${movie.title}</td>
+									                        <td><a class="filterText" href="/cinemind/movies/viewMovie?movieId=${movie.id}">${movie.title}</a></td>
 									                        <td>${movie.release_date}</td>
 									                        <td class="text-center"><a href="/cinemind/profile?removeList=watchlist&movieId=${movie.id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
@@ -225,7 +223,7 @@
 							                    	<c:if test="${fn:length(favoritesList)>0}">
 								                    	<tr>
 									                        <td>${movie.id}</td>
-									                        <td>${movie.title}</td>
+									                        <td><a class="filterText" href="/cinemind/movies/viewMovie?movieId=${movie.id}">${movie.title}</a></td>
 									                        <td>${movie.release_date}</td>
 									                        <td class="text-center"><a href="/cinemind/profile?removeList=favorites&movieId=${movie.id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>
@@ -256,8 +254,8 @@
 							                    <c:forEach var="review" items="${userReviewList}">
 							                    	<c:if test="${fn:length(userReviewList)>0}">
 								                    	<tr>
-									                        <td>${review.movie_id}</td>
-									                        <td>${review.review}</td>
+								                    		<td>${review.movie_id}</td>
+									                        <td><a class="filterText" href="/cinemind/movies/viewMovie?movieId=${review.movie_id}">${review.review}</a></td>
 									                        <td>${review.reviewed_at}</td>
 									                        <td class="text-center"><a href="/cinemind/profile?reviewId=${review.id}&movieId=${review.movie_id}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Del</a></td>
 								                    	</tr>

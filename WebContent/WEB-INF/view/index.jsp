@@ -96,6 +96,7 @@
 	</div>
         <div class="row" style="margin-top: -20px; background-color: #e5e5e5">
         	<div class="container" style="background-color: white"> 
+        		<!-- 
            		<div class="row" style="margin-bottom: -20px;">
            			<div class="col-md-12" style="text-align: center;">
            				<div class="page-header" style="margin-top: 20px;">
@@ -111,6 +112,7 @@
            				</div>
            			</div>
            		</div>
+           		 -->
            		<div class="row" style="padding-bottom: 10px; margin-top: 20px;">
 					<div class="col-md-9">
 						<div class="row">

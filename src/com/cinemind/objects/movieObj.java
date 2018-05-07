@@ -28,6 +28,8 @@ public class MovieObj {
 	private String music;
 	private List<Country> countries;
 	private String countryString;
+	private String imdb_id;
+	private String homepage;
 	
 	private List<MovieObj> recommendedMovies = new ArrayList<>();
 
@@ -308,6 +310,24 @@ public class MovieObj {
         }
         return null;
     }
+
+	public String getImdb_id() {
+		return imdb_id;
+	}
+
+	public void setImdb_id(String imdb_id) {
+		this.imdb_id = imdb_id;
+	}
+
+	public String getHomepage() {
+		return homepage;
+	}
+
+	public void setHomepage(String homepage) {
+		this.homepage = homepage;
+	}
+    
+    
     
 }
 

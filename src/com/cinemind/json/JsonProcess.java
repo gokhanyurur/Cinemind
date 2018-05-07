@@ -268,6 +268,21 @@ public class JsonProcess {
         String music = JsonReader.getMusic(tempMovie.getCrewList());
         tempMovie.setMusic(music);
         
+        //Links
+        if(jsonMovie.get("imdb_id").getClass().equals(String.class)) {
+			String imdbId = jsonMovie.getString("imdb_id");
+			tempMovie.setImdb_id("https://www.imdb.com/title/"+imdbId);
+		}else {
+			tempMovie.setImdb_id("#");
+		}
+        
+        if(jsonMovie.get("homepage").getClass().equals(String.class)) {
+			String homepage = jsonMovie.getString("homepage");
+			tempMovie.setHomepage(homepage);
+		}else {
+			tempMovie.setHomepage("#");
+		}
+        
 		//get cast
         JSONArray castJsonArray=JsonReader.getJsonCast(jsonMovie.getJSONObject("credits").toString());
         List<Cast> castList =new ArrayList<>();

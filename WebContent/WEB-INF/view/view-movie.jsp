@@ -472,9 +472,9 @@
 						<div class="col-md-12">
 							<h5 class="primaryColor bold">External Links:</h5>
 							<div class="col-md-12">
-								<a href="#" class="filterText">IMDb</a><br>
-								<a href="#" class="filterText">TheMovieDb</a><br>
-								<a href="#" class="filterText">Official Website</a>
+								<a href="${movie.imdb_id}" class="filterText">IMDb</a><br>
+								<a href="https://www.themoviedb.org/movie/${movie.id}" class="filterText">TheMovieDb</a><br>
+								<a href="${movie.homepage}" class="filterText">Official Website</a>
 							</div>
 						</div>
 					</div>
