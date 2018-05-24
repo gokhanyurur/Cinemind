@@ -88,7 +88,7 @@ public class MoviesController {
 		MovieObj tempMovie = JsonProcess.getMovieFromUrl("https://api.themoviedb.org/3/movie/"+movieId+"?api_key=a092bd16da64915723b2521295da3254&append_to_response=credits,videos,images");
 		theModel.addAttribute("movie",tempMovie);
 		
-		System.out.println("Day Left "+tempMovie.getDayLeft());
+		//System.out.println("Day Left "+tempMovie.getDayLeft());
 		
 		//GENRE LIST
 		List<GenreObj> genreList = JsonProcess.getGenresFromUrl("https://api.themoviedb.org/3/genre/movie/list?api_key=a092bd16da64915723b2521295da3254&language=en-US");

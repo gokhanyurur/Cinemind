@@ -719,12 +719,14 @@
 						        </div>			                              
 						    </div>
 					</div>
-					<nav>
-						<ul class="control-box pager" style="margin-left: -10px; margin-top: -15px; margin-left: -10px; margin-bottom: 80px;">
-							<li><a data-slide="prev" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
-							<li><a data-slide="next" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>
-						</ul>
-					</nav>
+					<div class="col-md-12">
+						<nav>
+							<ul class="control-box pager" style="margin-left: -10px; margin-top: -15px; margin-left: -10px; margin-bottom: 80px;">
+								<li><a data-slide="prev" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-left" style="color:#FF4D4D;"></i></a></li>
+								<li><a data-slide="next" href="#myCarouselrec" class=""><i class="glyphicon glyphicon-chevron-right" style="color:#FF4D4D;"></i></li>
+							</ul>
+						</nav>
+					</div>
 				</div>
 			</c:if>
 		</div>

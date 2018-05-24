@@ -148,7 +148,7 @@
 							            <table class="table">
 							                <thead>
 							                    <tr class="filters">
-							                        <th><input type="text" class="form-control" placeholder="#" disabled></th>
+							                        <th><input type="text" class="form-control" placeholder="Movie Id" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Title" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Release Date" disabled></th>
 							                        <th>Action</th>
@@ -180,7 +180,7 @@
 							            <table class="table">
 							                <thead>
 							                    <tr class="filters">
-							                        <th><input type="text" class="form-control" placeholder="#" disabled></th>
+							                        <th><input type="text" class="form-control" placeholder="Movie Id" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Title" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Release Date" disabled></th>
 							                        <th>Action</th>
@@ -212,7 +212,7 @@
 							            <table class="table">
 							                <thead>
 							                    <tr class="filters">
-							                        <th><input type="text" class="form-control" placeholder="#" disabled></th>
+							                        <th><input type="text" class="form-control" placeholder="Movie Id" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Title" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Release Date" disabled></th>
 							                        <th>Action</th>
@@ -244,7 +244,7 @@
 							            <table class="table">
 							                <thead>
 							                    <tr class="filters">
-							                        <th><input type="text" class="form-control" placeholder="Movie Title" disabled></th>
+							                        <th><input type="text" class="form-control" placeholder="Movie Id" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Review" disabled></th>
 							                        <th><input type="text" class="form-control" placeholder="Reviewed At" disabled></th>
 							                        <th>Action</th>
