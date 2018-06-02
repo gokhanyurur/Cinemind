@@ -4,31 +4,31 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
        	<title>Change Your Password</title>
-       	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/navbar.css" />
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/texts.css" />
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css" />
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/images.css" />
+       	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/navbar.css">
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/texts.css">
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/buttons.css">
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/images.css">
 		
 		<link href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" rel="stylesheet">
 		
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/script"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" type="text/script"></script>
 	    
-	    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slider.css" />
+	    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/slider.css">
 		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 		
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/verticalmovie.css" />
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/verticalmovie.css">
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 		
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tables.css" />
-		<script src="${pageContext.request.contextPath}/resources/js/movieListTables.js"></script>
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tables.css">
+		<script src="${pageContext.request.contextPath}/resources/js/movieListTables.js" type="text/script"></script>
 		
-		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
+		<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css">
 		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 		
@@ -44,7 +44,7 @@
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
-                            <img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
+                            <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="Logo" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
                             <span style="display: inline-block;">CINEMIND</span>
                         </a>     
                     </div>

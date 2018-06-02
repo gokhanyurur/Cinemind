@@ -2,26 +2,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\navbar.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\signup.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\texts.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body background="${pageContext.request.contextPath}/resources/img/bg/signup_bg.jpg">
-        <div class="row">
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>Sign Up</title>
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\navbar.css">
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\signup.css">
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\texts.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</head>
+	<body background="${pageContext.request.contextPath}/resources/img/bg/signup_bg.jpg">
+    	<div class="row">
             <nav class="navbar navbar-inverse navbar-static-top">
                 <div class="container">
                     <div class="navbar-header"> 
                         <a class="navbar-brand" href="/cinemind" style="color: #ff4d4d; font-weight: bold; font-size: 20px;">
-                            <img src="${pageContext.request.contextPath}/resources/img/logo.png" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
+                            <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="Logo" style="width: 30px; height: 30px; margin-top: -5px; display: inline-block;">
                             <span style="display: inline-block;">CINEMIND</span>
                         </a>     
                     </div>
@@ -75,7 +75,6 @@
         </div>
         <div class="row" style="margin-top: 20px">
             <div class="container transparent-white" style="padding-top: 50px; padding-bottom: 75px;" >
-                <!--<form class="form-horizontal" role="form" method="POST" action="/register">-->
                 <form:form action="registerUser" modelAttribute="user" method="POST">
                     <div class="row">
                         <div class="col-md-3"></div>
@@ -92,7 +91,6 @@
                             <div class="form-group">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                                    <!-- <input type="text" name="name" class="form-control" id="name" placeholder="John Doe" required autofocus style="width: 600px;">-->
                                     <form:input path="username" cssClass="form-control" cssStyle="width: 600px;" required="required"/>
                                 </div>
                             </div>
@@ -106,7 +104,6 @@
                             <div class="form-group">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                                    <!-- <input type="text" name="email" class="form-control" id="email" placeholder="you@example.com" required autofocus style="width: 600px;"> -->
                                     <form:input path="email" cssClass="form-control" cssStyle="width: 600px;" required="required"/>
                                 </div>
                             </div>
@@ -120,7 +117,6 @@
                             <div class="form-group has-danger">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                                    <!-- <input type="password" name="password" class="form-control" id="password" placeholder="Password" required style="width: 600px;"> -->
                                     <form:password path="password" cssClass="form-control" cssStyle="width: 600px;" required="required"/>
                                 </div>
                             </div>
@@ -153,7 +149,6 @@
                             <button type="submit" class="btn btn-danger"><i class="fa fa-user-plus"></i> Register</button>
                         </div>
                     </div>
-                <!--</form>-->
                 </form:form>
             </div>
         </div>

@@ -2,23 +2,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Login</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\navbar.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\signup.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\texts.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css" />
-    
-</head>
-<body background="${pageContext.request.contextPath}/resources/img/bg/signup_bg.jpg">
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <title>Login</title>
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\navbar.css">
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\signup.css">
+	    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css\texts.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	    
+	    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/starRating.css">
+	    
+	</head>
+	<body background="${pageContext.request.contextPath}/resources/img/bg/signup_bg.jpg">
         <div class="row">
             <nav class="navbar navbar-inverse navbar-static-top">
                 <div class="container">
@@ -94,7 +94,6 @@
                             <div class="form-group">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                                    <!-- <input type="text" name="email" class="form-control" id="email" placeholder="you@example.com" required autofocus style="width: 600px;"> -->
                                     <form:input path="email" cssClass="form-control" cssStyle="width: 600px;" required="required"/>
                                 </div>
                             </div>
